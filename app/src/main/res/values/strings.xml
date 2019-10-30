@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MonitoraVeiculo</string>
+    <string name="title_activity_tela_principalmain">MonitoraVeiculo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">MonitoraVeiculo</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Excluir Veiculo</string>
+    <string name="title_activity_tela_cadastro">Cadastrar Veiculo</string>
+    <string name="title_activity_tela_status_manutencao">Status de Manutenção</string>
+
+
+    <string-array name="combustivel">
+        <item>Flex</item>
+        <item>Gasolina</item>
+        <item>Etanol</item>
+        <item>Diesel</item>
+        <item>GNV</item>
+    </string-array>
+
+    <string-array name="cambio">
+        <item>Manual</item>
+        <item>Automatico</item>
+    </string-array>
+
+
+</resources>

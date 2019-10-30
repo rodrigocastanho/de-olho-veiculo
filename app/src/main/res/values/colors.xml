@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cordeFundo">#DEE0D9</color>
+    <color name="cordoStatusBar">#8B8181</color>
+    <color name="cortextoBotao">#292525</color>
+</resources>

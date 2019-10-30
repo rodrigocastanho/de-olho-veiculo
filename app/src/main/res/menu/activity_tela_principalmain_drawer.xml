@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/CadastroVeiculo"
+                android:icon="@drawable/ic_menu_carro"
+                android:title="Cadastrar Veiculo"/>
+        <item
+                android:id="@+id/StatusManuteção"
+                android:icon="@drawable/ic_menu_manutencao"
+                android:title="Status de Manutenção"/>
+        <item
+                android:id="@+id/RelatorioCusto"
+                android:icon="@drawable/ic_menu_relatorio"
+                android:title="Relatorio de Custo"/>
+        <item
+                android:id="@+id/SobreApp"
+                android:icon="@drawable/ic_menu_app"
+                android:title="Sobre o Aplicativo"/>
+    </group>
+</menu>
