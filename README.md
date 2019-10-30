@@ -1,5 +1,5 @@
 # monitora-veiculo
-App utilizado para monitorar as manutenções do veiculo (Em Desenvolvimento).
+App utilizado para facilitar  o monitoramento das manutenções do veiculo (Em Desenvolvimento).
 
 Tecnologias utilizadas no App.
 
