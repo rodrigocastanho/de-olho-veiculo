@@ -1,4 +1,4 @@
-package com.appdesenvol.monitoraveiculo.objetos
+package com.appdesenvol.monitoraveiculo.model
 
 import android.arch.persistence.room.Embedded
 

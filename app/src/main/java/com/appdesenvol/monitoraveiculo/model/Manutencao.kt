@@ -1,4 +1,4 @@
-package com.appdesenvol.monitoraveiculo.objetos
+package com.appdesenvol.monitoraveiculo.model
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
@@ -20,16 +20,14 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 class Manutencao(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_manutencao") val idM: Long,
+    @ColumnInfo(name = "id_manutencao") var idM: Long,
 
-    @ColumnInfo(name = "id_mveiculo") val idVM: Long,
+    @ColumnInfo(name = "id_mveiculo") var idVM: Long,
     @ColumnInfo(name = "tipo_manutencao") var tipoManutencao: String,
     @ColumnInfo(name = "kmtroca") var kmtroca: String,
     @ColumnInfo(name = "data") var data: String,
-    @ColumnInfo(name = "custo") var custo: String
-
-
-)
+    @ColumnInfo(name = "custo") var custo: String,
+    @ColumnInfo(name = "observacao") var observacao: String)
 
 
 

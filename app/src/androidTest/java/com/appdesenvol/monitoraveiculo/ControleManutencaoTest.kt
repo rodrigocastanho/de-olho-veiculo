@@ -1,12 +1,9 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo
 
-import android.util.Log
-import com.appdesenvol.monitoraveiculo.objetos.Manutencao
+import com.appdesenvol.monitoraveiculo.model.Manutencao
 import org.junit.Test
 
-import org.junit.Assert.*
-
-class ControleManutencoesTest {
+class ControleManutencaoTest {
 
     val arrayManutencoes = ArrayList<Manutencao>()
 

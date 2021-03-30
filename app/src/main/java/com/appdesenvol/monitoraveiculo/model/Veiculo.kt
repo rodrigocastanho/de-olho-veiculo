@@ -1,14 +1,16 @@
-package com.appdesenvol.monitoraveiculo.objetos
+package com.appdesenvol.monitoraveiculo.model
 
 import android.arch.persistence.room.*
-import com.appdesenvol.monitoraveiculo.logica.ControleDados
-import com.appdesenvol.monitoraveiculo.logica.ConversorListManutencao
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "Veiculo")
 class Veiculo(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_veiculo") val idV: Long,
+    @ColumnInfo(name = "id_veiculo") var idV: Long,
 
     @ColumnInfo(name = "nome_veiculo") var nomeVeiculo: String,
     @ColumnInfo(name = "marca_veiculo") var marcaVeiculo: String,
@@ -17,5 +19,5 @@ class Veiculo(
     @ColumnInfo(name = "combustivel") var combustivel: String,
     @ColumnInfo(name = "tipo_cambio") var tipoCambio: String,
     @ColumnInfo(name = "ano") var ano: String
-)
+): Parcelable
 

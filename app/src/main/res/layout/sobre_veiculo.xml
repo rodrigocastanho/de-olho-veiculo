@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:fillViewport="true">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:id="@+id/sb_nome_veiculo"
+                android:hint="Nome:"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="8dp" />
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sb_txt_nome_veiculo"
+                android:hint="..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/sb_marca_veiculo"
+                app:layout_constraintEnd_toEndOf="@+id/sb_nome_veiculo"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="63dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:id="@+id/sb_marca_veiculo"
+                android:hint="Marca:"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_nome_veiculo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp" />
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sb_txt_marca"
+                android:hint="..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_txt_nome_veiculo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sb_marca_veiculo"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="63dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:id="@+id/sb_placa_veiculo"
+                android:hint="Placa:"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_marca_veiculo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp" />
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sb_txt_placa"
+                android:hint="..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_txt_marca"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sb_marca_veiculo"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="63dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:id="@+id/sb_motor"
+                android:hint="Motor:"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_placa_veiculo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp" />
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sb_txt_motor"
+                android:hint="..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_txt_placa"
+                app:layout_constraintStart_toEndOf="@+id/sb_motor"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="63dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_txt_combustivel"
+                android:text="Combustível:"
+                app:layout_constraintTop_toBottomOf="@+id/sb_motor"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="16dp"/>
+
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_combustivel"
+                android:entries="@array/combustivel"
+                app:layout_constraintTop_toBottomOf="@+id/sb_txt_combustivel"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_txt_cambio"
+                android:text="Tipo de Câmbio:"
+                app:layout_constraintTop_toBottomOf="@+id/sb_combustivel"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="16dp"/>
+
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_cambio"
+                android:entries="@array/cambio"
+                app:layout_constraintTop_toBottomOf="@+id/sb_txt_cambio"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:id="@+id/sb_ano_fabricacao"
+                android:hint="Ano de Fabricação:"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_cambio"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_txt_ano_fabricacao"
+                android:hint="..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/sb_cambio"
+                app:layout_constraintStart_toEndOf="@+id/sb_ano_fabricacao"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginEnd="8dp" />
+
+        <android.support.v7.widget.AppCompatButton
+                android:layout_width="87dp"
+                android:layout_height="36dp"
+                android:id="@+id/bt_editarVeiculo"
+                android:text="Editar"
+                app:layout_constraintTop_toBottomOf="@+id/sb_ano_fabricacao"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="116dp" />
+
+        <android.support.v7.widget.AppCompatButton
+                android:layout_width="87dp"
+                android:layout_height="36dp"
+                android:id="@+id/bt_fecharVeiculo"
+                android:text="Fechar"
+                app:layout_constraintTop_toBottomOf="@+id/sb_ano_fabricacao"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

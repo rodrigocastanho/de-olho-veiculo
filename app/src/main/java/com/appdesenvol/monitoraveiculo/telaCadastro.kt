@@ -6,93 +6,56 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
-import com.appdesenvol.monitoraveiculo.objetos.VeiculoManutencao
-import com.appdesenvol.monitoraveiculo.objetos.Veiculo
+import com.appdesenvol.monitoraveiculo.logica.ControleVeiculo
+import com.appdesenvol.monitoraveiculo.model.Veiculo
 import kotlinx.android.synthetic.main.activity_tela_cadastro.*
 import kotlinx.android.synthetic.main.app_bar_tela_cadastro.*
 import kotlinx.android.synthetic.main.content_tela_cadastro.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import java.sql.SQLException
 
 class telaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var bd: BancoDadoConfig
+    private val controleVeiculo = ControleVeiculo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_cadastro)
         setSupportActionBar(toolbar)
 
-
-        var nomeVeiculo = nomeveiculo.text
-        var marcaVeiculo = marcaveiculo.text
-        var placaVeiculo = placaveiculo.text
-        var motorVeiculo = motorveiculo.text
-        var tipoCombustivel = combescolha
-        var tipoCambio = cambioescolha
-        var anoFabricacao = fabricaoveiculo.text
-
         bd = BancoDadoConfig.getInstance(applicationContext)
+
+        val veiculoEditado = controleVeiculo.veiculoValorEditado(this)
+
+        nomeveiculo.setText(veiculoEditado?.nomeVeiculo)
+        marcaveiculo.setText(veiculoEditado?.marcaVeiculo)
+        placaveiculo.setText(veiculoEditado?.placaVeiculo)
+        motorveiculo.setText(veiculoEditado?.motor)
+        combescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.combustivel,
+            R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.combustivel))
+        cambioescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.cambio,
+            R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.tipoCambio))
+        fabricaoveiculo.setText(veiculoEditado?.ano)
 
 
         btCadastro.setOnClickListener {
 
-            if (nomeVeiculo.isNotEmpty()) {
-                Log.i("TESTE EMP", "CADASTRO OK")
 
-                var veiculo = Veiculo(
-                    0,
-                    nomeVeiculo.toString(),
-                    marcaVeiculo.toString(),
-                    placaVeiculo.toString(),
-                    motorVeiculo.toString(),
-                    tipoCombustivel.selectedItem.toString(),
-                    tipoCambio.selectedItem.toString(),
-                    anoFabricacao.toString()
-                )
+            val veiculo = Veiculo(
+                controleVeiculo.statusVeiculoId(veiculoEditado),
+                nomeveiculo.text.toString(),
+                marcaveiculo.text.toString(),
+                placaveiculo.text.toString(),
+                motorveiculo.text.toString(),
+                combescolha.selectedItem.toString(),
+                cambioescolha.selectedItem.toString(),
+                fabricaoveiculo.text.toString())
 
-
-
-                Toast.makeText(getApplicationContext(), "VEICULO CADASTRADO", Toast.LENGTH_SHORT).show()
-
-            CoroutineScope(IO).launch {
-
-                    try {
-
-                        bd.controleDAO().salvarDados(veiculo)
-
-                    } catch (e: SQLException) {
-
-                        Log.e("ERRO Veiculo insert", " VERIFICAR ERRO: " + e)
-
-                    }
-
-                }
-
-
-                Log.i(
-                    "-VEICULO-",
-                    "id " + veiculo.idV + " nome " + veiculo.nomeVeiculo + " marca " + veiculo.marcaVeiculo + " Combustivel " + veiculo.combustivel + " " +
-                            " Placa " + veiculo.placaVeiculo + " Motor " + veiculo.motor + " Cambio " + veiculo.tipoCambio + " Ano " + veiculo.ano
-                )
-
-            } else {
-
-
-                Log.w("-AVISO-", "FALTOU NOME DO VEICULO")
-                Toast.makeText(getApplicationContext(), "FALTOU NOME DO VEICULO", Toast.LENGTH_SHORT).show()
-
-                //consultateste()
-            }
+            controleVeiculo.salvarVeiculo(veiculo, this)
 
         }
-
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -102,28 +65,6 @@ class telaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
     }
-
-   /* fun consultateste() {
-
-        CoroutineScope(IO).launch {
-
-            val buscveiculo = bd.controleDAO().buscaVeiculoManutencao()
-            for (vm: VeiculoManutencao in buscveiculo) {
-
-                Log.i(
-                    "DADOS DO BANCO", "id " + vm.veiculo.idV +
-                            " nome " + vm.veiculo.nomeVeiculo + " marca " + vm.veiculo.marcaVeiculo + " Combustivel " + vm.veiculo.combustivel + " " +
-                            " Placa " + vm.veiculo.placaVeiculo + " Motor " + vm.veiculo.motor + " Cambio " + vm.veiculo.tipoCambio + " Ano " + vm.veiculo.ano +
-
-                            "---DADOS BANCO MANUTENCAO---" + " id " + vm.manutencao.idM + " id V_M " + vm.veiculo.nomeVeiculo + " Manutencao " + vm.manutencao.tipoManutencao +
-                            " KM Troca " + vm.manutencao.kmtroca + " Data " + vm.manutencao.data + " Custo " + vm.manutencao.custo
-                )
-
-
-            }
-        }
-
-    }*/
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

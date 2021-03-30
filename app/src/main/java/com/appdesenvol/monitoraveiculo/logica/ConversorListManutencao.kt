@@ -1,7 +1,7 @@
 package com.appdesenvol.monitoraveiculo.logica
 
 import android.arch.persistence.room.TypeConverter
-import com.appdesenvol.monitoraveiculo.objetos.Manutencao
+import com.appdesenvol.monitoraveiculo.model.Manutencao
 import com.google.gson.Gson
 
 class ConversorListManutencao {

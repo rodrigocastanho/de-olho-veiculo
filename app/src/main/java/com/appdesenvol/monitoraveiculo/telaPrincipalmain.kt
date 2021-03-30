@@ -46,22 +46,6 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.tela_principalmain, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.btExcluir -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -72,7 +56,6 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
             R.id.StatusManuteção -> {
                 //Chamar a tela de Status de manutenção
                 startActivity(Intent(this@telaPrincipalmain, telaStatusManutencao::class.java))
-
 
             }
             R.id.RelatorioCusto -> {
