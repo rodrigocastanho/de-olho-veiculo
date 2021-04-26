@@ -51,20 +51,20 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
         when (item.itemId) {
             R.id.CadastroVeiculo -> {
                 //Chamar a tela de cadastro
-                startActivity(Intent(this@telaPrincipalmain, telaCadastro::class.java))
+                startActivity(Intent(this, telaCadastro::class.java))
             }
             R.id.StatusManuteção -> {
                 //Chamar a tela de Status de manutenção
-                startActivity(Intent(this@telaPrincipalmain, telaStatusManutencao::class.java))
-
+                startActivity(Intent(this, telaStatusManutencao::class.java))
             }
             R.id.RelatorioCusto -> {
 
             }
+            R.id.backup_restaura -> {
+                startActivity(Intent(this, TelaBackup::class.java))
+            }
             R.id.SobreApp -> {
-
-                startActivity(Intent(this@telaPrincipalmain, telaSobreApp::class.java))
-
+                startActivity(Intent(this, telaSobreApp::class.java))
 
             }
         }

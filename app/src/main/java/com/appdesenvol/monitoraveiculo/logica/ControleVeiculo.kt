@@ -1,5 +1,6 @@
 package com.appdesenvol.monitoraveiculo.logica
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -10,7 +11,7 @@ import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import com.appdesenvol.monitoraveiculo.telaStatusManutencao
 import kotlinx.android.synthetic.main.content_tela_cadastro.*
-import kotlinx.android.synthetic.main.sobre_veiculo.*
+import kotlinx.android.synthetic.main.sobre_veiculo_dialog.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -116,5 +117,14 @@ class ControleVeiculo {
         }
 
     }
+
+//    @SuppressLint("CommitPrefEdits")
+//    fun controleSalvarVeiculoVersao(veiculoSalvo: Int, context: Activity) {
+//      val sharePref = context.getPreferences(Context.MODE_PRIVATE)?: return
+//        with(sharePref.edit()) {
+//           putInt("VS_GRATIS", veiculoSalvo)
+//            commit()
+//        }
+//    }
 
 }

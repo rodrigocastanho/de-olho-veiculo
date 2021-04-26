@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.appdesenvol.monitoraveiculo">
+        package="com.appdesenvol.monitoraveiculo">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
             android:allowBackup="true"
@@ -9,8 +13,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".telaSobreApp">
+        <activity
+                android:name=".TelaBackup"
+                android:label="Backup/Restaura Dados"
+                android:parentActivityName=".telaPrincipalmain">
         </activity>
+        <activity android:name=".telaSobreApp" />
         <activity
                 android:name=".telaStatusManutencao"
                 android:label="@string/title_activity_tela_status_manutencao"
@@ -18,29 +26,29 @@
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain"/>
+                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain" />
         </activity>
         <activity
                 android:name=".telaCadastro"
                 android:label="@string/title_activity_tela_cadastro"
                 android:parentActivityName=".telaPrincipalmain"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:windowSoftInputMode="adjustPan">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain"/>
+                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain" />
         </activity>
         <activity
                 android:name=".telaPrincipalmain"
                 android:label="@string/title_activity_tela_principalmain"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".telaAbertura"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

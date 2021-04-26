@@ -21,6 +21,10 @@
                 android:icon="@drawable/ic_menu_relatorio"
                 android:title="Relatorio de Custo"/>
         <item
+                android:id="@+id/backup_restaura"
+                android:icon="@drawable/ic_menu_backup_restaurar_24"
+                android:title="Backup/Restaurar dados"/>
+        <item
                 android:id="@+id/SobreApp"
                 android:icon="@drawable/ic_menu_app"
                 android:title="Sobre o Aplicativo"/>

@@ -25,6 +25,9 @@ interface ControleDAO {
     @Query("DELETE FROM Veiculo WHERE id_veiculo = :idVeiculo")
     fun deletarDadosVeiculo(idVeiculo: Long)
 
+    @Delete
+    fun deletarDadosVeiculo(veiculo: Veiculo)
+
 
 /*-------------------------------------Manutencão---------------------------------------*/
 
@@ -39,5 +42,19 @@ interface ControleDAO {
 
     @Delete
     fun deletarDadosManutencao(manutencao: Manutencao)
+
+/*-------------------------------------Backup/Restaura---------------------------------------*/
+    @Transaction
+    suspend fun salvarDadosBKP(veiculo: Veiculo, manutencao: Manutencao) {
+        deletarDadosVeiculo(veiculo)
+        salvarDadosVeiculo(veiculo)
+        salvarDadosManutencao(manutencao)
+
+    }
+
+    @Query("SELECT * FROM Veiculo INNER JOIN Manutencao ON Veiculo.id_veiculo = Manutencao.id_mveiculo")
+    fun buscaDadosBKP(): List<VeiculoManutencao>
+
+
 
 }

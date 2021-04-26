@@ -1,23 +1,22 @@
 package com.appdesenvol.monitoraveiculo.logica
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.arch.persistence.room.TypeConverter
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
-import android.support.v7.app.AlertDialog
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat.getSystemService
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
-import com.appdesenvol.monitoraveiculo.model.Manutencao
-import com.appdesenvol.monitoraveiculo.telaStatusManutencao
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import java.sql.SQLException
-import java.text.DecimalFormat
+import kotlinx.android.synthetic.*
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 
 
@@ -25,62 +24,7 @@ class Util {
 
     companion object STATIC {
 
-        private fun replaceChars(textoEditText: String): String {
-            return textoEditText.replace(".", "").replace("-", "")
-                .replace("(", "").replace(")", "")
-                .replace("/", "").replace(" ", "")
-                .replace("*", "")
-        }
-
-        fun mascEdittext(masc: String, texto: EditText): TextWatcher {
-
-            val textWatcher: TextWatcher = object : TextWatcher {
-
-                var isUpdating: Boolean = false
-                var oldString: String = ""
-
-                override fun afterTextChanged(s: Editable?) {}
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                    val str = replaceChars(s.toString())
-                    var escritamasc = ""
-
-                    if (count == 0)//is deleting
-                        isUpdating = true
-
-                    if (isUpdating) {
-                        oldString = str
-                        isUpdating = false
-                        return
-                    }
-
-                    var i = 0
-                    for (m: Char in masc.toCharArray()) {
-
-                        if (m != '#' && str.length > oldString.length) {
-
-                            escritamasc += m
-                            continue
-                        }
-                        try {
-                            escritamasc += str.get(i)
-
-
-                        } catch (e: Exception) {
-                            break
-                        }
-                        i++
-                    }
-
-                    isUpdating = true
-                    texto.setText(escritamasc)
-                    texto.setSelection(escritamasc.length)
-                }
-            }
-            return textWatcher
-        }
+        var veiculoId: Long = 0
 
         fun mascMonetario(valor: EditText): TextWatcher {
 
@@ -111,11 +55,35 @@ class Util {
             return textWatcherMonetario
         }
 
-        var veiculoId: Long = 0
-
         fun pegarVeiculoId(veiculoID: Long) {
             veiculoId = veiculoID
         }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun converteDataTexto(data: LocalDate?): String? {
+            return data?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun converteTextoData(data: String?): LocalDate? {
+            if(!data.isNullOrEmpty()) {
+                return LocalDate.parse(data, DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+            }else return null
+
+        }
+
+        fun fecharTeclado(context: Activity) {
+            val view = context.currentFocus
+            view?.let{
+                val input = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                input.hideSoftInputFromWindow(it.windowToken, 0)
+
+            }
+
+        }
+
+        fun conversorMonetario(valor: String): String = valor.replace(",",".").trim()
+
 
     }
 

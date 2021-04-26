@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
 import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.Veiculo
-import kotlinx.android.synthetic.main.sobre_veiculo.view.*
+import kotlinx.android.synthetic.main.sobre_veiculo_dialog.view.*
 
 class SobreVeiculoDialog : DialogFragment() {
 
@@ -19,7 +19,7 @@ class SobreVeiculoDialog : DialogFragment() {
 
         return activity?.let {
             val dialogSobreVeiculo = AlertDialog.Builder(it)
-            val view = requireActivity().layoutInflater.inflate(R.layout.sobre_veiculo, null)
+            val view = requireActivity().layoutInflater.inflate(R.layout.sobre_veiculo_dialog, null)
 
             bd = BancoDadoConfig.getInstance(it)
 
@@ -27,9 +27,9 @@ class SobreVeiculoDialog : DialogFragment() {
             view.sb_txt_marca.text = veiculo.marcaVeiculo
             view.sb_txt_placa.text = veiculo.placaVeiculo
             view.sb_txt_motor.text = veiculo.motor
-            view.sb_combustivel.setSelection(ArrayAdapter.createFromResource(it, R.array.combustivel, R.layout.sobre_veiculo).getPosition(veiculo.combustivel))
+            view.sb_combustivel.setSelection(ArrayAdapter.createFromResource(it, R.array.combustivel, R.layout.sobre_veiculo_dialog).getPosition(veiculo.combustivel))
             view.sb_combustivel.isEnabled = false
-            view.sb_cambio.setSelection(ArrayAdapter.createFromResource(it, R.array.cambio, R.layout.sobre_veiculo).getPosition(veiculo.tipoCambio))
+            view.sb_cambio.setSelection(ArrayAdapter.createFromResource(it, R.array.cambio, R.layout.sobre_veiculo_dialog).getPosition(veiculo.tipoCambio))
             view.sb_cambio.isEnabled = false
             view.sb_txt_ano_fabricacao.text = veiculo.ano
 

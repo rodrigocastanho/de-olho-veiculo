@@ -2,6 +2,9 @@ package com.appdesenvol.monitoraveiculo.model
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
+import com.opencsv.bean.CsvBindByName
+import com.opencsv.bean.CsvDate
+import java.time.LocalDate
 
 @Entity(
     tableName = "Manutencao",
@@ -20,14 +23,18 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 class Manutencao(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_manutencao") var idM: Long,
+    @ColumnInfo(name = "id_manutencao")   @CsvBindByName var idM: Long,
+    @ColumnInfo(name = "id_mveiculo")     @CsvBindByName var idVM: Long,
+    @ColumnInfo(name = "tipo_manutencao") @CsvBindByName var tipoManutencao: String,
+    @ColumnInfo(name = "kmtroca")         @CsvBindByName var kmtroca: String,
+    @ColumnInfo(name = "data")            @CsvDate("yyyy-MM-dd") var data: LocalDate?,
+    @ColumnInfo(name = "custo")           @CsvBindByName var custo: String,
+    @ColumnInfo(name = "observacao")      @CsvBindByName var observacao: String) {
 
-    @ColumnInfo(name = "id_mveiculo") var idVM: Long,
-    @ColumnInfo(name = "tipo_manutencao") var tipoManutencao: String,
-    @ColumnInfo(name = "kmtroca") var kmtroca: String,
-    @ColumnInfo(name = "data") var data: String,
-    @ColumnInfo(name = "custo") var custo: String,
-    @ColumnInfo(name = "observacao") var observacao: String)
+    @Ignore
+    constructor(): this(0L,0L,"","", null,"","")
+
+}
 
 
 
