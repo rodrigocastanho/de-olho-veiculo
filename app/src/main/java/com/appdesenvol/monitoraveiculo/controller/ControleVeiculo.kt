@@ -1,17 +1,13 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.controller
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.Veiculo
-import com.appdesenvol.monitoraveiculo.telaStatusManutencao
-import kotlinx.android.synthetic.main.content_tela_cadastro.*
-import kotlinx.android.synthetic.main.sobre_veiculo_dialog.view.*
+import com.appdesenvol.monitoraveiculo.TelaStatusManutencao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -42,7 +38,7 @@ class ControleVeiculo {
 
             }
             Toast.makeText(context, "VEÍCULO CADASTRADO", Toast.LENGTH_SHORT).show()
-            context.startActivity(Intent(context, telaStatusManutencao::class.java))
+            context.startActivity(Intent(context, TelaStatusManutencao::class.java))
 
         } else {
             Toast.makeText(context, "FALTOU NOME DO VEÍCULO", Toast.LENGTH_SHORT).show()
@@ -95,7 +91,7 @@ class ControleVeiculo {
                 context.finish()
                 context.overridePendingTransition(0, 0)
                 context.startActivity(
-                    Intent(context, telaStatusManutencao::class.java).addFlags(
+                    Intent(context, TelaStatusManutencao::class.java).addFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION
                     )
                 )

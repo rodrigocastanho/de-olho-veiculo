@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
 
-class telaAbertura : AppCompatActivity() {
+class TelaAbertura : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +16,7 @@ class telaAbertura : AppCompatActivity() {
         setContentView(R.layout.activity_telaabertura);
 
         Handler().postDelayed({
-            startActivity(Intent(this@telaAbertura, telaPrincipalmain::class.java))
+            startActivity(Intent(this@TelaAbertura, TelaPrincipalmain::class.java))
             finish();
         },6000)
 

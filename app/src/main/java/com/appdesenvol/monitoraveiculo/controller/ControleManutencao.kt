@@ -1,4 +1,4 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.controller
 
 
 import android.app.Activity
@@ -6,14 +6,13 @@ import android.content.Context
 import android.os.Handler
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import com.appdesenvol.monitoraveiculo.R
 import com.appdesenvol.monitoraveiculo.SobreVeiculoDialog
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.Manutencao
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import com.appdesenvol.monitoraveiculo.model.VeiculoManutencao
@@ -136,8 +135,8 @@ class ControleManutencao: Manutencoes {
 
     }
 
-    fun excluirManutencao(manutencao: Manutencao, context: Context, holder: AdapterRecyclerView.ViewHolder,
-                          adapter: AdapterRecyclerView, manutencoes: ArrayList<Manutencao>) {
+    fun excluirManutencao(manutencao: Manutencao, context: Context, holder: StatusManutencaoAdapterRW.ViewHolder,
+                          manutencaoAdapter: StatusManutencaoAdapterRW, manutencoes: ArrayList<Manutencao>) {
 
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
@@ -159,7 +158,7 @@ class ControleManutencao: Manutencoes {
                 Toast.makeText(context, "MANUTENÇÃO EXCLUIDA", Toast.LENGTH_SHORT).show()
 
                 manutencoes.removeAt(holder.adapterPosition)
-                adapter.notifyItemRemoved(holder.adapterPosition)
+                manutencaoAdapter.notifyItemRemoved(holder.adapterPosition)
 
             }
             builder.setNegativeButton("NÃO") { _, _ ->
@@ -176,7 +175,7 @@ class ControleManutencao: Manutencoes {
 
     }
     
-    fun editarTipoManutencao(context: Context, holder: AdapterRecyclerView.ViewHolder) {
+    fun editarTipoManutencao(context: Context, holder: StatusManutencaoAdapterRW.ViewHolder) {
 
         val builder = AlertDialog.Builder(context)
         val view = LayoutInflater.from(context).inflate(R.layout.editar_tipo_manutencao_dialog, null)

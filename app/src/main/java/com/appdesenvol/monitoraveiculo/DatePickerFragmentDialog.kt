@@ -10,8 +10,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.widget.DatePicker
 import android.widget.EditText
-import com.appdesenvol.monitoraveiculo.logica.ConversorData
-import com.appdesenvol.monitoraveiculo.logica.Util
+import com.appdesenvol.monitoraveiculo.configuration.Util
 import java.time.LocalDate
 import java.util.*
 

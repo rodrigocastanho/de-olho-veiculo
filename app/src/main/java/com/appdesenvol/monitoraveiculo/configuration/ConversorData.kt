@@ -1,11 +1,10 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.configuration
 
 import android.arch.persistence.room.TypeConverter
 import android.os.Build
 import android.support.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ConversorData {

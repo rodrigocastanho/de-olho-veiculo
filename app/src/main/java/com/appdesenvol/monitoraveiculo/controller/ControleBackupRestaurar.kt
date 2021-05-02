@@ -1,13 +1,14 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.controller
 
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.content.ContextCompat
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.VeiculoManutencao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,12 +16,18 @@ import android.os.Environment.*
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.util.Log
+import android.view.View
+import android.widget.Toast
+import com.appdesenvol.monitoraveiculo.model.Manutencao
 import com.opencsv.CSVWriter
 import com.opencsv.bean.ColumnPositionMappingStrategy
 import com.opencsv.bean.CsvToBeanBuilder
 import com.opencsv.bean.StatefulBeanToCsvBuilder
+import com.opencsv.exceptions.CsvDataTypeMismatchException
+import kotlinx.android.synthetic.main.activity_tela_backup.*
+import kotlinx.coroutines.Dispatchers.Main
 import java.io.*
-import java.lang.Exception
+import kotlin.Exception
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ControleBackupRestaurar {
@@ -34,13 +41,15 @@ class ControleBackupRestaurar {
     val NOME_DIRETORIO = "MonitoraVeiculoBackup"
 
 
+    @SuppressLint("SetTextI18n")
     fun backupDados(context: Activity) {
-
+        exibirProcessoCarramento(context, true, "")
          CoroutineScope(IO).launch {
               val dadosBackup = async { buscarDadosParaBkP(context) }
-              val fazerBackup = async { criarBackup(context, dadosBackup.await()) }
-              fazerBackup.await()
-
+              criarBackup(context, dadosBackup.await())
+              withContext(Main) {
+                  exibirProcessoCarramento(context, false, "Backup criado com sucesso")
+               }
          }
 
     }
@@ -117,16 +126,31 @@ class ControleBackupRestaurar {
 
     }
 
+    @SuppressLint("SetTextI18n")
     fun arquivoSelecionadoRestaurar(context: Activity, codigoRequisicao: Int, codigoResultado: Int, intent: Intent?) {
         if (codigoRequisicao == ARQUIVO_BKP_CODE && codigoResultado == Activity.RESULT_OK) {
+            var status: Boolean
+            exibirProcessoCarramento(context, true, "")
+
             intent?. data?.also { uri ->
                 CoroutineScope(IO).launch {
                     val dadosBackup = async { prepararArquivoRestaurar(context, uri) }
-                    //inserirDadosBKP(context, dadosBackup.await())
+                    status = inserirDadosBKP(context, dadosBackup.await())
+
+                    if(status) {
+                        withContext(Main) {
+                            exibirProcessoCarramento(context, false, "Backup restaurado com sucesso")
+                        }
+                    }else {
+                        withContext(Main) {
+                            Toast.makeText(context,"ARQUIVO ESTA COM INCOMPATIBILIDADE NOS DADOS", Toast.LENGTH_LONG).show()
+                            exibirProcessoCarramento(context, false, "")
+                        }
+                    }
 
                 }
-                
             }
+
         }
     }
 
@@ -137,34 +161,43 @@ class ControleBackupRestaurar {
         try {
             diretorioLeitura = context.contentResolver.openInputStream(arquivoDiretorioUri)?.bufferedReader()
             val arquivoRestauraBackupMap = mapeamentoBackupCSV()
-
             restauraBackup = CsvToBeanBuilder<VeiculoManutencao>(diretorioLeitura)
                 .withMappingStrategy(arquivoRestauraBackupMap)
                 .withIgnoreLeadingWhiteSpace(true)
                 .withSeparator('\t')
+                .withExceptionHandler { CsvDataTypeMismatchException() }
                 .build()
                 .parse()
 
         }catch (e: Exception) {
             Log.e("ERRO_LEITURA", "ERRO_LEITURA_BACKUP " + e)
-
         }finally {
             diretorioLeitura?.close()
-
         }
         return restauraBackup
 
     }
 
-    private suspend fun inserirDadosBKP(context: Activity, veiculoManutencao: List<VeiculoManutencao>) {
+    private fun inserirDadosBKP(context: Activity, veiculoManutencao: List<VeiculoManutencao>): Boolean {
+        var status: Boolean
+        val manutencoes = ArrayList<Manutencao>()
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
-        if(!veiculoManutencao.isNullOrEmpty()) {
-            veiculoManutencao.forEach { bk ->
-                bd.controleDAO().salvarDadosBKP(bk.veiculo, bk.manutencao)
+        try {
+            if (veiculoManutencao.component1().veiculo.idV != 0L) {
+                status = true
+                veiculoManutencao.forEach { bk ->
+                    bd.controleDAO().salvarDadosVeiculoBKP(bk.veiculo)
+                    manutencoes.add(bk.manutencao)
 
-            }
+                }
+                bd.controleDAO().salvarDadosManutencaoBKP(manutencoes)
+            } else return false
+        }catch (e: Exception) {
+            status = false
         }
+        return status
+
     }
 
     private fun mapeamentoBackupCSV(): ColumnPositionMappingStrategy<VeiculoManutencao> {
@@ -201,8 +234,19 @@ class ControleBackupRestaurar {
               arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), codigoPermissao)
       }
 
-
   }
+
+    private fun exibirProcessoCarramento(context: Activity, processo: Boolean, mensagem: String) {
+        if(processo) {
+            context.txt_bk_rt_completo.visibility = View.GONE
+            context.ld_backup.visibility = View.VISIBLE
+        } else {
+            context.ld_backup.visibility = View.GONE
+            context.txt_bk_rt_completo.visibility = View.VISIBLE
+            context.txt_bk_rt_completo.text = mensagem
+        }
+
+    }
 
 }
 

@@ -1,23 +1,17 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.configuration
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.arch.persistence.room.TypeConverter
 import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.support.v4.content.ContextCompat.getSystemService
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import kotlinx.android.synthetic.*
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.*
 
 
 class Util {
@@ -79,11 +73,9 @@ class Util {
                 input.hideSoftInputFromWindow(it.windowToken, 0)
 
             }
-
         }
 
         fun conversorMonetario(valor: String): String = valor.replace(",",".").trim()
-
 
     }
 

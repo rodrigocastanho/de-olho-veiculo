@@ -16,22 +16,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textColor="@color/cortextoBotao"
             android:textAlignment="center"/>
 
 
     <ProgressBar
-            android:layout_width="231dp"
-            android:layout_height="193dp"
+            android:layout_width="180dp"
+            android:layout_height="145dp"
             android:id="@+id/ld_backup"
             style="@android:style/Widget.Holo.ProgressBar.Large"
             android:progress="30"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_backup"
-            app:layout_constraintBottom_toTopOf="@+id/btn_fazer_backup"/>
+            app:layout_constraintBottom_toTopOf="@+id/btn_fazer_backup"
+            android:visibility="gone"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -51,6 +52,8 @@
              android:id="@+id/btn_fazer_backup"
              android:text="BACKUP"
              android:textSize="20sp"
+             android:layout_marginStart="8dp"
+             android:layout_marginEnd="8dp"
              app:layout_constraintTop_toBottomOf="@+id/txt_backup"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +66,8 @@
             android:id="@+id/btn_restaurar_backup"
             android:text="RESTAURAR BACKUP"
             android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/btn_fazer_backup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

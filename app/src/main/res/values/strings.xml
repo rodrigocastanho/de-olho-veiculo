@@ -16,6 +16,7 @@
         <item>Etanol</item>
         <item>Diesel</item>
         <item>GNV</item>
+        <item>Eletrico</item>
     </string-array>
 
     <string-array name="cambio">

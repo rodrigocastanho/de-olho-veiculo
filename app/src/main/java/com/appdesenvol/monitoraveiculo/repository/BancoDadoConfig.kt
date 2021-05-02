@@ -1,12 +1,12 @@
-package com.appdesenvol.monitoraveiculo.bancodados
+package com.appdesenvol.monitoraveiculo.repository
 
 import android.arch.persistence.room.*
 import android.content.Context
-import com.appdesenvol.monitoraveiculo.logica.ConversorData
+import com.appdesenvol.monitoraveiculo.configuration.ConversorData
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import com.appdesenvol.monitoraveiculo.model.Manutencao
 
-@Database(entities = [Veiculo::class, Manutencao::class], version = 1)
+@Database(entities = [Veiculo::class, Manutencao::class], version = 1, exportSchema = false)
 @TypeConverters(ConversorData::class)
 abstract class BancoDadoConfig : RoomDatabase() {
     abstract fun controleDAO(): ControleDAO

@@ -16,34 +16,34 @@
         <activity
                 android:name=".TelaBackup"
                 android:label="Backup/Restaura Dados"
-                android:parentActivityName=".telaPrincipalmain">
+                android:parentActivityName=".TelaPrincipalmain">
         </activity>
-        <activity android:name=".telaSobreApp" />
+        <activity android:name=".TelaSobreApp" />
         <activity
-                android:name=".telaStatusManutencao"
+                android:name=".TelaStatusManutencao"
                 android:label="@string/title_activity_tela_status_manutencao"
-                android:parentActivityName=".telaPrincipalmain"
+                android:parentActivityName=".TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain" />
+                    android:value="com.appdesenvol.monitoraveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name=".telaCadastro"
+                android:name=".TelaCadastro"
                 android:label="@string/title_activity_tela_cadastro"
-                android:parentActivityName=".telaPrincipalmain"
+                android:parentActivityName=".TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustPan">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.telaPrincipalmain" />
+                    android:value="com.appdesenvol.monitoraveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name=".telaPrincipalmain"
+                android:name=".TelaPrincipalmain"
                 android:label="@string/title_activity_tela_principalmain"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".telaAbertura"
+                android:name=".TelaAbertura"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

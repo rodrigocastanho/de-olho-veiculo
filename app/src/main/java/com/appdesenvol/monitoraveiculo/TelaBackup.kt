@@ -6,7 +6,7 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import com.appdesenvol.monitoraveiculo.logica.ControleBackupRestaurar
+import com.appdesenvol.monitoraveiculo.controller.ControleBackupRestaurar
 import kotlinx.android.synthetic.main.activity_tela_backup.*
 
 @RequiresApi(Build.VERSION_CODES.O)

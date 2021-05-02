@@ -6,13 +6,12 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_tela_principalmain.*
 import kotlinx.android.synthetic.main.app_bar_tela_principalmain.*
 
-class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +24,7 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             //Parte que ira chamar a telaCadastro
             //Toast.makeText(this@telaPrincipalmain, "Teste do Click.", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this@telaPrincipalmain, telaCadastro::class.java))
+            startActivity(Intent(this@TelaPrincipalmain, TelaCadastro::class.java))
 
         }
 
@@ -51,11 +50,11 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
         when (item.itemId) {
             R.id.CadastroVeiculo -> {
                 //Chamar a tela de cadastro
-                startActivity(Intent(this, telaCadastro::class.java))
+                startActivity(Intent(this, TelaCadastro::class.java))
             }
             R.id.StatusManuteção -> {
                 //Chamar a tela de Status de manutenção
-                startActivity(Intent(this, telaStatusManutencao::class.java))
+                startActivity(Intent(this, TelaStatusManutencao::class.java))
             }
             R.id.RelatorioCusto -> {
 
@@ -64,7 +63,7 @@ class telaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(Intent(this, TelaBackup::class.java))
             }
             R.id.SobreApp -> {
-                startActivity(Intent(this, telaSobreApp::class.java))
+                startActivity(Intent(this, TelaSobreApp::class.java))
 
             }
         }

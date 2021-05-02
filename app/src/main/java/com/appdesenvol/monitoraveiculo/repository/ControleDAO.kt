@@ -1,4 +1,4 @@
-package com.appdesenvol.monitoraveiculo.bancodados
+package com.appdesenvol.monitoraveiculo.repository
 
 import android.arch.persistence.room.*
 import com.appdesenvol.monitoraveiculo.model.VeiculoManutencao
@@ -44,13 +44,14 @@ interface ControleDAO {
     fun deletarDadosManutencao(manutencao: Manutencao)
 
 /*-------------------------------------Backup/Restaura---------------------------------------*/
-    @Transaction
-    suspend fun salvarDadosBKP(veiculo: Veiculo, manutencao: Manutencao) {
+   @Transaction
+   fun salvarDadosVeiculoBKP(veiculo: Veiculo) {
         deletarDadosVeiculo(veiculo)
         salvarDadosVeiculo(veiculo)
-        salvarDadosManutencao(manutencao)
-
     }
+
+    @Insert
+    fun salvarDadosManutencaoBKP(manutencoes: List<Manutencao>)
 
     @Query("SELECT * FROM Veiculo INNER JOIN Manutencao ON Veiculo.id_veiculo = Manutencao.id_mveiculo")
     fun buscaDadosBKP(): List<VeiculoManutencao>

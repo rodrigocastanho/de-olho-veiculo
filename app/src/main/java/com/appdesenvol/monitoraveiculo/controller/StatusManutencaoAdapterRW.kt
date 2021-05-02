@@ -1,43 +1,36 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.controller
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethod
-import android.view.inputmethod.InputMethodManager
 import com.appdesenvol.monitoraveiculo.DatePickerFragmentDialog
 import com.appdesenvol.monitoraveiculo.R
-import com.appdesenvol.monitoraveiculo.logica.AdapterRecyclerView.*
-import com.appdesenvol.monitoraveiculo.logica.Util.STATIC.veiculoId
+import com.appdesenvol.monitoraveiculo.configuration.Util
+import com.appdesenvol.monitoraveiculo.controller.StatusManutencaoAdapterRW.*
+import com.appdesenvol.monitoraveiculo.configuration.Util.STATIC.veiculoId
 import com.appdesenvol.monitoraveiculo.model.Manutencao
 import kotlinx.android.synthetic.main.tipo_manutencao.view.*
 import kotlin.collections.ArrayList
 
 
-class AdapterRecyclerView(
+class StatusManutencaoAdapterRW(
     private val manutencoes: ArrayList<Manutencao>,
     private val context: Activity,
     private val supportFragmentManager: FragmentManager
 ) : Adapter<ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-
         val view = LayoutInflater.from(context).inflate(R.layout.tipo_manutencao, parent, false)
-        
 
         return ViewHolder(view)
 

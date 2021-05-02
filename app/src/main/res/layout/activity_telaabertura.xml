@@ -6,7 +6,7 @@
               android:orientation="vertical"
               android:gravity="center"
               android:background="@color/cordeFundo"
-              tools:context=".telaAbertura">
+              tools:context=".TelaAbertura">
 
     <ImageView
             android:src="@drawable/iconmotor"

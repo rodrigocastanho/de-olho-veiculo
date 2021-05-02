@@ -8,14 +8,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
-import com.appdesenvol.monitoraveiculo.logica.ControleVeiculo
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.controller.ControleVeiculo
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import kotlinx.android.synthetic.main.activity_tela_cadastro.*
 import kotlinx.android.synthetic.main.app_bar_tela_cadastro.*
 import kotlinx.android.synthetic.main.content_tela_cadastro.*
 
-class telaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var bd: BancoDadoConfig
     private val controleVeiculo = ControleVeiculo()
@@ -90,14 +90,14 @@ class telaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.Home -> {
                 //Chama tela Principal
-                startActivity(Intent(this, telaPrincipalmain::class.java))
+                startActivity(Intent(this, TelaPrincipalmain::class.java))
             }
             R.id.CadastroVeiculo -> {
 
             }
             R.id.StatusManuteção -> {
                 //Chamar a tela de Status de manutenção
-                startActivity(Intent(this, telaStatusManutencao::class.java))
+                startActivity(Intent(this, TelaStatusManutencao::class.java))
             }
             R.id.RelatorioCusto -> {
 

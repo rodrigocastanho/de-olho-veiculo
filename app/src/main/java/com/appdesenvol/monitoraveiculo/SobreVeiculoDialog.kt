@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import kotlinx.android.synthetic.main.sobre_veiculo_dialog.view.*
 
@@ -44,7 +44,7 @@ class SobreVeiculoDialog : DialogFragment() {
                     view.sb_cambio.selectedItem.toString(),
                     view.sb_txt_ano_fabricacao.text.toString())
 
-                   startActivity(Intent(requireContext(), telaCadastro::class.java)
+                   startActivity(Intent(requireContext(), TelaCadastro::class.java)
                        .putExtra("veiculoEditado", veiculoEditado))
 
             }

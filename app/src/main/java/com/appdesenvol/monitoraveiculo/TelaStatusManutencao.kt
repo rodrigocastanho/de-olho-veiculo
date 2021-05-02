@@ -1,17 +1,13 @@
 package com.appdesenvol.monitoraveiculo
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.Constraints
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -19,28 +15,22 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.appdesenvol.monitoraveiculo.bancodados.BancoDadoConfig
-import com.appdesenvol.monitoraveiculo.logica.AdapterRecyclerView
-import com.appdesenvol.monitoraveiculo.logica.ControleManutencao
-import com.appdesenvol.monitoraveiculo.logica.ControleVeiculo
-import com.appdesenvol.monitoraveiculo.logica.Util
+import com.appdesenvol.monitoraveiculo.repository.BancoDadoConfig
+import com.appdesenvol.monitoraveiculo.controller.StatusManutencaoAdapterRW
+import com.appdesenvol.monitoraveiculo.controller.ControleManutencao
+import com.appdesenvol.monitoraveiculo.controller.ControleVeiculo
+import com.appdesenvol.monitoraveiculo.configuration.Util
 import com.appdesenvol.monitoraveiculo.model.Veiculo
 import kotlinx.android.synthetic.main.activity_tela_principalmain.*
-import kotlinx.android.synthetic.main.content_tela_cadastro.*
 import kotlinx.android.synthetic.main.content_tela_status_manutencao.*
-import kotlinx.android.synthetic.main.sobre_veiculo_dialog.*
-import kotlinx.android.synthetic.main.tipo_manutencao.*
-import kotlinx.android.synthetic.main.tipo_manutencao.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 
-class telaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val controleManutencoes = ControleManutencao()
     private lateinit var bd: BancoDadoConfig
@@ -99,7 +89,7 @@ class telaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewManutencao.layoutManager = layoutManager
         recyclerViewManutencao.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        recyclerViewManutencao.adapter = AdapterRecyclerView(controleManutencoes.arrayManutencoes,this, supportFragmentManager)
+        recyclerViewManutencao.adapter = StatusManutencaoAdapterRW(controleManutencoes.arrayManutencoes,this, supportFragmentManager)
 
 
         bt_ft_add_manutencao.setOnClickListener {
@@ -156,11 +146,11 @@ class telaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
         when (item.itemId) {
             R.id.Home -> {
                 //Chamar a tela de principal
-                startActivity(Intent(this, telaPrincipalmain::class.java))
+                startActivity(Intent(this, TelaPrincipalmain::class.java))
             }
             R.id.CadastroVeiculo -> {
                 //Chamar a tela de cadastro
-                startActivity(Intent(this, telaCadastro::class.java))
+                startActivity(Intent(this, TelaCadastro::class.java))
             }
             R.id.StatusManuteção -> {
 
@@ -172,7 +162,7 @@ class telaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
                 startActivity(Intent(this, TelaBackup::class.java))
             }
             R.id.SobreApp -> {
-                startActivity(Intent(this, telaSobreApp::class.java))
+                startActivity(Intent(this, TelaSobreApp::class.java))
 
 
             }

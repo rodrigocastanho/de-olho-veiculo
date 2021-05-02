@@ -1,4 +1,4 @@
-package com.appdesenvol.monitoraveiculo.logica
+package com.appdesenvol.monitoraveiculo.controller
 
 import com.appdesenvol.monitoraveiculo.model.Manutencao
 

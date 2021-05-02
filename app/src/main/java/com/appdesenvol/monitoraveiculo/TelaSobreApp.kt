@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_tela_sobre_app.*
 import android.os.Bundle
 
-class telaSobreApp : AppCompatActivity() {
+class TelaSobreApp : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
