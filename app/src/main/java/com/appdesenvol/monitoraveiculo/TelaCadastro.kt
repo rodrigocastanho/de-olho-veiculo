@@ -92,15 +92,12 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //Chama tela Principal
                 startActivity(Intent(this, TelaPrincipalmain::class.java))
             }
-            R.id.CadastroVeiculo -> {
-
-            }
             R.id.StatusManuteção -> {
                 //Chamar a tela de Status de manutenção
                 startActivity(Intent(this, TelaStatusManutencao::class.java))
             }
             R.id.RelatorioCusto -> {
-
+                startActivity(Intent(this, TelaRelatorioCusto::class.java))
             }
             R.id.backup_restaura -> {
                 startActivity(Intent(this, TelaBackup::class.java))

@@ -57,7 +57,7 @@ class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(Intent(this, TelaStatusManutencao::class.java))
             }
             R.id.RelatorioCusto -> {
-
+                startActivity(Intent(this, TelaRelatorioCusto::class.java))
             }
             R.id.backup_restaura -> {
                 startActivity(Intent(this, TelaBackup::class.java))

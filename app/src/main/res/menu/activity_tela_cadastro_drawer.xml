@@ -19,7 +19,7 @@
         <item
                 android:id="@+id/RelatorioCusto"
                 android:icon="@drawable/ic_menu_relatorio"
-                android:title="Relatorio de Custo"/>
+                android:title="Relatório de Custo"/>
         <item
                 android:id="@+id/backup_restaura"
                 android:icon="@drawable/ic_menu_backup_restaurar_24"

@@ -18,9 +18,8 @@ import com.appdesenvol.monitoraveiculo.model.Veiculo
 import com.appdesenvol.monitoraveiculo.model.VeiculoManutencao
 import kotlinx.android.synthetic.main.content_tela_status_manutencao.*
 import kotlinx.android.synthetic.main.editar_tipo_manutencao_dialog.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import java.sql.SQLException
 import kotlin.collections.ArrayList
 
@@ -65,16 +64,16 @@ class ControleManutencao: Manutencoes {
                         }
 
                     }
+                    withContext(Main) {
+                        context.recyclerViewManutencao.adapter?.notifyDataSetChanged()
+                    }
                 } catch (e: Exception) {
                     Log.e("ERRO_VEICULO_M", "ERRO_VEICULO_MANUTENÇÂO" + e)
 
                 }
 
             }
-            Handler().postDelayed({
-                context.recyclerViewManutencao.adapter?.notifyDataSetChanged()
-            }, 285)
-            
+
             context.bt_infoVeiculo.isEnabled = true
             context.bt_infoVeiculo.setOnClickListener {
                 val sobreVeiculoDialog = SobreVeiculoDialog()

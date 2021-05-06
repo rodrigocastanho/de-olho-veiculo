@@ -152,19 +152,14 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
                 //Chamar a tela de cadastro
                 startActivity(Intent(this, TelaCadastro::class.java))
             }
-            R.id.StatusManuteção -> {
-
-            }
             R.id.RelatorioCusto -> {
-
+                startActivity(Intent(this, TelaRelatorioCusto::class.java))
             }
             R.id.backup_restaura -> {
                 startActivity(Intent(this, TelaBackup::class.java))
             }
             R.id.SobreApp -> {
                 startActivity(Intent(this, TelaSobreApp::class.java))
-
-
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
