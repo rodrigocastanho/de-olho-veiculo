@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.appdesenvol.monitoraveiculo">
+        package="br.com.devnattiva.deolhoveiculo">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -12,39 +12,39 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".TelaRelatorioCusto"
+        <activity android:name="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto"
                   android:label="Relatório de Custo"
-                  android:parentActivityName=".TelaPrincipalmain" />
+                  android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         <activity
-                android:name=".TelaBackup"
+                android:name="br.com.devnattiva.deolhoveiculo.TelaBackup"
                 android:label="Backup/Restaura Dados"
-                android:parentActivityName=".TelaPrincipalmain" />
-        <activity android:name=".TelaSobreApp" />
+                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
+        <activity android:name="br.com.devnattiva.deolhoveiculo.TelaSobreApp" />
         <activity
-                android:name=".TelaStatusManutencao"
+                android:name="br.com.devnattiva.deolhoveiculo.TelaStatusManutencao"
                 android:label="@string/title_activity_tela_status_manutencao"
-                android:parentActivityName=".TelaPrincipalmain"
+                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.TelaPrincipalmain" />
+                    android:value="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name=".TelaCadastro"
+                android:name="br.com.devnattiva.deolhoveiculo.TelaCadastro"
                 android:label="@string/title_activity_tela_cadastro"
-                android:parentActivityName=".TelaPrincipalmain"
+                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustPan">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.appdesenvol.monitoraveiculo.TelaPrincipalmain" />
+                    android:value="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name=".TelaPrincipalmain"
+                android:name="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
                 android:label="@string/title_activity_tela_principalmain"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".TelaAbertura"
+                android:name="br.com.devnattiva.deolhoveiculo.TelaAbertura"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

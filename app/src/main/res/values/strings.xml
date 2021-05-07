@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">MonitoraVeiculo</string>
-    <string name="title_activity_tela_principalmain">MonitoraVeiculo</string>
+    <string name="app_name">DeOlhoVeiculo</string>
+    <string name="title_activity_tela_principalmain">DeOlhoVeiculo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">MonitoraVeiculo</string>
+    <string name="nav_header_title">DeOlhoVeiculo</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Excluir Veiculo</string>
     <string name="title_activity_tela_cadastro">Cadastrar Veiculo</string>

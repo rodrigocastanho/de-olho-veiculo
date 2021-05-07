@@ -6,7 +6,7 @@
               android:orientation="vertical"
               android:gravity="center"
               android:background="@color/cordeFundo"
-              tools:context=".TelaAbertura">
+              tools:context="br.com.devnattiva.deolhoveiculo.TelaAbertura">
 
     <ImageView
             android:src="@drawable/iconmotor"
@@ -15,7 +15,7 @@
             android:id="@+id/logoapp"/>
 
     <TextView
-            android:text="MonitoraVeiculo"
+            android:text="DeOlhoVeiculo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
