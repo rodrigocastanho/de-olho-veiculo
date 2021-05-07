@@ -1,11 +1,12 @@
-# monitora-veiculo
-App utilizado para facilitar  o monitoramento das manutenções do veiculo (Em Desenvolvimento).
+# DeOlhoVeiculo
+App utilizado para facilitar o controle das manutenções de seu veículo (Em Desenvolvimento).
 
 Tecnologias utilizadas no App.
 
 .linguagem Kotlin
 
--Persistencia de dados 
+-Persistencia de dados
+   biblioteca Room para SqLite local do dispositvo.
 
-Biblioteca Room para SqLite local do dispositvo.
+-biblioteca opencsv
 
