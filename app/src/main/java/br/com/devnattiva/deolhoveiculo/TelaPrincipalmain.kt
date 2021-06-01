@@ -2,46 +2,49 @@ package br.com.devnattiva.deolhoveiculo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.ImageView
-import kotlinx.android.synthetic.main.activity_tela_principalmain.*
-import kotlinx.android.synthetic.main.app_bar_tela_principalmain.*
+import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaPrincipalmainBinding
+
 
 class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var viewPrincipalBind: ActivityTelaPrincipalmainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela_principalmain)
-        setSupportActionBar(toolbar)
+        viewPrincipalBind = ActivityTelaPrincipalmainBinding.inflate(layoutInflater)
+        val toolbarBind = viewPrincipalBind.appBarTelaPrincipal.toolbar
+        val viewConteudoBind = viewPrincipalBind.appBarTelaPrincipal.contentTelaPrincipal
 
-        val imgcarro = findViewById(R.id.ImgCarro) as ImageView
+        setContentView(viewPrincipalBind.root)
+        setSupportActionBar(toolbarBind)
 
-        imgcarro.setOnClickListener{
-
+        viewConteudoBind.ImgCarro.setOnClickListener {
             //Parte que ira chamar a telaCadastro
             //Toast.makeText(this@telaPrincipalmain, "Teste do Click.", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this@TelaPrincipalmain, TelaCadastro::class.java))
+            startActivity(Intent(this, TelaCadastro::class.java))
 
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
+            this, viewPrincipalBind.drawerLayout, toolbarBind,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        viewPrincipalBind.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+       viewPrincipalBind.navView.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (viewPrincipalBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            viewPrincipalBind.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
@@ -70,7 +73,9 @@ class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        viewPrincipalBind.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
 }
+

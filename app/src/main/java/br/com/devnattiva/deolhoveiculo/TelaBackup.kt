@@ -1,37 +1,42 @@
 package br.com.devnattiva.deolhoveiculo
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import br.com.devnattiva.deolhoveiculo.controller.ControleBackupRestaurar
-import kotlinx.android.synthetic.main.activity_tela_backup.*
+import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaBackupBinding
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TelaBackup : AppCompatActivity() {
 
+    private lateinit var viewActivityBackup: ActivityTelaBackupBinding
+
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela_backup)
+        viewActivityBackup = ActivityTelaBackupBinding.inflate(layoutInflater)
+        setContentView(viewActivityBackup.root)
 
         supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
 
-       btn_fazer_backup.setOnClickListener {
-           ControleBackupRestaurar().backupDados(this)
-       }
+        val arquivo = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            ControleBackupRestaurar().arquivoSelecionadoRestaurar(this, result.resultCode, result.data, viewActivityBackup)
+        }
 
-       btn_restaurar_backup.setOnClickListener {
-           ControleBackupRestaurar().restaurarBackupDados(this)
-       }
+        viewActivityBackup.btnFazerBackup.setOnClickListener {
+            ControleBackupRestaurar().backupDados(this, viewActivityBackup)
+        }
+
+        viewActivityBackup.btnRestaurarBackup.setOnClickListener {
+             ControleBackupRestaurar().restaurarBackupDados(this, arquivo)
+        }
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-           ControleBackupRestaurar().arquivoSelecionadoRestaurar(this, requestCode, resultCode, resultData)
-
-    }
 
 }
+
+

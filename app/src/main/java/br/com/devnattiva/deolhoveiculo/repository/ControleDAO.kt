@@ -1,9 +1,10 @@
 package br.com.devnattiva.deolhoveiculo.repository
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
+import java.time.LocalDate
 
 @Dao
 interface ControleDAO {
@@ -56,6 +57,10 @@ interface ControleDAO {
     @Query("SELECT * FROM Veiculo INNER JOIN Manutencao ON Veiculo.id_veiculo = Manutencao.id_mveiculo")
     fun buscaDadosBKP(): List<VeiculoManutencao>
 
+/*-------------------------------------Relatorio Custo---------------------------------------*/
+
+    @Query("SELECT * FROM Manutencao WHERE Manutencao.data BETWEEN :dataInicial AND :dataFinal AND Manutencao.id_mveiculo = :idVeiculo")
+    fun buscarCustoData(idVeiculo: Long, dataInicial: LocalDate?, dataFinal: LocalDate?): List<Manutencao>
 
 
 }

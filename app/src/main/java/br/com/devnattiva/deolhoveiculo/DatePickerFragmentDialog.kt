@@ -5,18 +5,18 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
 import android.widget.DatePicker
 import android.widget.EditText
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import java.time.LocalDate
 import java.util.*
 
-class DatePickerFragmentDialog: DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePickerDialog.OnDateSetListener {
 
-    var campoData: EditText?= null
+    private var campoData: EditText?= null
+    private val MESSANGEM_INTERVALO_DATA = "Data inicial não pode ser maior que a data final."
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -38,6 +38,20 @@ class DatePickerFragmentDialog: DialogFragment(), DatePickerDialog.OnDateSetList
     fun exibirDataPicker(supportFragmentManager: FragmentManager, editText: EditText) {
         campoData = editText
         this.show(supportFragmentManager,"dialogDatePicker")
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Throws(Exception::class)
+    fun verificarIntervaloData(dataInicial: EditText, dataFinal: EditText) {
+        val dtInicial = Util.converteTextoData(dataInicial.text.toString())
+        val dtFinal = Util.converteTextoData(dataFinal.text.toString())
+
+        if(dtInicial != null && dtFinal != null) {
+            if (dtInicial.isAfter(dtFinal)) {
+                throw Exception(MESSANGEM_INTERVALO_DATA)
+            }
+        }
 
     }
 

@@ -2,75 +2,81 @@ package br.com.devnattiva.deolhoveiculo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
+import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaCadastroBinding
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
-import kotlinx.android.synthetic.main.activity_tela_cadastro.*
-import kotlinx.android.synthetic.main.app_bar_tela_cadastro.*
-import kotlinx.android.synthetic.main.content_tela_cadastro.*
+
 
 class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var bd: BancoDadoConfig
+    private lateinit var viewCadastroBind: ActivityTelaCadastroBinding
+
+    private lateinit var bd: BancoDadoConfig
     private val controleVeiculo = ControleVeiculo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela_cadastro)
-        setSupportActionBar(toolbar)
+
+        viewCadastroBind = ActivityTelaCadastroBinding.inflate(layoutInflater)
+
+        setContentView(viewCadastroBind.root)
+        setSupportActionBar(viewCadastroBind.appBarCadastro.toolbar)
 
         bd = BancoDadoConfig.getInstance(applicationContext)
 
         val veiculoEditado = controleVeiculo.veiculoValorEditado(this)
 
-        nomeveiculo.setText(veiculoEditado?.nomeVeiculo)
-        marcaveiculo.setText(veiculoEditado?.marcaVeiculo)
-        placaveiculo.setText(veiculoEditado?.placaVeiculo)
-        motorveiculo.setText(veiculoEditado?.motor)
-        combescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.combustivel,
+        viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.setText(veiculoEditado?.nomeVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.setText(veiculoEditado?.marcaVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.setText(veiculoEditado?.placaVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.setText(veiculoEditado?.motor)
+        viewCadastroBind.appBarCadastro.contentCadastro.combescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.combustivel,
             R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.combustivel))
-        cambioescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.cambio,
+        viewCadastroBind.appBarCadastro.contentCadastro.cambioescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.cambio,
             R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.tipoCambio))
-        fabricaoveiculo.setText(veiculoEditado?.ano)
+        viewCadastroBind.appBarCadastro.contentCadastro.fabricaoveiculo.setText(veiculoEditado?.ano)
 
 
-        btCadastro.setOnClickListener {
+        viewCadastroBind
+            .appBarCadastro
+            .contentCadastro.btCadastro.setOnClickListener {
 
 
-            val veiculo = Veiculo(
-                controleVeiculo.statusVeiculoId(veiculoEditado),
-                nomeveiculo.text.toString(),
-                marcaveiculo.text.toString(),
-                placaveiculo.text.toString(),
-                motorveiculo.text.toString(),
-                combescolha.selectedItem.toString(),
-                cambioescolha.selectedItem.toString(),
-                fabricaoveiculo.text.toString())
+                val veiculo = Veiculo(
+                    controleVeiculo.statusVeiculoId(veiculoEditado),
+                    viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.combescolha.selectedItem.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.cambioescolha.selectedItem.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.fabricaoveiculo.text.toString())
 
-            controleVeiculo.salvarVeiculo(veiculo, this)
+                controleVeiculo.salvarVeiculo(veiculo, this)
 
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
+            this, viewCadastroBind.drawerLayout, viewCadastroBind.appBarCadastro.toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        viewCadastroBind.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        viewCadastroBind.navView.setNavigationItemSelectedListener(this)
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (viewCadastroBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            viewCadastroBind.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
@@ -109,7 +115,7 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        viewCadastroBind.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 }

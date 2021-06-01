@@ -3,11 +3,12 @@ package br.com.devnattiva.deolhoveiculo.configuration
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -20,33 +21,73 @@ class Util {
 
         var veiculoId: Long = 0
 
-        fun mascMonetario(valor: EditText): TextWatcher {
+        fun mascMonetario(valor: Any): TextWatcher {
 
-            val textWatcherMonetario: TextWatcher = object : TextWatcher {
+            lateinit var textWatcherMonetario: TextWatcher
+            var valorAtual: String?
 
-                var valorAtual = ""
+            when(valor) {
+                   is EditText -> {
+                     textWatcherMonetario = object : TextWatcher {
 
-                override fun afterTextChanged(s: Editable?) {}
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                       override fun afterTextChanged(s: Editable?) {}
+                       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                    if (s.toString().isNotEmpty()) {
+                           if (s.toString().isNotEmpty()) {
 
-                        valor.removeTextChangedListener(this)
-                        val str = s.toString().replace(("[R$,.]").toRegex(), "").trim()
-                        val parsed = java.lang.Double.valueOf(str)
-                        val formatted = NumberFormat.getCurrencyInstance().format((parsed / 100))
-                        valorAtual = formatted.replace(("[R$]").toRegex(), "")
+                               valor.removeTextChangedListener(this)
+                               val str = s.toString().replace(("[R$,.]").toRegex(), "").trim()
+                               val parsed = java.lang.Double.valueOf(str)
+                               val formatted =  NumberFormat.getCurrencyInstance().format((parsed / 100))
+                               valorAtual = formatted.replace(("[R$]").toRegex(), "")
 
-                        valor.setText(valorAtual)
-                        valor.setSelection(valorAtual.length)
+                               valor.setText(valorAtual)
+                               valor.setSelection(valorAtual!!.length)
 
-                        valor.addTextChangedListener(this)
+                               valor.addTextChangedListener(this)
+                           }
+                       }
+                   }
+                 }
+                 is TextView -> {
+                    textWatcherMonetario = object : TextWatcher {
+
+                        override fun afterTextChanged(s: Editable?) {}
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                            if (s.toString().isNotEmpty()) {
+
+                                valor.removeTextChangedListener(this)
+                                val str = s.toString().replace(("[R$]").toRegex(), "")
+                                                      .replace(("[,]").toRegex(), ".").trim()
+                                val parsed = java.lang.Double.valueOf(str)
+                                val formatted = NumberFormat.getCurrencyInstance().format((parsed))
+                                valorAtual = formatted
+
+                                valor.text = valorAtual
+
+                                valor.addTextChangedListener(this)
+                            }
+                        }
+
                     }
-                }
+                 }
             }
             return textWatcherMonetario
+        }
+
+        fun mascMonetarioTotal(valor: String): String? {
+            if(valor.isNotEmpty()) {
+                val parsed = valor.toDouble()
+                return NumberFormat.getCurrencyInstance().format((parsed))
+            }else {
+                return ""
+            }
+
         }
 
         fun pegarVeiculoId(veiculoID: Long) {

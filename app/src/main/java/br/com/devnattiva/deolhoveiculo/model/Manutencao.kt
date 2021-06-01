@@ -1,16 +1,14 @@
 package br.com.devnattiva.deolhoveiculo.model
 
-import android.arch.persistence.room.*
-import android.arch.persistence.room.ForeignKey.CASCADE
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 import com.opencsv.bean.CsvBindByName
 import com.opencsv.bean.CsvDate
 import java.time.LocalDate
 
 @Entity(
     tableName = "Manutencao",
-    indices = arrayOf(
-        Index(value = ["id_mveiculo", "tipo_manutencao", "kmtroca", "data", "custo"])
-    ),
+    indices = [Index(value = ["id_mveiculo", "tipo_manutencao", "kmtroca", "data", "custo"])],
     foreignKeys = [
         ForeignKey(
             entity = Veiculo::class,

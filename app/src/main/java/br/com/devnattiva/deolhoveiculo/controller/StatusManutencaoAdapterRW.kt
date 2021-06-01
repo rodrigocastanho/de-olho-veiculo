@@ -3,22 +3,21 @@ package br.com.devnattiva.deolhoveiculo.controller
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.Adapter
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.devnattiva.deolhoveiculo.DatePickerFragmentDialog
-import br.com.devnattiva.deolhoveiculo.R
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.*
 import br.com.devnattiva.deolhoveiculo.configuration.Util.STATIC.veiculoId
+import br.com.devnattiva.deolhoveiculo.databinding.TipoManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
-import kotlinx.android.synthetic.main.tipo_manutencao.view.*
 import kotlin.collections.ArrayList
 
 
@@ -30,7 +29,8 @@ class StatusManutencaoAdapterRW(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.tipo_manutencao, parent, false)
+        val view = TipoManutencaoBinding.inflate(LayoutInflater.from(context), parent, false)
+        //val view = LayoutInflater.from(context).inflate(R.layout.tipo_manutencao, parent, false)
 
         return ViewHolder(view)
 
@@ -53,7 +53,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(km: Editable?) {}
                 override fun beforeTextChanged(km: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(km: CharSequence?, start: Int, before: Int, count: Int) {
-                        manutencoes[it.adapterPosition].kmtroca = km.toString()
+                        manutencoes[it.bindingAdapterPosition].kmtroca = km.toString()
                 }
             })
 
@@ -61,7 +61,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(data: Editable?) {}
                 override fun beforeTextChanged(data: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(data: CharSequence?, start: Int, before: Int, count: Int) {
-                     manutencoes[it.adapterPosition].data  = Util.converteTextoData(data.toString())
+                     manutencoes[it.bindingAdapterPosition].data  = Util.converteTextoData(data.toString())
                 }
             })
 
@@ -69,7 +69,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(custo: Editable?) {}
                 override fun beforeTextChanged(custo: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(custo: CharSequence?, start: Int, before: Int, count: Int) {
-                       manutencoes[it.adapterPosition].custo = Util.conversorMonetario(custo.toString())
+                       manutencoes[it.bindingAdapterPosition].custo = Util.conversorMonetario(custo.toString())
                 }
             })
 
@@ -77,7 +77,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(custo: Editable?) {}
                 override fun beforeTextChanged(custo: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(observacao: CharSequence?, start: Int, before: Int, count: Int) {
-                        manutencoes[it.adapterPosition].observacao = observacao.toString()
+                        manutencoes[it.bindingAdapterPosition].observacao = observacao.toString()
 
 
                 }
@@ -112,23 +112,23 @@ class StatusManutencaoAdapterRW(
     private fun manutencaoSelecionada(position: Int, holder: ViewHolder): Manutencao =
         Manutencao(manutencoes[position].idM,
             veiculoId,
-            holder.descricaoManutencao?.text.toString(), //manutencoes[position].tipoManutencao
+            holder.descricaoManutencao.text.toString(), //manutencoes[position].tipoManutencao
             manutencoes[position].kmtroca,
             manutencoes[position].data,
             manutencoes[position].custo,
             manutencoes[position].observacao)
 
 
-  inner class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview), View.OnClickListener {
+  inner class ViewHolder(itemview: TipoManutencaoBinding) : RecyclerView.ViewHolder(itemview.root), View.OnClickListener {
 
         val descricaoManutencao = itemview.tipoManutencao
         val kmtroca = itemview.kmTroca
         val data = itemview.dataTroca
         val custo = itemview.custo
-        val observacao = itemview.m_observacao
+        val observacao = itemview.mObservacao
         val btSalvar = itemview.btsalvar2
-        val btExcluir = itemview.btexcluir_manutencao
-        val btEditarManutencao = itemview.bt_editar_tp_manutencoa
+        val btExcluir = itemview.btexcluirManutencao
+        val btEditarManutencao = itemview.btEditarTpManutencoa
 
 
       init {
@@ -143,7 +143,6 @@ class StatusManutencaoAdapterRW(
 
       override fun onClick(v: View?) {
           Util.fecharTeclado(context)
-
       }
 
   }

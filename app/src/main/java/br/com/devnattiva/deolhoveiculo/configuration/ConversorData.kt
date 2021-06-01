@@ -1,8 +1,8 @@
 package br.com.devnattiva.deolhoveiculo.configuration
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

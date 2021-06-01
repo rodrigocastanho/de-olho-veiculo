@@ -3,15 +3,14 @@ package br.com.devnattiva.deolhoveiculo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
-import android.support.v4.widget.DrawerLayout
-import android.support.design.widget.NavigationView
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.View
@@ -22,9 +21,9 @@ import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW
 import br.com.devnattiva.deolhoveiculo.controller.ControleManutencao
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.configuration.Util
+import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaStatusManutencaoBinding
+import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaStatusManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
-import kotlinx.android.synthetic.main.activity_tela_principalmain.*
-import kotlinx.android.synthetic.main.content_tela_status_manutencao.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -32,20 +31,23 @@ import kotlinx.coroutines.launch
 
 class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var viewActivity: ActivityTelaStatusManutencaoBinding
+
     private val controleManutencoes = ControleManutencao()
     private lateinit var bd: BancoDadoConfig
     private var veiculoId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela_status_manutencao)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        viewActivity = ActivityTelaStatusManutencaoBinding.inflate(layoutInflater)
+
+        setContentView(viewActivity.root)
+        setSupportActionBar(viewActivity.appBarManutencao.toolbar)
 
         val contextActivy = this
         bd = BancoDadoConfig.getInstance(applicationContext)
 
-        val buscarVeiculo = buscaVeiculo
+        val buscarVeiculo = viewActivity.appBarManutencao.contentManutencao.buscaVeiculo
         val listId = mutableListOf<Long>(0)
         val listVeiculo = mutableListOf<String>("\t\t\t\t\t\t Buscar Veiculo")
 
@@ -62,7 +64,7 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 Util.pegarVeiculoId(veiculoId)
 
-                controleManutencoes.fluxoManutencao(veiculoId, contextActivy, supportFragmentManager)
+                controleManutencoes.fluxoManutencao(veiculoId, contextActivy, supportFragmentManager, viewActivity.appBarManutencao.contentManutencao)
 
                 Log.i("MEU ID", " ID " + veiculoId)
 
@@ -83,36 +85,37 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
             } catch (e: Exception) {
                 Log.e("ERRO_BUSCA_VM", " ERRO_BUSCA_VEICULO_MANUTENÇÂO " + e)
 
+            } finally {
+                bd.close()
             }
         }
 
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerViewManutencao.layoutManager = layoutManager
-        recyclerViewManutencao.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        recyclerViewManutencao.adapter = StatusManutencaoAdapterRW(controleManutencoes.arrayManutencoes,this, supportFragmentManager)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.layoutManager = layoutManager
+        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.adapter = StatusManutencaoAdapterRW(controleManutencoes.arrayManutencoes,this, supportFragmentManager)
 
 
-        bt_ft_add_manutencao.setOnClickListener {
+        viewActivity.appBarManutencao.contentManutencao.btFtAddManutencao.setOnClickListener {
             controleManutencoes.arrayManutencoes.add(controleManutencoes.addManutencao())
-            recyclerViewManutencao.adapter?.notifyItemInserted(controleManutencoes.arrayManutencoes.size)
+            viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.adapter?.notifyItemInserted(controleManutencoes.arrayManutencoes.size)
             layoutManager.scrollToPosition(controleManutencoes.arrayManutencoes.size-1)
 
         }
 
-        statusManutencao.setOnClickListener{
+        viewActivity.appBarManutencao.contentManutencao.statusManutencao.setOnClickListener{
             Util.fecharTeclado(this)
         }
 
-
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
+            this, this.viewActivity.drawerLayout, viewActivity.appBarManutencao.toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        this.viewActivity.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        this.viewActivity.navView.setNavigationItemSelectedListener(this)
     }
 
     override fun onBackPressed() {
@@ -164,8 +167,8 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
                 startActivity(Intent(this, TelaSobreApp::class.java))
             }
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        drawerLayout.closeDrawer(GravityCompat.START)
+
+        viewActivity.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 }

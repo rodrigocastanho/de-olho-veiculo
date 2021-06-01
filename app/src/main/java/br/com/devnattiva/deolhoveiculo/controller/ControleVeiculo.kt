@@ -2,12 +2,13 @@ package br.com.devnattiva.deolhoveiculo.controller
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import br.com.devnattiva.deolhoveiculo.TelaStatusManutencao
+import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaCadastroBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -34,6 +35,8 @@ class ControleVeiculo {
                     }
                 } catch (e: Exception) {
                     Log.e("ERRO_VEICULO", " SALVAR_VEICULO: " + e)
+                } finally {
+                    bd.close()
                 }
 
             }
@@ -76,7 +79,7 @@ class ControleVeiculo {
             builder.setMessage("Deseja excluir o veículo e suas manutenções gravadas?")
             builder.setPositiveButton("SIM") { _, _ ->
 
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(IO).launch {
 
                     try {
 
@@ -85,22 +88,20 @@ class ControleVeiculo {
                     } catch (e: SQLException) {
                         Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: " + e)
 
+                    } finally {
+                        bd.close()
                     }
                 }
 
                 context.finish()
                 context.overridePendingTransition(0, 0)
-                context.startActivity(
-                    Intent(context, TelaStatusManutencao::class.java).addFlags(
-                        Intent.FLAG_ACTIVITY_NO_ANIMATION
-                    )
-                )
-                Toast.makeText(context.getApplicationContext(), "VEÍCULO EXCLUIDO", Toast.LENGTH_SHORT).show()
+                context.startActivity(Intent(context, TelaStatusManutencao::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+                Toast.makeText(context.applicationContext, "VEÍCULO EXCLUIDO", Toast.LENGTH_SHORT).show()
 
             }
 
             builder.setNegativeButton("NÃO") { _, _ ->
-                Toast.makeText(context.getApplicationContext(), "VEÍCULO NÃO SERÁ EXCLUIDO", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context.applicationContext, "VEÍCULO NÃO SERÁ EXCLUIDO", Toast.LENGTH_SHORT).show()
 
             }
 
@@ -109,7 +110,7 @@ class ControleVeiculo {
             dialog.show()
 
         } else {
-            Toast.makeText(context.getApplicationContext(), "SELECIONAR VEÍCULO", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context.applicationContext, "SELECIONAR VEÍCULO", Toast.LENGTH_SHORT).show()
         }
 
     }

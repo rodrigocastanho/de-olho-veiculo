@@ -14,6 +14,7 @@
             android:theme="@style/AppTheme">
         <activity android:name="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto"
                   android:label="Relatório de Custo"
+                  android:configChanges="orientation"
                   android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         <activity
                 android:name="br.com.devnattiva.deolhoveiculo.TelaBackup"
@@ -23,6 +24,7 @@
         <activity
                 android:name="br.com.devnattiva.deolhoveiculo.TelaStatusManutencao"
                 android:label="@string/title_activity_tela_status_manutencao"
+                android:configChanges="orientation"
                 android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data

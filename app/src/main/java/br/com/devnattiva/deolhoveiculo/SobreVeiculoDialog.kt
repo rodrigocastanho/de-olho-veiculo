@@ -3,12 +3,13 @@ package br.com.devnattiva.deolhoveiculo
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AlertDialog
 import android.widget.ArrayAdapter
+import br.com.devnattiva.deolhoveiculo.databinding.SobreVeiculoDialogBinding
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
-import kotlinx.android.synthetic.main.sobre_veiculo_dialog.view.*
 
 class SobreVeiculoDialog : DialogFragment() {
 
@@ -19,43 +20,43 @@ class SobreVeiculoDialog : DialogFragment() {
 
         return activity?.let {
             val dialogSobreVeiculo = AlertDialog.Builder(it)
-            val view = requireActivity().layoutInflater.inflate(R.layout.sobre_veiculo_dialog, null)
+            val viewBinding = SobreVeiculoDialogBinding.inflate(LayoutInflater.from(context))
 
             bd = BancoDadoConfig.getInstance(it)
 
-            view.sb_txt_nome_veiculo.text = veiculo.nomeVeiculo
-            view.sb_txt_marca.text = veiculo.marcaVeiculo
-            view.sb_txt_placa.text = veiculo.placaVeiculo
-            view.sb_txt_motor.text = veiculo.motor
-            view.sb_combustivel.setSelection(ArrayAdapter.createFromResource(it,
+            viewBinding.sbTxtNomeVeiculo.text = veiculo.nomeVeiculo
+            viewBinding.sbTxtMarca.text = veiculo.marcaVeiculo
+            viewBinding.sbTxtPlaca.text = veiculo.placaVeiculo
+            viewBinding.sbTxtMotor.text = veiculo.motor
+            viewBinding.sbCombustivel.setSelection(ArrayAdapter.createFromResource(it,
                 R.array.combustivel,
-                R.layout.sobre_veiculo_dialog).getPosition(veiculo.combustivel))
-            view.sb_combustivel.isEnabled = false
-            view.sb_cambio.setSelection(ArrayAdapter.createFromResource(it,
-                R.array.cambio,
-                R.layout.sobre_veiculo_dialog).getPosition(veiculo.tipoCambio))
-            view.sb_cambio.isEnabled = false
-            view.sb_txt_ano_fabricacao.text = veiculo.ano
+                viewBinding.root.id).getPosition(veiculo.combustivel))
+            viewBinding.sbCombustivel.isEnabled = false
+            viewBinding.sbCambio.setSelection(ArrayAdapter.createFromResource(it,
+                 R.array.cambio,
+                 viewBinding.root.id).getPosition(veiculo.tipoCambio))
+            viewBinding.sbCambio.isEnabled = false
+            viewBinding.sbTxtAnoFabricacao.text = veiculo.ano
 
-            view.bt_editarVeiculo.setOnClickListener {
+            viewBinding.btEditarVeiculo.setOnClickListener {
 
                val veiculoEditado = Veiculo(veiculo.idV,
-                    view.sb_txt_nome_veiculo.text.toString(),
-                    view.sb_txt_marca.text.toString(),
-                    view.sb_txt_placa.text.toString(),
-                    view.sb_txt_motor.text.toString(),
-                    view.sb_combustivel.selectedItem.toString(),
-                    view.sb_cambio.selectedItem.toString(),
-                    view.sb_txt_ano_fabricacao.text.toString())
+                   viewBinding.sbTxtNomeVeiculo.text.toString(),
+                   viewBinding.sbTxtMarca.text.toString(),
+                   viewBinding.sbTxtPlaca.text.toString(),
+                   viewBinding.sbTxtMotor.text.toString(),
+                   viewBinding.sbCombustivel.selectedItem.toString(),
+                   viewBinding.sbCambio.selectedItem.toString(),
+                   viewBinding.sbTxtAnoFabricacao.text.toString())
 
                    startActivity(Intent(requireContext(), TelaCadastro::class.java)
                        .putExtra("veiculoEditado", veiculoEditado))
 
             }
-            view.bt_fecharVeiculo.setOnClickListener { dialog.dismiss() }
+            viewBinding.btFecharVeiculo.setOnClickListener { dialog?.dismiss() }
 
             dialogSobreVeiculo.setTitle("                        Veículo")
-            dialogSobreVeiculo.setView(view)
+            dialogSobreVeiculo.setView(viewBinding.root)
             dialogSobreVeiculo.create()
 
         } ?: throw IllegalStateException("Erro ao exibir tela de veículo")
@@ -67,6 +68,8 @@ class SobreVeiculoDialog : DialogFragment() {
     }
 
 }
+
+
 
 
 

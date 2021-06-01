@@ -1,10 +1,9 @@
 package br.com.devnattiva.deolhoveiculo.model
 
-import android.arch.persistence.room.*
-import android.os.Parcel
+import androidx.room.*
 import android.os.Parcelable
 import com.opencsv.bean.CsvBindByName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "Veiculo")

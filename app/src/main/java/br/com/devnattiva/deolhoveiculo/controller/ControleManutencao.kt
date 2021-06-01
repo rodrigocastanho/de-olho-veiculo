@@ -3,23 +3,24 @@ package br.com.devnattiva.deolhoveiculo.controller
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AlertDialog
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import br.com.devnattiva.deolhoveiculo.R
 import br.com.devnattiva.deolhoveiculo.SobreVeiculoDialog
+import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaStatusManutencaoBinding
+import br.com.devnattiva.deolhoveiculo.databinding.EditarTipoManutencaoDialogBinding
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
-import kotlinx.android.synthetic.main.content_tela_status_manutencao.*
-import kotlinx.android.synthetic.main.editar_tipo_manutencao_dialog.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import java.sql.SQLException
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -38,8 +39,7 @@ class ControleManutencao: Manutencoes {
 
     }
 
-    fun fluxoManutencao(veiculoId: Long, context: Activity, supportFragmentManager: FragmentManager) {
-
+    fun fluxoManutencao(veiculoId: Long, context: Activity, supportFragmentManager: FragmentManager, viewConteudo: ContentTelaStatusManutencaoBinding) {
         lateinit var veiculo : Veiculo
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
@@ -64,34 +64,36 @@ class ControleManutencao: Manutencoes {
 
                     }
                     withContext(Main) {
-                        context.recyclerViewManutencao.adapter?.notifyDataSetChanged()
+                        viewConteudo.recyclerViewManutencao.adapter?.notifyDataSetChanged()
                     }
                 } catch (e: Exception) {
-                    Log.e("ERRO_VEICULO_M", "ERRO_VEICULO_MANUTENÇÂO" + e)
+                    Log.e("ERRO_VEICULO_M", "ERRO_VEICULO_MANUTENÇÂO $e")
 
+                } finally {
+                    bd.close()
                 }
 
             }
 
-            context.bt_infoVeiculo.isEnabled = true
-            context.bt_infoVeiculo.setOnClickListener {
+            viewConteudo.btInfoVeiculo.isEnabled = true
+            viewConteudo.btInfoVeiculo.setOnClickListener {
                 val sobreVeiculoDialog = SobreVeiculoDialog()
                 sobreVeiculoDialog.veiculoSelecionado(veiculo)
                 sobreVeiculoDialog.show(supportFragmentManager, "dialogSobreVeiculo")
 
             }
 
-            if(context.recyclerViewManutencao.visibility == View.GONE) {
-                context.tx_inicio_manutencao.visibility = View.GONE
-                context.recyclerViewManutencao.visibility = View.VISIBLE
-                context.bt_ft_add_manutencao.show()
+            if(viewConteudo.recyclerViewManutencao.visibility == View.GONE) {
+                viewConteudo.txInicioManutencao.visibility = View.GONE
+                viewConteudo.recyclerViewManutencao.visibility = View.VISIBLE
+                viewConteudo.btFtAddManutencao.show()
             }
 
         }else {
-            context.bt_infoVeiculo.isEnabled = false
-            context.tx_inicio_manutencao.visibility = View.VISIBLE
-            context.recyclerViewManutencao.visibility = View.GONE
-            context.bt_ft_add_manutencao.hide()
+            viewConteudo.btInfoVeiculo.isEnabled = false
+            viewConteudo.txInicioManutencao.visibility = View.VISIBLE
+            viewConteudo.recyclerViewManutencao.visibility = View.GONE
+            viewConteudo.btFtAddManutencao.hide()
         }
 
     }
@@ -112,18 +114,20 @@ class ControleManutencao: Manutencoes {
                         }
 
                     } catch (e: SQLException) {
-                        Log.e("ERRO_MANUTENCAO_INSERIR", "ERRO_MANUTENCAO_INSERIR: " + e)
+                        Log.e("ERRO_MANUTENCAO_INSERIR", "ERRO_MANUTENCAO_INSERIR: $e")
 
+                    } finally {
+                        bd.close()
                     }
 
                 }
                 Toast.makeText(context,
-                    " MANUTENÇÃO GRAVADA " + manutencao.tipoManutencao.toUpperCase(),
+                    " MANUTENÇÃO GRAVADA " + manutencao.tipoManutencao.toUpperCase(Locale.ROOT),
                     Toast.LENGTH_SHORT).show()
 
             } else {
                 Toast.makeText(context,
-                    "ADICIONE PELO MENOS UMA INFORMAÇÃOS EM UM DOS CAMPOS: " + manutencao.tipoManutencao.toUpperCase(),
+                    "ADICIONE PELO MENOS UMA INFORMAÇÃOS EM UM DOS CAMPOS: " + manutencao.tipoManutencao.toUpperCase(Locale.ROOT),
                     Toast.LENGTH_LONG).show()
             }
 
@@ -150,13 +154,16 @@ class ControleManutencao: Manutencoes {
                         bd.controleDAO().deletarDadosManutencao(manutencao)
 
                     } catch (e: SQLException) {
-                        Log.e("ERRO_DEL_MANUTENCAO", "ERRO_DELETAR_MANUTECAO: " + e)
+                        Log.e("ERRO_DEL_MANUTENCAO", "ERRO_DELETAR_MANUTECAO: $e")
+                    } finally {
+                        bd.close()
                     }
+
                 }
                 Toast.makeText(context, "MANUTENÇÃO EXCLUIDA", Toast.LENGTH_SHORT).show()
 
-                manutencoes.removeAt(holder.adapterPosition)
-                manutencaoAdapter.notifyItemRemoved(holder.adapterPosition)
+                manutencoes.removeAt(holder.bindingAdapterPosition)
+                manutencaoAdapter.notifyItemRemoved(holder.bindingAdapterPosition)
 
             }
             builder.setNegativeButton("NÃO") { _, _ ->
@@ -172,16 +179,18 @@ class ControleManutencao: Manutencoes {
         }
 
     }
-    
+
     fun editarTipoManutencao(context: Context, holder: StatusManutencaoAdapterRW.ViewHolder) {
 
         val builder = AlertDialog.Builder(context)
-        val view = LayoutInflater.from(context).inflate(R.layout.editar_tipo_manutencao_dialog, null)
+        //val view = LayoutInflater.from(context).inflate(R.layout.editar_tipo_manutencao_dialog, null)
+        val viewAlertDialog = EditarTipoManutencaoDialogBinding.inflate(LayoutInflater.from(context))
         builder.setPositiveButton("EDITAR") { _,_ ->
-            holder.descricaoManutencao.text = view.ed_tipo_manutencao?.text
+            //holder.descricaoManutencao.text = view.ed_tipo_manutencao?.text
+            holder.descricaoManutencao.text = viewAlertDialog.edTipoManutencao.text
         }
         builder.setNeutralButton("FECHAR") { _, _ -> }
-        builder.setView(view)
+        builder.setView(viewAlertDialog.root)
         builder.create()
         builder.show()
         

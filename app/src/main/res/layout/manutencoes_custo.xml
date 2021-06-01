@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cad_custo_manutencao"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:layout_gravity="top">
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="26dp">
+
+       <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/txt_manutencao_rc"
+               android:layout_width="172dp"
+               android:layout_height="20dp"
+               android:hint="Manutencao"
+               android:textAlignment="center"
+               android:scrollbars="vertical"
+               android:drawableStart="@drawable/ic_menu_manutencao"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintBottom_toBottomOf="parent"
+               android:layout_marginStart="8dp" />
+
+       <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/txt_data_rc"
+               android:layout_width="88dp"
+               android:layout_height="20dp"
+               android:textAlignment="center"
+               android:scrollbars="vertical"
+               android:hint="00/00/0000"
+               app:layout_constraintStart_toEndOf="@id/txt_manutencao_rc"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginStart="8dp"
+               app:layout_constraintBottom_toBottomOf="parent" />
+
+       <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/txt_custo_rc"
+               android:layout_width="0dp"
+               android:layout_height="20dp"
+               android:textAlignment="center"
+               android:scrollbars="vertical"
+               android:hint="0"
+               app:layout_constraintStart_toEndOf="@id/txt_data_rc"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginStart="8dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintBottom_toBottomOf="parent" />
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

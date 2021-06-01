@@ -1,6 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.repository
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import android.content.Context
 import br.com.devnattiva.deolhoveiculo.configuration.ConversorData
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
