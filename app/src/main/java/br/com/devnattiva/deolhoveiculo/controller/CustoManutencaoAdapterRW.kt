@@ -1,8 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import android.text.method.ScrollingMovementMethod
@@ -20,7 +18,6 @@ class CustoManutencaoAdapterRW(private val manutencoes: List<Manutencao>,
 
     override fun getItemCount(): Int = manutencoes.size
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.let {
             it.descricaoManutencao.text = manutencoes[it.bindingAdapterPosition].tipoManutencao

@@ -69,7 +69,6 @@ class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.SobreApp -> {
                 startActivity(Intent(this, TelaSobreApp::class.java))
-
             }
         }
 

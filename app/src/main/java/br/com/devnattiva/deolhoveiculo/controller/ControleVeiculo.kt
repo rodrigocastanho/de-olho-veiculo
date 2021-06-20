@@ -8,9 +8,7 @@ import android.widget.Toast
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import br.com.devnattiva.deolhoveiculo.TelaStatusManutencao
-import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaCadastroBinding
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -34,7 +32,7 @@ class ControleVeiculo {
 
                     }
                 } catch (e: Exception) {
-                    Log.e("ERRO_VEICULO", " SALVAR_VEICULO: " + e)
+                    Log.e("ERRO_VEICULO", " SALVAR_VEICULO: $e")
                 } finally {
                     bd.close()
                 }
@@ -53,9 +51,9 @@ class ControleVeiculo {
     fun veiculoValorEditado(context: Activity): Veiculo? {
         var veiculoEditado: Veiculo? = null
         try {
-            veiculoEditado = context.intent?.getParcelableExtra<Veiculo>("veiculoEditado")
+            veiculoEditado = context.intent?.getParcelableExtra("veiculoEditado")
         } catch (e: Exception) {
-            Log.e("ERRO_PARCEL_VEICULO", "ERRO_PARCEL_VEICULO: " + e)
+            Log.e("ERRO_PARCEL_VEICULO", "ERRO_PARCEL_VEICULO: $e")
         }
         return veiculoEditado
     }
@@ -80,13 +78,11 @@ class ControleVeiculo {
             builder.setPositiveButton("SIM") { _, _ ->
 
                 CoroutineScope(IO).launch {
-
                     try {
-
                         bd.controleDAO().deletarDadosVeiculo(veiculoId)
 
                     } catch (e: SQLException) {
-                        Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: " + e)
+                        Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: $e")
 
                     } finally {
                         bd.close()
@@ -114,14 +110,5 @@ class ControleVeiculo {
         }
 
     }
-
-//    @SuppressLint("CommitPrefEdits")
-//    fun controleSalvarVeiculoVersao(veiculoSalvo: Int, context: Activity) {
-//      val sharePref = context.getPreferences(Context.MODE_PRIVATE)?: return
-//        with(sharePref.edit()) {
-//           putInt("VS_GRATIS", veiculoSalvo)
-//            commit()
-//        }
-//    }
 
 }

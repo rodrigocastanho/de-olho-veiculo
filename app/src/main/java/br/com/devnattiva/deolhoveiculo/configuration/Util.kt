@@ -2,8 +2,6 @@ package br.com.devnattiva.deolhoveiculo.configuration
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
@@ -94,12 +92,10 @@ class Util {
             veiculoId = veiculoID
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun converteDataTexto(data: LocalDate?): String? {
             return data?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun converteTextoData(data: String?): LocalDate? {
             if(!data.isNullOrEmpty()) {
                 return LocalDate.parse(data, DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))

@@ -1,10 +1,8 @@
 package br.com.devnattiva.deolhoveiculo
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
@@ -13,7 +11,6 @@ import android.widget.ArrayAdapter
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.ControleRelatorioCusto
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaRelatorioCustoBinding
-import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -24,7 +21,6 @@ class TelaRelatorioCusto : AppCompatActivity(), AdapterView.OnItemSelectedListen
      private lateinit var viewRelatorioCustoBind: ActivityTelaRelatorioCustoBinding
      private val idVeiculos = mutableListOf<Long>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +58,12 @@ class TelaRelatorioCusto : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     private fun selecionadorBuscaVeiculo(nomeVeiculos: List<String>) {
-        viewRelatorioCustoBind.buscaVeiculoCusto.adapter = ArrayAdapter<Long>(this, android.R.layout.preference_category, idVeiculos)
-        viewRelatorioCustoBind.buscaVeiculoCusto.adapter = ArrayAdapter<String>(this, android.R.layout.preference_category, nomeVeiculos)
+        viewRelatorioCustoBind.buscaVeiculoCusto.adapter = ArrayAdapter(this, android.R.layout.preference_category, idVeiculos)
+        viewRelatorioCustoBind.buscaVeiculoCusto.adapter = ArrayAdapter(this, android.R.layout.preference_category, nomeVeiculos)
         viewRelatorioCustoBind.buscaVeiculoCusto.onItemSelectedListener = this
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         ControleRelatorioCusto().alterarEstadoCamposDataBotao(idVeiculos[position], viewRelatorioCustoBind)
         viewRelatorioCustoBind.btFiltroCusto?.setOnClickListener {

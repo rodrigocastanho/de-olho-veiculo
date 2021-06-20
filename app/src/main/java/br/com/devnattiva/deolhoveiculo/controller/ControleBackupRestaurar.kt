@@ -8,27 +8,24 @@ import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaBackupBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
+import br.com.devnattiva.deolhoveiculo.model.Veiculo
+import com.opencsv.CSVReaderBuilder
 import com.opencsv.CSVWriter
-import com.opencsv.bean.ColumnPositionMappingStrategy
-import com.opencsv.bean.CsvToBeanBuilder
-import com.opencsv.bean.StatefulBeanToCsvBuilder
-import com.opencsv.exceptions.CsvDataTypeMismatchException
 import kotlinx.coroutines.Dispatchers.Main
 import java.io.*
 import kotlin.Exception
 
-@RequiresApi(Build.VERSION_CODES.O)
 class ControleBackupRestaurar {
 
     private lateinit var bd: BancoDadoConfig
@@ -43,9 +40,14 @@ class ControleBackupRestaurar {
          CoroutineScope(IO).launch {
               val dadosBackup = async { buscarDadosParaBkP(context) }
               if(!dadosBackup.await().isNullOrEmpty()) {
-                  criarBackup(context, dadosBackup.await())
+               val status = criarBackup(context, dadosBackup.await())
                   withContext(Main) {
-                      exibirProcessoCarramento( false, "Backup criado com sucesso", viewActivityBackup)
+                      if(status) {
+                          exibirProcessoCarramento(false,"Backup criado com sucesso", viewActivityBackup)
+                      }else {
+                          Toast.makeText(context,"BACKUP NÃO FOI POSSÍVEL SER CRIADO", Toast.LENGTH_LONG).show()
+                          exibirProcessoCarramento(false, "", viewActivityBackup)
+                      }
                   }
               }else {
                   withContext(Main) {
@@ -63,9 +65,10 @@ class ControleBackupRestaurar {
 
    }
 
-   private fun criarBackup(context: Activity, dados: List<VeiculoManutencao>) {
+   private fun criarBackup(context: Activity, dados: List<VeiculoManutencao>): Boolean {
 
        var arquivoEstrica: FileWriter?= null
+       var status = false
        lateinit var diretorioArquivo: String
 
        if(!permissoes(context, "ESCRITA")) {
@@ -73,7 +76,7 @@ class ControleBackupRestaurar {
 
        }else {
            try {
-               val diretorio = File("${context.getExternalFilesDir(null)}/"+NOME_DIRETORIO)
+               val diretorio = File(context.getExternalFilesDir(null), NOME_DIRETORIO)
                if(!diretorio.exists()) {
                    diretorio.mkdir()
                }
@@ -81,26 +84,51 @@ class ControleBackupRestaurar {
                diretorioArquivo = "$diretorio/$NOME_ARQUIVO"
                arquivoEstrica = FileWriter(diretorioArquivo)
 
-               val arquivoBackup = mapeamentoBackupCSV()
-               val arquivoCSV = StatefulBeanToCsvBuilder<VeiculoManutencao>(arquivoEstrica)
-                   .withMappingStrategy(arquivoBackup)
-                   .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                   .withSeparator('\t')
-                   .build()
+               val arquivoCSV = CSVWriter(arquivoEstrica,
+                                           ',',
+                                            CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                                            CSVWriter.NO_ESCAPE_CHARACTER,
+                                            CSVWriter.DEFAULT_LINE_END)
 
-               arquivoCSV.write(dados)
+              dados.forEach { d ->
+                 val backupsDados = arrayOf(d.veiculo.idV.toString(),
+                     d.veiculo.nomeVeiculo, d.veiculo.marcaVeiculo,
+                     d.veiculo.placaVeiculo, d.veiculo.motor,
+                     d.veiculo.combustivel, d.veiculo.tipoCambio,
+                     d.veiculo.ano, d.manutencao.idM.toString(),
+                     d.manutencao.idVM.toString(), d.manutencao.tipoManutencao,
+                     d.manutencao.kmtroca, Util.converteDataTexto(d.manutencao.data),
+                     d.manutencao.custo, d.manutencao.observacao)
 
+                 arquivoCSV.writeNext(backupsDados)
+
+              }
+
+//           Nas API anteriorior 24 esse trecho de código não funciona pois há incompatibilidades Beans e Mapper
+//               val arquivoBackup = mapeamentoBackupCSV()
+//               val arquivoCSV = StatefulBeanToCsvBuilder<VeiculoManutencao>(arquivoEstrica)
+//                   .withMappingStrategy(arquivoBackup)
+//                   .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+//                   .withSeparator('\t')
+//                   .build()
+//
+//               arquivoCSV.write(dados)
+
+               status = true
            } catch (e: Exception) {
+               status = false
                Log.e("ERRO_ESCRITA", "ERRO_BACKUP $e")
 
            } finally {
                arquivoEstrica?.flush()
                arquivoEstrica?.close()
-               enviarArquivoBKP(context, Uri.parse(diretorioArquivo))
-
+               if(status) {
+                   enviarArquivoBKP(context, Uri.parse(diretorioArquivo))
+               }
            }
 
        }
+       return status
 
    }
 
@@ -114,6 +142,7 @@ class ControleBackupRestaurar {
         context.startActivity(Intent.createChooser(intent, "backup..."))
    }
     
+    @SuppressLint("SdCardPath")
     fun restaurarBackupDados(context: Activity, arquivo: ActivityResultLauncher<Intent>) {
         if(!permissoes(context, "LEITURA")) {
             telaPermissoes(context, 2)
@@ -125,6 +154,7 @@ class ControleBackupRestaurar {
                     type = "text/csv"
                     putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("text/*"))
                 })
+
         }
 
     }
@@ -158,18 +188,32 @@ class ControleBackupRestaurar {
 
     private fun prepararArquivoRestaurar(context: Activity, arquivoDiretorioUri: Uri): List<VeiculoManutencao> {
         var diretorioLeitura: BufferedReader?= null
-        var restauraBackup = listOf<VeiculoManutencao>()
+        val restauraBackup = mutableListOf<VeiculoManutencao>()
 
         try {
             diretorioLeitura = context.contentResolver.openInputStream(arquivoDiretorioUri)?.bufferedReader()
-            val arquivoRestauraBackupMap = mapeamentoBackupCSV()
-            restauraBackup = CsvToBeanBuilder<VeiculoManutencao>(diretorioLeitura)
-                .withMappingStrategy(arquivoRestauraBackupMap)
-                .withIgnoreLeadingWhiteSpace(true)
-                .withSeparator('\t')
-                .withExceptionHandler { CsvDataTypeMismatchException() }
-                .build()
-                .parse()
+            val arquivoRestaurado = CSVReaderBuilder(diretorioLeitura).build()
+
+            arquivoRestaurado.readAll().forEach { l ->
+                val dados = VeiculoManutencao(
+                                        Veiculo(l[0].toLong(), l[1], l[2], l[3], l[4], l[5], l[6], l[7]),
+                                        Manutencao(l[8].toLong(), l[9].toLong(), l[10], l[11],
+                                            Util.converteTextoData(l[12]), l[13], l[14]))
+
+                restauraBackup.add(dados)
+
+            }
+
+//           Nas API anteriorior 24 esse trecho de código não funciona pois há incompatibilidades Beans e Mapper
+//            diretorioLeitura = context.contentResolver.openInputStream(arquivoDiretorioUri)?.bufferedReader()
+//            val arquivoRestauraBackupMap = mapeamentoBackupCSV()
+//            restauraBackup = CsvToBeanBuilder<VeiculoManutencao>(diretorioLeitura)
+//                .withMappingStrategy(arquivoRestauraBackupMap)
+//                .withIgnoreLeadingWhiteSpace(true)
+//                .withSeparator('\t')
+//                .withExceptionHandler { CsvDataTypeMismatchException() }
+//                .build()
+//                .parse()
 
         }catch (e: Exception) {
             Log.e("ERRO_LEITURA", "ERRO_LEITURA_BACKUP $e")
@@ -204,15 +248,16 @@ class ControleBackupRestaurar {
 
     }
 
-    private fun mapeamentoBackupCSV(): ColumnPositionMappingStrategy<VeiculoManutencao> {
-        val mapearClassCSV = ColumnPositionMappingStrategy<VeiculoManutencao>()
-        mapearClassCSV.type = VeiculoManutencao::class.java
-        mapearClassCSV.setColumnMapping(
-            "idV", "nomeVeiculo", "marcaVeiculo", "placaVeiculo", "motor",
-            "combustivel", "tipoCambio", "ano", "idM", "idVM", "tipoManutencao",
-            "kmtroca", "data", "custo", "observacao")
-        return mapearClassCSV
-    }
+ //   metodo Mapper utilizado, funciona nas API acima da 24 android
+//    private fun mapeamentoBackupCSV(): ColumnPositionMappingStrategy<VeiculoManutencao> {
+//        val mapearClassCSV = ColumnPositionMappingStrategy<VeiculoManutencao>()
+//        mapearClassCSV.type = VeiculoManutencao::class.java
+//        mapearClassCSV.setColumnMapping(
+//            "idV", "nomeVeiculo", "marcaVeiculo", "placaVeiculo", "motor",
+//            "combustivel", "tipoCambio", "ano", "idM", "idVM", "tipoManutencao",
+//            "kmtroca", "data", "custo", "observacao")
+//        return mapearClassCSV
+//    }
 
     private fun permissoes(context: Activity, escolherPermissao: String): Boolean {
       return when(escolherPermissao) {

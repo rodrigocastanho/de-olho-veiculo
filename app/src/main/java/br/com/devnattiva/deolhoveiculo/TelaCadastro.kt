@@ -47,8 +47,6 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewCadastroBind
             .appBarCadastro
             .contentCadastro.btCadastro.setOnClickListener {
-
-
                 val veiculo = Veiculo(
                     controleVeiculo.statusVeiculoId(veiculoEditado),
                     viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.text.toString(),
@@ -111,7 +109,7 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, TelaBackup::class.java))
             }
             R.id.SobreApp -> {
-
+                startActivity(Intent(this, TelaSobreApp::class.java))
             }
         }
 

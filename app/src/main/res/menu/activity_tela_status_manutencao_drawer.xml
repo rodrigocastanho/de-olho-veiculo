@@ -12,7 +12,7 @@
         <item
                 android:id="@+id/CadastroVeiculo"
                 android:icon="@drawable/ic_menu_carro"
-                android:title="Cadastrar Veiculo"/>
+                android:title="Cadastrar Veículo"/>
         <item
                 android:id="@+id/StatusManuteção"
                 android:icon="@drawable/ic_menu_manutencao"

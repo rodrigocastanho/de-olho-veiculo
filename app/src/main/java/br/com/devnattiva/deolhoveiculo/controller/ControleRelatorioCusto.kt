@@ -1,8 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
 import android.app.Activity
-import android.os.Build
-import androidx.annotation.RequiresApi
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
@@ -25,7 +23,7 @@ class ControleRelatorioCusto {
 
     fun buscaVeiculoCusto(context: Activity): Map<Long, String> {
         bd = BancoDadoConfig.getInstance(context.applicationContext)
-        val veiculos = mutableMapOf(0L to "\t\t\t\t\t\t Buscar Veiculo")
+        val veiculos = mutableMapOf(0L to "\t\t\t\t\t\t Buscar Veículo")
 
         CoroutineScope(IO).launch {
             try {
@@ -40,7 +38,6 @@ class ControleRelatorioCusto {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun filtrarCustoManutencao(idVeiculo: Long, dataInicial: EditText, dataFinal: EditText, context: Activity, viewRelatorioCustoBind: ActivityTelaRelatorioCustoBinding) {
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
@@ -75,10 +72,15 @@ class ControleRelatorioCusto {
             viewRelatorioCustoBind.edDataInicialCusto.isEnabled = false
             viewRelatorioCustoBind.edDataFinalCusto.isEnabled = false
             viewRelatorioCustoBind.btFiltroCusto?.isEnabled = false
+            viewRelatorioCustoBind.rcCusto.adapter = CustoManutencaoAdapterRW(listOf(), viewRelatorioCustoBind.root.context)
+            viewRelatorioCustoBind.txtTotalCustoValor?.text = ""
         } else {
             viewRelatorioCustoBind.edDataInicialCusto.isEnabled = true
             viewRelatorioCustoBind.edDataFinalCusto.isEnabled = true
             viewRelatorioCustoBind.btFiltroCusto?.isEnabled = true
+            viewRelatorioCustoBind.rcCusto.adapter = CustoManutencaoAdapterRW(listOf(), viewRelatorioCustoBind.root.context)
+            viewRelatorioCustoBind.txtTotalCustoValor?.text = ""
+
         }
 
     }

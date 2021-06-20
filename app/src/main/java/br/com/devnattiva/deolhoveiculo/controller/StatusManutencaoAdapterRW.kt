@@ -1,9 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -18,11 +15,11 @@ import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.*
 import br.com.devnattiva.deolhoveiculo.configuration.Util.STATIC.veiculoId
 import br.com.devnattiva.deolhoveiculo.databinding.TipoManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 class StatusManutencaoAdapterRW(
-    private val manutencoes: ArrayList<Manutencao>,
+    private val manutencoes: LinkedList<Manutencao>,
     private val context: Activity,
     private val supportFragmentManager: FragmentManager
 ) : Adapter<ViewHolder>() {
@@ -30,7 +27,6 @@ class StatusManutencaoAdapterRW(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = TipoManutencaoBinding.inflate(LayoutInflater.from(context), parent, false)
-        //val view = LayoutInflater.from(context).inflate(R.layout.tipo_manutencao, parent, false)
 
         return ViewHolder(view)
 
@@ -40,8 +36,6 @@ class StatusManutencaoAdapterRW(
         return manutencoes.size
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("RecyclerView")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Safe call e funcao let garantindo integridade do codigo impedindo NUll

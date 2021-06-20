@@ -3,9 +3,7 @@ package br.com.devnattiva.deolhoveiculo
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import android.widget.DatePicker
 import android.widget.EditText
@@ -28,7 +26,6 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
         return DatePickerDialog(activity as Context, this, ano, mes, dia)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSet(view: DatePicker, ano: Int, mes: Int, dia: Int) {
         val data = LocalDate.of(ano, mes + 1, dia)
         campoData?.setText(Util.converteDataTexto(data))
@@ -41,7 +38,6 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @Throws(Exception::class)
     fun verificarIntervaloData(dataInicial: EditText, dataFinal: EditText) {
         val dtInicial = Util.converteTextoData(dataInicial.text.toString())

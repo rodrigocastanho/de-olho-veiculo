@@ -5,8 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">DeOlhoVeiculo</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Excluir Veiculo</string>
-    <string name="title_activity_tela_cadastro">Cadastrar Veiculo</string>
+    <string name="action_settings">Excluir Veículo</string>
+    <string name="title_activity_tela_cadastro">Cadastrar Veículo</string>
     <string name="title_activity_tela_status_manutencao">Status de Manutenção</string>
 
 
@@ -16,13 +16,22 @@
         <item>Etanol</item>
         <item>Diesel</item>
         <item>GNV</item>
-        <item>Eletrico</item>
+        <item>Elétrico</item>
     </string-array>
 
     <string-array name="cambio">
         <item>Manual</item>
-        <item>Automatico</item>
+        <item>Automático</item>
     </string-array>
+    <string name="hello_world">Hello world!</string>
+    <!-- -
+    This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
+    For more information, see https://support.google.com/admob/answer/3052638
+<!- -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="sobreApp">Aplicativo com foco em ajudar você a registrar as manutenções e analisar seus gasto com veiculo. </string>
+    <string name="vers_o_1_0">versão: 1.0</string>
+    <string name="desenvolvido">desenvolvido: devnattiva@gmail.com</string>
 
 
 </resources>

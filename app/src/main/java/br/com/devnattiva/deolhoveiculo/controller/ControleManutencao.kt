@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import br.com.devnattiva.deolhoveiculo.R
 import br.com.devnattiva.deolhoveiculo.SobreVeiculoDialog
 import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaStatusManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.databinding.EditarTipoManutencaoDialogBinding
@@ -21,20 +20,19 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import java.sql.SQLException
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ControleManutencao: Manutencoes {
 
-    val arrayManutencoes = ArrayList<Manutencao>()
+    val arrayManutencoes = LinkedList<Manutencao>()
     private lateinit var bd: BancoDadoConfig
 
     init {
         this.arrayManutencoes
     }
 
-    override fun manutencoesConfig(manutencao: Manutencao): ArrayList<Manutencao> {
-        arrayManutencoes.add(manutencao)
+    override fun manutencoesConfig(manutencao: Manutencao): LinkedList<Manutencao> {
+        arrayManutencoes.addFirst(manutencao)
         return arrayManutencoes
 
     }
@@ -103,7 +101,7 @@ class ControleManutencao: Manutencoes {
          bd = BancoDadoConfig.getInstance(context.applicationContext)
 
         if(manutencao.idVM != 0L) {
-            if (manutencao.kmtroca.isNotEmpty() || !manutencao.data!!.equals(null) || manutencao.custo.isNotEmpty()) {
+            if (manutencao.kmtroca.isNotEmpty() || manutencao.data != null || manutencao.custo.isNotEmpty()) {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
@@ -138,7 +136,7 @@ class ControleManutencao: Manutencoes {
     }
 
     fun excluirManutencao(manutencao: Manutencao, context: Context, holder: StatusManutencaoAdapterRW.ViewHolder,
-                          manutencaoAdapter: StatusManutencaoAdapterRW, manutencoes: ArrayList<Manutencao>) {
+                          manutencaoAdapter: StatusManutencaoAdapterRW, manutencoes: LinkedList<Manutencao>) {
 
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
@@ -183,10 +181,8 @@ class ControleManutencao: Manutencoes {
     fun editarTipoManutencao(context: Context, holder: StatusManutencaoAdapterRW.ViewHolder) {
 
         val builder = AlertDialog.Builder(context)
-        //val view = LayoutInflater.from(context).inflate(R.layout.editar_tipo_manutencao_dialog, null)
         val viewAlertDialog = EditarTipoManutencaoDialogBinding.inflate(LayoutInflater.from(context))
         builder.setPositiveButton("EDITAR") { _,_ ->
-            //holder.descricaoManutencao.text = view.ed_tipo_manutencao?.text
             holder.descricaoManutencao.text = viewAlertDialog.edTipoManutencao.text
         }
         builder.setNeutralButton("FECHAR") { _, _ -> }

@@ -9,7 +9,7 @@
               tools:context="br.com.devnattiva.deolhoveiculo.TelaAbertura">
 
     <ImageView
-            android:src="@drawable/iconmotor"
+            android:src="@drawable/icondeolhoveiculo"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/logoapp"/>

@@ -22,7 +22,6 @@ import br.com.devnattiva.deolhoveiculo.controller.ControleManutencao
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaStatusManutencaoBinding
-import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaStatusManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -49,11 +48,11 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
 
         val buscarVeiculo = viewActivity.appBarManutencao.contentManutencao.buscaVeiculo
         val listId = mutableListOf<Long>(0)
-        val listVeiculo = mutableListOf<String>("\t\t\t\t\t\t Buscar Veiculo")
+        val listVeiculo = mutableListOf("\t\t\t\t\t\t Buscar Veículo")
 
 
-        buscarVeiculo.adapter = ArrayAdapter<Long>(this, android.R.layout.preference_category, listId)
-        buscarVeiculo.adapter = ArrayAdapter<String>(this, android.R.layout.preference_category, listVeiculo)
+        buscarVeiculo.adapter = ArrayAdapter(this, android.R.layout.preference_category, listId)
+        buscarVeiculo.adapter = ArrayAdapter(this, android.R.layout.preference_category, listVeiculo)
 
         buscarVeiculo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -66,7 +65,7 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 controleManutencoes.fluxoManutencao(veiculoId, contextActivy, supportFragmentManager, viewActivity.appBarManutencao.contentManutencao)
 
-                Log.i("MEU ID", " ID " + veiculoId)
+                Log.i("MEU ID", " ID $veiculoId")
 
             }
 
@@ -83,7 +82,7 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
                 }
 
             } catch (e: Exception) {
-                Log.e("ERRO_BUSCA_VM", " ERRO_BUSCA_VEICULO_MANUTENÇÂO " + e)
+                Log.e("ERRO_BUSCA_VM", " ERRO_BUSCA_VEICULO_MANUTENÇÂO $e")
 
             } finally {
                 bd.close()

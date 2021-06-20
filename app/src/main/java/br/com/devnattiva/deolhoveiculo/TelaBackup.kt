@@ -1,15 +1,12 @@
 package br.com.devnattiva.deolhoveiculo
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import br.com.devnattiva.deolhoveiculo.controller.ControleBackupRestaurar
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaBackupBinding
 
-@RequiresApi(Build.VERSION_CODES.O)
 class TelaBackup : AppCompatActivity() {
 
     private lateinit var viewActivityBackup: ActivityTelaBackupBinding

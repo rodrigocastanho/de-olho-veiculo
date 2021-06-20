@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="br.com.devnattiva.deolhoveiculo">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+            android:hardwareAccelerated="true"
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/icondeolhoveiculo"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/icondeolhoveiculo"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto"
-                  android:label="Relatório de Custo"
-                  android:configChanges="orientation"
-                  android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
+
+        <!--
+        This is the sample AdMob App ID. Insert your own AdMob App ID in quotes
+        https://googlemobileadssdk.page.link/admob-android-update-manifest
+        -->
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <activity
-                android:name="br.com.devnattiva.deolhoveiculo.TelaBackup"
+                android:name=".TelaRelatorioCusto"
+                android:configChanges="orientation|screenSize"
+                android:label="Relatório de Custo"
+                android:parentActivityName=".TelaPrincipalmain" />
+        <activity
+                android:name=".TelaBackup"
                 android:label="Backup/Restaura Dados"
-                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
-        <activity android:name="br.com.devnattiva.deolhoveiculo.TelaSobreApp" />
+                android:parentActivityName=".TelaPrincipalmain" />
+        <activity android:name=".TelaSobreApp"
+                  android:label="Sobre App" />
         <activity
-                android:name="br.com.devnattiva.deolhoveiculo.TelaStatusManutencao"
+                android:name=".TelaStatusManutencao"
+                android:configChanges="orientation|screenSize"
                 android:label="@string/title_activity_tela_status_manutencao"
-                android:configChanges="orientation"
-                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
+                android:parentActivityName=".TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name="br.com.devnattiva.deolhoveiculo.TelaCadastro"
+                android:name=".TelaCadastro"
                 android:label="@string/title_activity_tela_cadastro"
-                android:parentActivityName="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
+                android:parentActivityName=".TelaPrincipalmain"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustPan">
             <meta-data
@@ -42,11 +57,12 @@
                     android:value="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain" />
         </activity>
         <activity
-                android:name="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain"
+                android:name=".TelaPrincipalmain"
+                android:configChanges="orientation|screenSize"
                 android:label="@string/title_activity_tela_principalmain"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name="br.com.devnattiva.deolhoveiculo.TelaAbertura"
+                android:name=".TelaAbertura"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
