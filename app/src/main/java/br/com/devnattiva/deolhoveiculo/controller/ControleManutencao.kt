@@ -1,6 +1,7 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentManager
@@ -37,6 +38,7 @@ class ControleManutencao: Manutencoes {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun fluxoManutencao(veiculoId: Long, context: Activity, supportFragmentManager: FragmentManager, viewConteudo: ContentTelaStatusManutencaoBinding) {
         lateinit var veiculo : Veiculo
         bd = BancoDadoConfig.getInstance(context.applicationContext)
@@ -120,12 +122,13 @@ class ControleManutencao: Manutencoes {
 
                 }
                 Toast.makeText(context,
-                    " MANUTENÇÃO GRAVADA " + manutencao.tipoManutencao.toUpperCase(Locale.ROOT),
+                    " MANUTENÇÃO GRAVADA " + manutencao.tipoManutencao.uppercase(Locale.ROOT),
                     Toast.LENGTH_SHORT).show()
 
             } else {
                 Toast.makeText(context,
-                    "ADICIONE PELO MENOS UMA INFORMAÇÃOS EM UM DOS CAMPOS: " + manutencao.tipoManutencao.toUpperCase(Locale.ROOT),
+                    "ADICIONE PELO MENOS UMA INFORMAÇÃOS EM UM DOS CAMPOS: " + manutencao.tipoManutencao.uppercase(
+                        Locale.ROOT),
                     Toast.LENGTH_LONG).show()
             }
 
@@ -183,7 +186,9 @@ class ControleManutencao: Manutencoes {
         val builder = AlertDialog.Builder(context)
         val viewAlertDialog = EditarTipoManutencaoDialogBinding.inflate(LayoutInflater.from(context))
         builder.setPositiveButton("EDITAR") { _,_ ->
-            holder.descricaoManutencao.text = viewAlertDialog.edTipoManutencao.text
+            if(viewAlertDialog.edTipoManutencao.text.toString().isNotBlank()) {
+                holder.descricaoManutencao.text = viewAlertDialog.edTipoManutencao.text.toString()
+            }
         }
         builder.setNeutralButton("FECHAR") { _, _ -> }
         builder.setView(viewAlertDialog.root)

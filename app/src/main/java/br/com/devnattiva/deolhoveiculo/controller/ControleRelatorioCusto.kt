@@ -23,7 +23,7 @@ class ControleRelatorioCusto {
 
     fun buscaVeiculoCusto(context: Activity): Map<Long, String> {
         bd = BancoDadoConfig.getInstance(context.applicationContext)
-        val veiculos = mutableMapOf(0L to "\t\t\t\t\t\t Buscar Veículo")
+        val veiculos = mutableMapOf(0L to "\t\t\t\t\t Buscar Veículo")
 
         CoroutineScope(IO).launch {
             try {

@@ -111,7 +111,7 @@
                 android:layout_marginEnd="8dp"/>
 
         <TextView
-                android:text="TextView"
+                android:text="Tipo Manutenção"
                 android:layout_width="0dp"
                 android:layout_height="26dp"
                 android:id="@+id/tipoManutencao"
@@ -120,24 +120,25 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/bt_editar_tp_manutencoa"
+                app:layout_constraintEnd_toStartOf="@+id/bt_editar_tp_manutencao"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="4dp"
                 android:textSize="20sp"
                 android:textAlignment="center"/>
 
 
-        <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:id="@+id/bt_editar_tp_manutencoa"
-                android:background="@android:drawable/ic_menu_edit"
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/bt_editar_tp_manutencao"
+                android:src="@drawable/ic_editat_manutencao_24"
+                android:contentDescription="Editar tipo manuntenção"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tipoManutencao"
+                app:layout_constraintBottom_toBottomOf="@+id/tipoManutencao"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="4dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,15 +26,14 @@ class SobreVeiculoDialog : DialogFragment() {
 
             viewBinding.sbTxtNomeVeiculo.text = veiculo.nomeVeiculo
             viewBinding.sbTxtMarca.text = veiculo.marcaVeiculo
+            viewBinding.sbTxtCor.text = veiculo.cor
             viewBinding.sbTxtPlaca.text = veiculo.placaVeiculo
             viewBinding.sbTxtMotor.text = veiculo.motor
             viewBinding.sbCombustivel.setSelection(ArrayAdapter.createFromResource(it,
-                R.array.combustivel,
-                viewBinding.root.id).getPosition(veiculo.combustivel))
+                R.array.combustivel, id).getPosition(veiculo.combustivel))
             viewBinding.sbCombustivel.isEnabled = false
             viewBinding.sbCambio.setSelection(ArrayAdapter.createFromResource(it,
-                 R.array.cambio,
-                 viewBinding.root.id).getPosition(veiculo.tipoCambio))
+                 R.array.cambio, id).getPosition(veiculo.tipoCambio))
             viewBinding.sbCambio.isEnabled = false
             viewBinding.sbTxtAnoFabricacao.text = veiculo.ano
 
@@ -43,6 +42,7 @@ class SobreVeiculoDialog : DialogFragment() {
                val veiculoEditado = Veiculo(veiculo.idV,
                    viewBinding.sbTxtNomeVeiculo.text.toString(),
                    viewBinding.sbTxtMarca.text.toString(),
+                   viewBinding.sbTxtCor.text.toString(),
                    viewBinding.sbTxtPlaca.text.toString(),
                    viewBinding.sbTxtMotor.text.toString(),
                    viewBinding.sbCombustivel.selectedItem.toString(),

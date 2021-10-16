@@ -17,8 +17,9 @@ class TelaAbertura : AppCompatActivity() {
         setContentView(viewActivityAbertura.root)
 
         Handler(mainLooper).postDelayed({
-            startActivity(Intent(this@TelaAbertura, TelaPrincipalmain::class.java))
             finish()
+            startActivity(Intent(this@TelaAbertura, TelaPrincipalmain::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         },6000)
 
     }

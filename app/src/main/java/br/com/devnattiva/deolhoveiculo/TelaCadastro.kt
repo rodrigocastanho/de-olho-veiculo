@@ -35,6 +35,7 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.setText(veiculoEditado?.nomeVeiculo)
         viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.setText(veiculoEditado?.marcaVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.cor.setText(veiculoEditado?.cor)
         viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.setText(veiculoEditado?.placaVeiculo)
         viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.setText(veiculoEditado?.motor)
         viewCadastroBind.appBarCadastro.contentCadastro.combescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.combustivel,
@@ -51,6 +52,7 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     controleVeiculo.statusVeiculoId(veiculoEditado),
                     viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.text.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.cor.text.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.text.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.text.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.combescolha.selectedItem.toString(),

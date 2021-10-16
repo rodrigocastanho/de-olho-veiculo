@@ -9,5 +9,7 @@ class TelaSobreApp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_sobre_app)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 }

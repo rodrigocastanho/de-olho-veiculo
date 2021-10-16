@@ -14,6 +14,7 @@ class Veiculo(
 
     @ColumnInfo(name = "nome_veiculo")  @CsvBindByName var nomeVeiculo: String,
     @ColumnInfo(name = "marca_veiculo") @CsvBindByName var marcaVeiculo: String,
+    @ColumnInfo(name = "cor")           @CsvBindByName var cor: String,
     @ColumnInfo(name = "placa_veiculo") @CsvBindByName var placaVeiculo: String,
     @ColumnInfo(name = "motor")         @CsvBindByName var motor: String,
     @ColumnInfo(name = "combustivel")   @CsvBindByName var combustivel: String,
@@ -22,7 +23,8 @@ class Veiculo(
 ): Parcelable {
 
     @Ignore
-    constructor() : this(0L,"","","","","","","")
+    constructor() : this(0L,"","","","","","","","")
+
 }
 
 

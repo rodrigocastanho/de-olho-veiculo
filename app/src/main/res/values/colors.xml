@@ -3,4 +3,5 @@
     <color name="cordeFundo">#DEE0D9</color>
     <color name="cordoStatusBar">#8B8181</color>
     <color name="cortextoBotao">#292525</color>
+    <color name="cor_bt_ed_tp_manutencao">#D7D7D7</color>
 </resources>

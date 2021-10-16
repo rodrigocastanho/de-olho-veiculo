@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
@@ -8,23 +9,26 @@
               android:background="@color/cordeFundo"
               tools:context="br.com.devnattiva.deolhoveiculo.TelaAbertura">
 
-    <ImageView
-            android:src="@drawable/icondeolhoveiculo"
+    <androidx.appcompat.widget.AppCompatImageView
+            app:srcCompat="@drawable/icondeolhoveiculo"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/logoapp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
             android:text="DeOlhoVeiculo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:id="@+id/TextoLogo"/>
 
-    <ProgressBar
-               android:layout_width="45dp"
-               android:layout_height="45dp"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
                android:layout_marginTop="110dp"
+               android:indeterminate="true"
+               app:indicatorSize="60dp"
+               app:trackColor="@color/cordoStatusBar"
                android:id="@+id/Loading"/>
 </LinearLayout>

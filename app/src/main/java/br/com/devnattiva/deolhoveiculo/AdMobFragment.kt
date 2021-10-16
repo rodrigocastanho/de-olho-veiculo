@@ -1,5 +1,6 @@
 package br.com.devnattiva.deolhoveiculo
 
+import android.annotation.SuppressLint
 import com.google.android.gms.ads.AdRequest
 
 import androidx.fragment.app.Fragment
@@ -60,6 +61,7 @@ class AdMobFragment : Fragment() {
 
     }
 
+    @SuppressLint("MissingPermission")
     @Throws(Exception::class)
     private fun bannerAd() {
         adView.adUnitId = viewAdmobBind!!.adView.adUnitId
@@ -75,9 +77,5 @@ class AdMobFragment : Fragment() {
         super.onDestroyView()
         viewAdmobBind = null
     }
-
-//    companion object {
-//        fun new() = AdMobFragment()
-//    }
 
 }

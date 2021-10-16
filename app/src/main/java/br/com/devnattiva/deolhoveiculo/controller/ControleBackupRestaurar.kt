@@ -93,7 +93,7 @@ class ControleBackupRestaurar {
               dados.forEach { d ->
                  val backupsDados = arrayOf(d.veiculo.idV.toString(),
                      d.veiculo.nomeVeiculo, d.veiculo.marcaVeiculo,
-                     d.veiculo.placaVeiculo, d.veiculo.motor,
+                     d.veiculo.cor, d.veiculo.placaVeiculo, d.veiculo.motor,
                      d.veiculo.combustivel, d.veiculo.tipoCambio,
                      d.veiculo.ano, d.manutencao.idM.toString(),
                      d.manutencao.idVM.toString(), d.manutencao.tipoManutencao,
@@ -196,7 +196,7 @@ class ControleBackupRestaurar {
 
             arquivoRestaurado.readAll().forEach { l ->
                 val dados = VeiculoManutencao(
-                                        Veiculo(l[0].toLong(), l[1], l[2], l[3], l[4], l[5], l[6], l[7]),
+                                        Veiculo(l[0].toLong(), l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8]),
                                         Manutencao(l[8].toLong(), l[9].toLong(), l[10], l[11],
                                             Util.converteTextoData(l[12]), l[13], l[14]))
 

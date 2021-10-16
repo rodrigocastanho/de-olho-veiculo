@@ -9,7 +9,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import br.com.devnattiva.deolhoveiculo.DatePickerFragmentDialog
+import br.com.devnattiva.deolhoveiculo.R
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.*
 import br.com.devnattiva.deolhoveiculo.configuration.Util.STATIC.veiculoId
@@ -122,7 +124,7 @@ class StatusManutencaoAdapterRW(
         val observacao = itemview.mObservacao
         val btSalvar = itemview.btsalvar2
         val btExcluir = itemview.btexcluirManutencao
-        val btEditarManutencao = itemview.btEditarTpManutencoa
+        val btEditarManutencao = itemview.btEditarTpManutencao
 
 
       init {
