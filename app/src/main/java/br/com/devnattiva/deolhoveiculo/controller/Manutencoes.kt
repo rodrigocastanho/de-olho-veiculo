@@ -8,7 +8,7 @@ interface Manutencoes {
     fun manutencoesConfig(manutencao: Manutencao): LinkedList<Manutencao>
 
     fun addManutencao(): Manutencao {
-       return Manutencao(0, 0, "Nova Manutenção", "", null, "","")
+       return Manutencao(0, 0, "Nova Manutenção", "", "", null, "","")
     }
 
 }

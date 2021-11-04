@@ -24,13 +24,15 @@ class Manutencao(
     @ColumnInfo(name = "id_manutencao")   @CsvBindByName var idM: Long,
     @ColumnInfo(name = "id_mveiculo")     @CsvBindByName var idVM: Long,
     @ColumnInfo(name = "tipo_manutencao") @CsvBindByName var tipoManutencao: String,
+    @ColumnInfo(name = "kmtroca_atual")   @CsvBindByName var kmtrocaAtual: String,
+
     @ColumnInfo(name = "kmtroca")         @CsvBindByName var kmtroca: String,
     @ColumnInfo(name = "data")            @CsvDate("yyyy-MM-dd") var data: LocalDate?,
     @ColumnInfo(name = "custo")           @CsvBindByName var custo: String,
     @ColumnInfo(name = "observacao")      @CsvBindByName var observacao: String) {
 
     @Ignore
-    constructor(): this(0L,0L,"","", null,"","")
+    constructor(): this(0L,0L,"","", "",null,"","")
 
 }
 

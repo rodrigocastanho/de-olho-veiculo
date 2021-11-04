@@ -12,9 +12,9 @@
     <application
             android:hardwareAccelerated="true"
             android:allowBackup="false"
-            android:icon="@drawable/icondeolhoveiculo"
+            android:icon="@mipmap/icondeolhoveiculo"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/icondeolhoveiculo"
+            android:roundIcon="@mipmap/icondeolhoveiculoround"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 

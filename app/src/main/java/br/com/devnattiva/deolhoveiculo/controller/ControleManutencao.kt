@@ -103,7 +103,11 @@ class ControleManutencao: Manutencoes {
          bd = BancoDadoConfig.getInstance(context.applicationContext)
 
         if(manutencao.idVM != 0L) {
-            if (manutencao.kmtroca.isNotEmpty() || manutencao.data != null || manutencao.custo.isNotEmpty()) {
+            if (manutencao.kmtrocaAtual.isNotEmpty() ||
+                manutencao.kmtroca.isNotEmpty() ||
+                manutencao.data != null ||
+                manutencao.custo.isNotEmpty()
+            ) {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {

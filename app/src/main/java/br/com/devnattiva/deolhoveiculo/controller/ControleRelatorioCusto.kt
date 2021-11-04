@@ -27,7 +27,9 @@ class ControleRelatorioCusto {
 
         CoroutineScope(IO).launch {
             try {
-                bd.controleDAO().buscaVeiculo().forEach { veiculos[it.idV] = "\t\t\t\t\t\t" +it.nomeVeiculo }
+                bd.controleDAO().buscaVeiculo()
+                    .sortedBy { it.nomeVeiculo }
+                    .forEach { veiculos[it.idV] = "\t\t\t\t\t\t" +it.nomeVeiculo }
             }catch (e: Exception) {
                 Log.e("ERRO_BUSCA_V_CUSTO", " ERRO_BUSCA_VEICULO_CUSTO $e")
             }finally {

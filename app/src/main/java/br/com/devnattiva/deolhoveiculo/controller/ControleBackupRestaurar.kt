@@ -8,7 +8,6 @@ import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.core.app.ActivityCompat
@@ -97,7 +96,8 @@ class ControleBackupRestaurar {
                      d.veiculo.combustivel, d.veiculo.tipoCambio,
                      d.veiculo.ano, d.manutencao.idM.toString(),
                      d.manutencao.idVM.toString(), d.manutencao.tipoManutencao,
-                     d.manutencao.kmtroca, Util.converteDataTexto(d.manutencao.data),
+                     d.manutencao.kmtrocaAtual, d.manutencao.kmtroca,
+                     Util.converteDataTexto(d.manutencao.data),
                      d.manutencao.custo, d.manutencao.observacao)
 
                  arquivoCSV.writeNext(backupsDados)
@@ -142,7 +142,6 @@ class ControleBackupRestaurar {
         context.startActivity(Intent.createChooser(intent, "backup..."))
    }
     
-    @SuppressLint("SdCardPath")
     fun restaurarBackupDados(context: Activity, arquivo: ActivityResultLauncher<Intent>) {
         if(!permissoes(context, "LEITURA")) {
             telaPermissoes(context, 2)
@@ -196,9 +195,9 @@ class ControleBackupRestaurar {
 
             arquivoRestaurado.readAll().forEach { l ->
                 val dados = VeiculoManutencao(
-                                        Veiculo(l[0].toLong(), l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8]),
-                                        Manutencao(l[8].toLong(), l[9].toLong(), l[10], l[11],
-                                            Util.converteTextoData(l[12]), l[13], l[14]))
+                    Veiculo(l[0].toLong(), l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8]),
+                    Manutencao(l[9].toLong(), l[10].toLong(), l[11], l[12], l[13],
+                        Util.converteTextoData(l[14]), l[15], l[16]))
 
                 restauraBackup.add(dados)
 

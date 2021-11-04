@@ -19,6 +19,35 @@ class ControleVeiculo {
 
     private lateinit var bd: BancoDadoConfig
 
+    fun buscarVeiculo(context: Activity): Pair<MutableList<String>, MutableList<Long>> {
+        bd = BancoDadoConfig.getInstance(context.applicationContext)
+
+        val veiculos: Pair<MutableList<String>, MutableList<Long>> =
+            Pair(mutableListOf("\t\t\t\t\t\t Buscar Veículo"),
+                mutableListOf(0))
+
+        CoroutineScope(IO).launch {
+            try {
+                val buscveiculo = bd.controleDAO().buscaVeiculo()
+
+                if(buscveiculo.isNotEmpty()) {
+                    val buscVeiculos = buscveiculo.sortedBy { it.nomeVeiculo }.toList()
+
+                    for (v: Veiculo in buscVeiculos) {
+                        veiculos.first.add(" \t\t\t\t\t\t " + v.nomeVeiculo)
+                        veiculos.second.add(v.idV)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("ERRO_BUSCA_VM", " ERRO_BUSCA_VEICULO_MANUTENÇÂO $e")
+
+            } finally {
+                bd.close()
+            }
+        }
+        return veiculos
+    }
+
     fun salvarVeiculo(veiculo: Veiculo, context: Activity) {
 
         if(veiculo.nomeVeiculo.isNotEmpty()) {
@@ -44,7 +73,6 @@ class ControleVeiculo {
         } else {
             Toast.makeText(context, "FALTOU NOME DO VEÍCULO", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     //Valor do objeto veiculo vem da class SobreVeiculoDialog

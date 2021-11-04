@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Android/Sdk/platforms/android-31/data/res/layout/preference_category.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_app.xml" value="0.259765625" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_backup_restaurar_24.xml" value="0.259765625" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_carro.xml" value="0.259765625" />
@@ -12,25 +13,39 @@
         <entry key="app/src/main/res/drawable/ic_bt_filtro.xml" value="0.259765625" />
         <entry key="app/src/main/res/drawable/ic_editat_manutencao_24.xml" value="0.259375" />
         <entry key="app/src/main/res/drawable/ic_fundo_data_custo.xml" value="0.259765625" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/drawable/ic_odometrokm.xml" value="0.27734375" />
+        <entry key="app/src/main/res/drawable/icondeolhoveiculo.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/drawable/icondeolhoveiculo_launcher_background.xml" value="0.2765625" />
+        <entry key="app/src/main/res/drawable/inveiculo.xml" value="0.2765625" />
+        <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout-sw600dp/activity_tela_relatorio_custo.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout-v23/tipo_manutencao.xml" value="0.3296875" />
-        <entry key="app/src/main/res/layout-v26/tipo_manutencao.xml" value="0.24765625" />
+        <entry key="app/src/main/res/layout-v26/tipo_manutencao.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_tela_backup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_tela_cadastro.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/activity_tela_relatorio_custo.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_tela_sobre_app.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_tela_status_manutencao.xml" value="0.26640625" />
         <entry key="app/src/main/res/layout/activity_telaabertura.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/app_bar_tela_cadastro.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/content_tela_cadastro.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/content_tela_principalmain.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/content_tela_status_manutencao.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/content_tela_principalmain.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/content_tela_status_manutencao.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/editar_tipo_manutencao_dialog.xml" value="0.264453125" />
         <entry key="app/src/main/res/layout/fragment_ad_mob.xml" value="0.265234375" />
+        <entry key="app/src/main/res/layout/fragment_banner_admob.xml" value="0.264453125" />
         <entry key="app/src/main/res/layout/manutencoes_custo.xml" value="0.26640625" />
+        <entry key="app/src/main/res/layout/nav_header_tela_cadastro.xml" value="0.3536458333333333" />
+        <entry key="app/src/main/res/layout/nav_header_tela_principalmain.xml" value="0.3536458333333333" />
+        <entry key="app/src/main/res/layout/nav_header_tela_status_manutencao.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/sobre_veiculo_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/layout/tipo_manutencao.xml" value="0.33" />
         <entry key="app/src/main/res/menu/activity_tela_cadastro_drawer.xml" value="0.265234375" />
         <entry key="app/src/main/res/menu/activity_tela_status_manutencao_drawer.xml" value="0.265234375" />
         <entry key="app/src/main/res/menu/tela_status_manutencao.xml" value="0.26640625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/icondeolhoveiculo_launcher.xml" value="0.2765625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/icondeolhoveiculo_launcher_round.xml" value="0.27734375" />
       </map>
     </option>
   </component>

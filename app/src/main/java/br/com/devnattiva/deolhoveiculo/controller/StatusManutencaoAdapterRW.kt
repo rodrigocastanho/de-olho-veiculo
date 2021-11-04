@@ -7,11 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import br.com.devnattiva.deolhoveiculo.DatePickerFragmentDialog
-import br.com.devnattiva.deolhoveiculo.R
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.*
 import br.com.devnattiva.deolhoveiculo.configuration.Util.STATIC.veiculoId
@@ -45,11 +42,19 @@ class StatusManutencaoAdapterRW(
 
             it.descricaoManutencao.text = manutencoes[position].tipoManutencao
 
+            it.kmtrocaAtual.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun onTextChanged(kmAtual: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                     manutencoes[it.bindingAdapterPosition].kmtrocaAtual = kmAtual.toString()
+                }
+            })
+
             it.kmtroca.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(km: Editable?) {}
                 override fun beforeTextChanged(km: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(km: CharSequence?, start: Int, before: Int, count: Int) {
-                        manutencoes[it.bindingAdapterPosition].kmtroca = km.toString()
+                     manutencoes[it.bindingAdapterPosition].kmtroca = km.toString()
                 }
             })
 
@@ -57,7 +62,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(data: Editable?) {}
                 override fun beforeTextChanged(data: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(data: CharSequence?, start: Int, before: Int, count: Int) {
-                     manutencoes[it.bindingAdapterPosition].data  = Util.converteTextoData(data.toString())
+                      manutencoes[it.bindingAdapterPosition].data  = Util.converteTextoData(data.toString())
                 }
             })
 
@@ -65,7 +70,7 @@ class StatusManutencaoAdapterRW(
                 override fun afterTextChanged(custo: Editable?) {}
                 override fun beforeTextChanged(custo: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(custo: CharSequence?, start: Int, before: Int, count: Int) {
-                       manutencoes[it.bindingAdapterPosition].custo = Util.conversorMonetario(custo.toString())
+                     manutencoes[it.bindingAdapterPosition].custo = Util.conversorMonetario(custo.toString())
                 }
             })
 
@@ -80,6 +85,7 @@ class StatusManutencaoAdapterRW(
             })
 
             //Exibe os valores no EditText para o usuário
+              it.kmtrocaAtual.setText(manutencoes[position].kmtrocaAtual)
               it.kmtroca.setText(manutencoes[position].kmtroca)
               it.data.setText(Util.converteDataTexto(manutencoes[position].data))
               it.custo.setText(manutencoes[position].custo)
@@ -109,15 +115,17 @@ class StatusManutencaoAdapterRW(
         Manutencao(manutencoes[position].idM,
             veiculoId,
             holder.descricaoManutencao.text.toString(), //manutencoes[position].tipoManutencao
+            manutencoes[position].kmtrocaAtual,
             manutencoes[position].kmtroca,
             manutencoes[position].data,
             manutencoes[position].custo,
             manutencoes[position].observacao)
 
 
-  inner class ViewHolder(itemview: TipoManutencaoBinding) : RecyclerView.ViewHolder(itemview.root), View.OnClickListener {
+  inner class ViewHolder(itemview: TipoManutencaoBinding) : RecyclerView.ViewHolder(itemview.root) {
 
         val descricaoManutencao = itemview.tipoManutencao
+        val kmtrocaAtual = itemview.kmTrocaAtual
         val kmtroca = itemview.kmTroca
         val data = itemview.dataTroca
         val custo = itemview.custo
@@ -133,14 +141,8 @@ class StatusManutencaoAdapterRW(
                  DatePickerFragmentDialog().exibirDataPicker(supportFragmentManager, data)
             }
             custo.addTextChangedListener(Util.mascMonetario(custo))
-            observacao.setOnClickListener(this)
 
       }
-
-      override fun onClick(v: View?) {
-          Util.fecharTeclado(context)
-      }
-
   }
 
 }
