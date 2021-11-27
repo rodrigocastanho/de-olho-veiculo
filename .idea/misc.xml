@@ -42,6 +42,7 @@
         <entry key="app/src/main/res/layout/sobre_veiculo_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/layout/tipo_manutencao.xml" value="0.33" />
         <entry key="app/src/main/res/menu/activity_tela_cadastro_drawer.xml" value="0.265234375" />
+        <entry key="app/src/main/res/menu/activity_tela_principalmain_drawer.xml" value="0.265234375" />
         <entry key="app/src/main/res/menu/activity_tela_status_manutencao_drawer.xml" value="0.265234375" />
         <entry key="app/src/main/res/menu/tela_status_manutencao.xml" value="0.26640625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/icondeolhoveiculo_launcher.xml" value="0.2765625" />

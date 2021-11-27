@@ -8,8 +8,8 @@
     <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:adSize="LARGE_BANNER"
-            app:adUnitId="@string/banner_ad_unit_id" />
+            android:layout_height="wrap_content"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/banner_app_id" />
 
 </LinearLayout>

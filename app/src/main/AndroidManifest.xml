@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:hardwareAccelerated="true"
@@ -24,7 +23,7 @@
         -->
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-3940256099942544~3347511713" />
+                android:value="@string/admob_app_id" />
 
         <activity
                 android:name=".TelaRelatorioCusto"
@@ -60,7 +59,6 @@
         </activity>
         <activity
                 android:name=".TelaPrincipalmain"
-                android:configChanges="orientation|screenSize"
                 android:label="@string/title_activity_tela_principalmain"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity

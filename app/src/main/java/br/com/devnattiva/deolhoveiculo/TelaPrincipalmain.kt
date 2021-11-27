@@ -53,6 +53,10 @@ class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.Home -> {
+                //Chama tela Principal
+                startActivity(Intent(this, TelaPrincipalmain::class.java))
+            }
             R.id.CadastroVeiculo -> {
                 //Chamar a tela de cadastro
                 startActivity(Intent(this, TelaCadastro::class.java))
