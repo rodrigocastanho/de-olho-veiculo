@@ -8,13 +8,19 @@ import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaBackupBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
@@ -24,15 +30,14 @@ import com.opencsv.CSVWriter
 import kotlinx.coroutines.Dispatchers.Main
 import java.io.*
 import kotlin.Exception
+import kotlin.jvm.Throws
+
+const val NOME_ARQUIVO = "deolhoveiculo_bkp.csv"
+const val AUTORIZACAO_PROVIDER = "br.com.devnattiva.deolhoveiculo"
 
 class ControleBackupRestaurar {
 
     private lateinit var bd: BancoDadoConfig
-    @JvmField
-    val NOME_ARQUIVO = "deolhoveiculo_bkp.csv"
-    @JvmField
-    val NOME_DIRETORIO = "DeOlhoVeiculoBackup"
-
 
     fun backupDados(context: Activity, viewActivityBackup: ActivityTelaBackupBinding) {
         exibirProcessoCarramento( true, "", viewActivityBackup)
@@ -65,44 +70,100 @@ class ControleBackupRestaurar {
    }
 
    private fun criarBackup(context: Activity, dados: List<VeiculoManutencao>): Boolean {
-
-       var arquivoEstrica: FileWriter?= null
        var status = false
-       lateinit var diretorioArquivo: String
+       lateinit var diretorioArquivo: Uri
 
        if(!permissoes(context, "ESCRITA")) {
            telaPermissoes(context, 1)
 
        }else {
            try {
-               val diretorio = File(context.getExternalFilesDir(null), NOME_DIRETORIO)
-               if(!diretorio.exists()) {
-                   diretorio.mkdir()
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    diretorioArquivo = manipularDiretorioArquivoAndroidVersoesNova(context, dados)
+                } else {
+                    diretorioArquivo = manipularDiretorioArquivoAndroidVersoesAntiga(context, dados)
+                }
+
+               status = true
+           } catch (e: Exception) {
+               status = false
+               Log.e("ERRO_ESCRITA", "ERRO_BACKUP $e")
+
+           } finally {
+               if(status) {
+                   enviarArquivoBKP(context, diretorioArquivo)
                }
+           }
 
-               diretorioArquivo = "$diretorio/$NOME_ARQUIVO"
-               arquivoEstrica = FileWriter(diretorioArquivo)
+       }
+       return status
+   }
 
-               val arquivoCSV = CSVWriter(arquivoEstrica,
-                                           ',',
-                                            CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                                            CSVWriter.NO_ESCAPE_CHARACTER,
-                                            CSVWriter.DEFAULT_LINE_END)
+    @RequiresApi(Build.VERSION_CODES.Q)
+    @Throws(Exception::class)
+    private fun manipularDiretorioArquivoAndroidVersoesNova(context: Activity, dados: List<VeiculoManutencao>): Uri {
+        val contentResolver = context.applicationContext.contentResolver
+        val diretorioMedia = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
-              dados.forEach { d ->
-                 val backupsDados = arrayOf(d.veiculo.idV.toString(),
-                     d.veiculo.nomeVeiculo, d.veiculo.marcaVeiculo,
-                     d.veiculo.cor, d.veiculo.placaVeiculo, d.veiculo.motor,
-                     d.veiculo.combustivel, d.veiculo.tipoCambio,
-                     d.veiculo.ano, d.manutencao.idM.toString(),
-                     d.manutencao.idVM.toString(), d.manutencao.tipoManutencao,
-                     d.manutencao.kmtrocaAtual, d.manutencao.kmtroca,
-                     Util.converteDataTexto(d.manutencao.data),
-                     d.manutencao.custo, d.manutencao.observacao)
+        val novoArquivo = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, NOME_ARQUIVO)
+            put(MediaStore.MediaColumns.MIME_TYPE, "text/csv")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS)
+            put(MediaStore.Files.FileColumns.IS_PENDING, 1)
+        }
 
-                 arquivoCSV.writeNext(backupsDados)
+        val arquivoAdicionado = contentResolver.insert(diretorioMedia, novoArquivo)
+        val arquivoMediaAdicionado = arquivoAdicionado?.let { contentResolver.openFileDescriptor(it, "w") }
+        val arquivoOut = FileOutputStream(arquivoMediaAdicionado?.fileDescriptor)
 
-              }
+        val diretorio = criarArquivoDiretorio(context, true, dados)
+
+        val arquivoInput = FileInputStream(diretorio)
+        arquivoOut.write(arquivoInput.readBytes())
+        arquivoOut.close()
+        arquivoInput.close()
+        arquivoMediaAdicionado?.close()
+
+        novoArquivo.clear()
+        novoArquivo.put(MediaStore.Files.FileColumns.IS_PENDING, 0)
+        arquivoAdicionado?.let { contentResolver.update(it, novoArquivo, null, null) }
+
+        return FileProvider.getUriForFile(context.baseContext, AUTORIZACAO_PROVIDER, diretorio)
+    }
+
+    @Throws(Exception::class)
+    private fun manipularDiretorioArquivoAndroidVersoesAntiga(context: Activity, dados: List<VeiculoManutencao>): Uri {
+        val diretorio = criarArquivoDiretorio(context, false, dados)
+        return FileProvider.getUriForFile(context.baseContext, AUTORIZACAO_PROVIDER, diretorio)
+    }
+
+    private fun criarArquivoDiretorio(context: Activity, status: Boolean, dados: List<VeiculoManutencao>): File {
+        val diretorio = if (status) {
+            File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), NOME_ARQUIVO)
+        } else File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOME_ARQUIVO)
+
+        val arquivoEstrica = FileWriter(diretorio)
+        val arquivoCSV = CSVWriter(
+                arquivoEstrica,
+                ',',
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.NO_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END
+        )
+
+        dados.forEach { d ->
+            val backupsDados = arrayOf(d.veiculo.idV.toString(),
+                d.veiculo.nomeVeiculo, d.veiculo.marcaVeiculo,
+                d.veiculo.cor, d.veiculo.placaVeiculo, d.veiculo.motor,
+                d.veiculo.combustivel, d.veiculo.tipoCambio,
+                d.veiculo.ano, d.manutencao.idM.toString(),
+                d.manutencao.idVM.toString(), d.manutencao.tipoManutencao,
+                d.manutencao.kmtrocaAtual, d.manutencao.kmtroca,
+                Util.converteDataTexto(d.manutencao.data),
+                d.manutencao.custo, d.manutencao.observacao)
+
+            arquivoCSV.writeNext(backupsDados)
+        }
 
 //           Nas API anteriorior 24 esse trecho de código não funciona pois há incompatibilidades Beans e Mapper
 //               val arquivoBackup = mapeamentoBackupCSV()
@@ -114,28 +175,17 @@ class ControleBackupRestaurar {
 //
 //               arquivoCSV.write(dados)
 
-               status = true
-           } catch (e: Exception) {
-               status = false
-               Log.e("ERRO_ESCRITA", "ERRO_BACKUP $e")
+        arquivoEstrica.flush()
+        arquivoEstrica.close()
 
-           } finally {
-               arquivoEstrica?.flush()
-               arquivoEstrica?.close()
-               if(status) {
-                   enviarArquivoBKP(context, Uri.parse(diretorioArquivo))
-               }
-           }
-
-       }
-       return status
-
-   }
+        return diretorio
+    }
 
    private fun enviarArquivoBKP(context: Activity, diretorioArquivo: Uri) {
          val intent = Intent().apply {
              action = Intent.ACTION_SEND
              putExtra(Intent.EXTRA_STREAM, diretorioArquivo)
+             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
              type = "text/csv"
 
         }

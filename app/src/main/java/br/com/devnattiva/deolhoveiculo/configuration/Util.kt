@@ -1,5 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.configuration
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
@@ -114,8 +115,17 @@ class Util {
 
         fun conversorMonetario(valor: String): String = valor.replace(",",".").trim()
 
-    }
+        fun acessoInicial(context: Activity, status: Boolean) {
+            context.getPreferences(Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean("ACESSO_KEY", status)
+                .apply()
+        }
 
+        fun verificarAcessoInicial(context: Activity): Boolean {
+           return context.getPreferences(Context.MODE_PRIVATE).getBoolean("ACESSO_KEY", false)
+        }
+    }
 }
 
 

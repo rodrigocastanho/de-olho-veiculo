@@ -29,9 +29,10 @@
         <entry key="app/src/main/res/layout/activity_tela_status_manutencao.xml" value="0.26640625" />
         <entry key="app/src/main/res/layout/activity_telaabertura.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/app_bar_tela_cadastro.xml" value="0.265234375" />
+        <entry key="app/src/main/res/layout/app_bar_tela_principalmain.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/content_tela_cadastro.xml" value="0.33" />
         <entry key="app/src/main/res/layout/content_tela_principalmain.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/content_tela_status_manutencao.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/content_tela_status_manutencao.xml" value="0.33" />
         <entry key="app/src/main/res/layout/editar_tipo_manutencao_dialog.xml" value="0.264453125" />
         <entry key="app/src/main/res/layout/fragment_ad_mob.xml" value="0.265234375" />
         <entry key="app/src/main/res/layout/fragment_banner_admob.xml" value="0.264453125" />
@@ -47,6 +48,7 @@
         <entry key="app/src/main/res/menu/tela_status_manutencao.xml" value="0.26640625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/icondeolhoveiculo_launcher.xml" value="0.2765625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/icondeolhoveiculo_launcher_round.xml" value="0.27734375" />
+        <entry key="app/src/main/res/xml/filepaths.xml" value="0.265234375" />
       </map>
     </option>
   </component>

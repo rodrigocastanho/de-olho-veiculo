@@ -14,6 +14,9 @@ interface ControleDAO {
     @Query("SELECT * FROM Veiculo")
     fun buscaVeiculo(): List<Veiculo>
 
+    @Query("SELECT * FROM Veiculo LIMIT 1")
+    fun buscaVeiculoAcesso(): List<Veiculo>
+
     @Query("SELECT * FROM Veiculo WHERE Veiculo.id_veiculo = :idVeiculo")
     fun buscaVeiculoId(idVeiculo: Long): Veiculo
 
