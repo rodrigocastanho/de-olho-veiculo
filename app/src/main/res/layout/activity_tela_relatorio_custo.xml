@@ -141,8 +141,8 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_manutencoes_custo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/fg_anuncio_banner"
             app:layout_constraintVertical_bias="0.1"
+            android:layout_marginTop="4dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
 
