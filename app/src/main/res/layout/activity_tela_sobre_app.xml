@@ -26,7 +26,7 @@
             android:id="@+id/txt_versao_sobre_app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/vers_o_1_0"
+            android:text="@string/versao"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/txt_sobre_app"
             app:layout_constraintStart_toStartOf="parent"
