@@ -1,7 +1,6 @@
 package br.com.devnattiva.deolhoveiculo
 
 import android.annotation.SuppressLint
-import com.google.android.gms.ads.AdRequest
 
 import androidx.fragment.app.Fragment
 
@@ -9,8 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import br.com.devnattiva.deolhoveiculo.databinding.FragmentAdMobBinding
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import java.lang.Exception
 import kotlin.jvm.Throws
 
@@ -46,6 +44,11 @@ class AdMobFragment : Fragment() {
         adView = AdView(requireContext())
         val adRequest = AdRequest.Builder().build()
         viewAdmobBind?.adView!!.loadAd(adRequest)
+        viewAdmobBind?.adView!!.adListener = object: AdListener() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("ADS_DEBUG", adError.toString())
+            }
+        }
     }
 
     override fun onDestroyView() {
