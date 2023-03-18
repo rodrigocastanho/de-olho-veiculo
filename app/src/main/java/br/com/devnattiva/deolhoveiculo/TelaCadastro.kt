@@ -2,16 +2,16 @@ package br.com.devnattiva.deolhoveiculo
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaCadastroBinding
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
+import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
+import com.google.android.material.navigation.NavigationView
 
 
 class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

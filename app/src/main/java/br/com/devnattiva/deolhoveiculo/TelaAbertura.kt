@@ -30,7 +30,7 @@ class TelaAbertura : AppCompatActivity() {
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
 
-        },6000)
+        },5000)
     }
 
 }

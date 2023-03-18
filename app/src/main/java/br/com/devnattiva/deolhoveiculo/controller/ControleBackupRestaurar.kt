@@ -44,7 +44,7 @@ class ControleBackupRestaurar {
          CoroutineScope(IO).launch {
               val dadosBackup = async { buscarDadosParaBkP(context) }
               if(!dadosBackup.await().isNullOrEmpty()) {
-               val status = criarBackup(context, dadosBackup.await())
+                  val status = criarBackup(context, dadosBackup.await())
                   withContext(Main) {
                       if(status) {
                           exibirProcessoCarramento(false,"Backup criado com sucesso", viewActivityBackup)

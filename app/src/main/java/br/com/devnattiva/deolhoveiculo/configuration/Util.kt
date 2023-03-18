@@ -1,6 +1,5 @@
 package br.com.devnattiva.deolhoveiculo.configuration
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
@@ -9,9 +8,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Util {
@@ -93,14 +91,16 @@ class Util {
             veiculoId = veiculoID
         }
 
-        fun converteDataTexto(data: LocalDate?): String? {
-            return data?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+        fun converteDataTexto(data: Date?): String? {
+            val dateFormate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return data?.let { dateFormate.format(it) }
         }
 
-        fun converteTextoData(data: String?): LocalDate? {
-            if(!data.isNullOrEmpty()) {
-                return LocalDate.parse(data, DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-            }else return null
+        fun converteTextoData(data: String?): Date? {
+            return if(!data.isNullOrEmpty()) {
+                val dateFormate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                dateFormate.parse(data)
+            } else null
 
         }
 

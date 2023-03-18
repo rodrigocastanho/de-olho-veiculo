@@ -4,11 +4,10 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.fragment.app.FragmentManager
 import br.com.devnattiva.deolhoveiculo.configuration.Util
-import java.time.LocalDate
 import java.util.*
 
 class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -27,9 +26,10 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
     }
 
     override fun onDateSet(view: DatePicker, ano: Int, mes: Int, dia: Int) {
-        val data = LocalDate.of(ano, mes + 1, dia)
+        val calendario = Calendar.getInstance()
+        calendario.set(ano, (mes + 1), dia)
+        val data = calendario.time
         campoData?.setText(Util.converteDataTexto(data))
-
     }
 
     fun exibirDataPicker(supportFragmentManager: FragmentManager, editText: EditText) {
@@ -44,7 +44,7 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
         val dtFinal = Util.converteTextoData(dataFinal.text.toString())
 
         if(dtInicial != null && dtFinal != null) {
-            if (dtInicial.isAfter(dtFinal)) {
+            if (dtInicial.after(dtFinal)) {
                 throw Exception(MESSANGEM_INTERVALO_DATA)
             }
         }

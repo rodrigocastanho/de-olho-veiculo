@@ -4,7 +4,7 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import com.opencsv.bean.CsvBindByName
 import com.opencsv.bean.CsvDate
-import java.time.LocalDate
+import java.util.*
 
 @Entity(
     tableName = "Manutencao",
@@ -27,7 +27,7 @@ class Manutencao(
     @ColumnInfo(name = "kmtroca_atual")   @CsvBindByName var kmtrocaAtual: String,
 
     @ColumnInfo(name = "kmtroca")         @CsvBindByName var kmtroca: String,
-    @ColumnInfo(name = "data")            @CsvDate("yyyy-MM-dd") var data: LocalDate?,
+    @ColumnInfo(name = "data")            @CsvDate("yyyy-MM-dd") var data: Date?,
     @ColumnInfo(name = "custo")           @CsvBindByName var custo: String,
     @ColumnInfo(name = "observacao")      @CsvBindByName var observacao: String) {
 

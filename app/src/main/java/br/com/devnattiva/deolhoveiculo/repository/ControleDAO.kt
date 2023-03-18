@@ -5,6 +5,7 @@ import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import java.time.LocalDate
+import java.util.*
 
 @Dao
 interface ControleDAO {
@@ -63,7 +64,7 @@ interface ControleDAO {
 /*-------------------------------------Relatorio Custo---------------------------------------*/
 
     @Query("SELECT * FROM Manutencao WHERE Manutencao.data BETWEEN :dataInicial AND :dataFinal AND Manutencao.id_mveiculo = :idVeiculo")
-    fun buscarCustoData(idVeiculo: Long, dataInicial: LocalDate?, dataFinal: LocalDate?): List<Manutencao>
+    fun buscarCustoData(idVeiculo: Long, dataInicial: Date?, dataFinal: Date?): List<Manutencao>
 
 
 }
