@@ -59,10 +59,9 @@ class Util {
                             if (s.toString().isNotEmpty()) {
 
                                 valor.removeTextChangedListener(this)
-                                val str = s.toString().replace(("[R$]").toRegex(), "")
-                                                      .replace(("[,]").toRegex(), ".").trim()
+                                val str = s.toString().replace(("[R$,.]").toRegex(), "").trim()
                                 val parsed = java.lang.Double.valueOf(str)
-                                val formatted = NumberFormat.getCurrencyInstance().format((parsed))
+                                val formatted = NumberFormat.getCurrencyInstance().format((parsed / 100))
                                 valorAtual = formatted
 
                                 valor.text = valorAtual
@@ -70,7 +69,6 @@ class Util {
                                 valor.addTextChangedListener(this)
                             }
                         }
-
                     }
                  }
             }
@@ -78,13 +76,10 @@ class Util {
         }
 
         fun mascMonetarioTotal(valor: String): String? {
-            if(valor.isNotEmpty()) {
+            return if(valor.isNotEmpty()) {
                 val parsed = valor.toDouble()
-                return NumberFormat.getCurrencyInstance().format((parsed))
-            }else {
-                return ""
-            }
-
+                NumberFormat.getCurrencyInstance().format((parsed / 100))
+            } else ""
         }
 
         fun pegarVeiculoId(veiculoID: Long) {
@@ -101,7 +96,6 @@ class Util {
                 val dateFormate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 dateFormate.parse(data)
             } else null
-
         }
 
         fun fecharTeclado(context: Activity) {
