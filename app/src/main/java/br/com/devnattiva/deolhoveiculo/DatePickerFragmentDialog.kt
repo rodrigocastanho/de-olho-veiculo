@@ -14,10 +14,9 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
 
     private var campoData: EditText?= null
     private val MESSANGEM_INTERVALO_DATA = "Data inicial não pode ser maior que a data final."
+    private val calendario = Calendar.getInstance()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        val calendario = Calendar.getInstance()
         val ano = calendario.get(Calendar.YEAR)
         val mes = calendario.get(Calendar.MONTH)
         val dia = calendario.get(Calendar.DAY_OF_MONTH)
@@ -26,8 +25,7 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
     }
 
     override fun onDateSet(view: DatePicker, ano: Int, mes: Int, dia: Int) {
-        val calendario = Calendar.getInstance()
-        calendario.set(ano, (mes + 1), dia)
+        calendario.set(ano, mes, dia)
         val data = calendario.time
         campoData?.setText(Util.converteDataTexto(data))
     }
