@@ -14,7 +14,7 @@ android {
         applicationId "br.com.devnattiva.deolhoveiculo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 4
+        versionCode 5
         versionName "1.2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
