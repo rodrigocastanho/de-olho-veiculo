@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -72,24 +73,22 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         viewCadastroBind.navView.setNavigationItemSelectedListener(this)
+
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewCadastroBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    viewCadastroBind.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+            }
+        })
     }
-
-    override fun onBackPressed() {
-        if (viewCadastroBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            viewCadastroBind.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.btExcluir -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.btExcluir -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

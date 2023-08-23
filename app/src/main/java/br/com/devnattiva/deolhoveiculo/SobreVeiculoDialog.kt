@@ -39,7 +39,8 @@ class SobreVeiculoDialog : DialogFragment() {
 
             viewBinding.btEditarVeiculo.setOnClickListener {
 
-               val veiculoEditado = Veiculo(veiculo.idV,
+               val veiculoEditado = Veiculo(
+                   veiculo.idV,
                    viewBinding.sbTxtNomeVeiculo.text.toString(),
                    viewBinding.sbTxtMarca.text.toString(),
                    viewBinding.sbTxtCor.text.toString(),
@@ -47,10 +48,10 @@ class SobreVeiculoDialog : DialogFragment() {
                    viewBinding.sbTxtMotor.text.toString(),
                    viewBinding.sbCombustivel.selectedItem.toString(),
                    viewBinding.sbCambio.selectedItem.toString(),
-                   viewBinding.sbTxtAnoFabricacao.text.toString())
-
-                   startActivity(Intent(requireContext(), TelaCadastro::class.java)
-                       .putExtra("veiculoEditado", veiculoEditado))
+                   viewBinding.sbTxtAnoFabricacao.text.toString()
+               )
+                startActivity(Intent(requireContext(), TelaCadastro::class.java)
+                    .putExtra("veiculoEditado", veiculoEditado))
 
             }
             viewBinding.btFecharVeiculo.setOnClickListener { dialog?.dismiss() }

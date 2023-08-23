@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaPrincipalmainBinding
 
 
@@ -40,16 +41,14 @@ class TelaPrincipalmain : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
        viewPrincipalBind.navView.setNavigationItemSelectedListener(this)
 
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewPrincipalBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    viewPrincipalBind.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+            }
+        })
     }
-
-    override fun onBackPressed() {
-        if (viewPrincipalBind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            viewPrincipalBind.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {

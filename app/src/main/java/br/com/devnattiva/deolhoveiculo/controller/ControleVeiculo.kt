@@ -2,9 +2,11 @@ package br.com.devnattiva.deolhoveiculo.controller
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import br.com.devnattiva.deolhoveiculo.TelaStatusManutencao
@@ -79,7 +81,10 @@ class ControleVeiculo {
     fun veiculoValorEditado(context: Activity): Veiculo? {
         var veiculoEditado: Veiculo? = null
         try {
-            veiculoEditado = context.intent?.getParcelableExtra("veiculoEditado")
+            veiculoEditado = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.intent?.getParcelableExtra("veiculoEditado", Veiculo::class.java)
+            } else @Suppress("DEPRECATION") context.intent?.getParcelableExtra("veiculoEditado")
+
         } catch (e: Exception) {
             Log.e("ERRO_PARCEL_VEICULO", "ERRO_PARCEL_VEICULO: $e")
         }

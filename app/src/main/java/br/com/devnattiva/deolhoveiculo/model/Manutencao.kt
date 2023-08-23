@@ -1,7 +1,7 @@
 package br.com.devnattiva.deolhoveiculo.model
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.Companion.CASCADE
 import com.opencsv.bean.CsvBindByName
 import com.opencsv.bean.CsvDate
 import java.util.*
