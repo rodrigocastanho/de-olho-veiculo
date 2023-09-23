@@ -170,8 +170,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btCadastro"
-                android:layout_marginTop="30dp"
+                android:layout_marginBottom="65dp"
                 app:layout_constraintTop_toBottomOf="@+id/fabricaoveiculo"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -179,20 +180,6 @@
                 android:textSize="18sp"
                 android:background="#918B8B"
                 android:textColor="#FFFFFF"/>
-
-        <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fg_anuncio_banner"
-                android:name="br.com.devnattiva.deolhoveiculo.AdMobFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/btCadastro"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                tools:layout="@layout/fragment_ad_mob" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
