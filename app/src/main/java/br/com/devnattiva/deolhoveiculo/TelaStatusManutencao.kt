@@ -3,7 +3,6 @@ package br.com.devnattiva.deolhoveiculo
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,23 +13,25 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.ControleManutencao
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaStatusManutencaoBinding
-import com.google.android.material.navigation.NavigationView
+import com.google.android.material.navigation.NavigationView.*
 
 
-class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class TelaStatusManutencao : AppCompatActivity(),
+    OnNavigationItemSelectedListener {
 
     private lateinit var viewActivity: ActivityTelaStatusManutencaoBinding
 
     private val veiculos = ControleVeiculo()
     private var veiculoId: Long = 0
+    private lateinit var adapterManutencao: StatusManutencaoAdapterRW
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,36 +46,55 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
 
         buscarVeiculo.adapter = ArrayAdapter(this, android.R.layout.preference_category, veiculosBusca.first)
         buscarVeiculo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
                 veiculoId = veiculosBusca.second[position]
-
-                Util.pegarVeiculoId(veiculoId)
-
-                controleManutencoes.fluxoManutencao(veiculoId, this@TelaStatusManutencao, supportFragmentManager, viewActivity.appBarManutencao.contentManutencao)
-
+                controleManutencoes.fluxoManutencao(
+                    veiculoId,
+                    this@TelaStatusManutencao,
+                    supportFragmentManager,
+                    viewActivity.appBarManutencao.contentManutencao,
+                    callBack = { adapterManutencao.submitList(controleManutencoes.manutencoes) }
+                )
                 Log.i("MEU ID", " ID $veiculoId")
+            }
+        }
 
+        viewActivity.appBarManutencao.contentManutencao
+            .ivFiltro.setOnClickListener {
+                FiltroDialog(callBack = { manutencao, dialog ->
+                    dialog.dismiss()
+                    val manutencoesFiltro = controleManutencoes.filtrarManutencoes(manutencao)
+                    adapterManutencao.submitList(manutencoesFiltro)
+                }).show(supportFragmentManager, "FiltroManutencao")
+        }
+
+        adapterManutencao = StatusManutencaoAdapterRW(
+            context = this@TelaStatusManutencao,
+            fragment = supportFragmentManager,
+            controleManutencao = controleManutencoes
+        )
+
+        viewActivity.appBarManutencao.contentManutencao
+            .recyclerViewManutencao.apply {
+                setHasFixedSize(true)
+                adapter = adapterManutencao
             }
 
+        viewActivity.appBarManutencao
+            .contentManutencao.btFtAddManutencao.setOnClickListener {
+                AddManutencaoDialog(callBack = { manutencao, dialog ->
+                    dialog.dismiss()
+                    viewActivity.appBarManutencao.contentManutencao.tvNaoManutencao.isVisible = false
+                    viewActivity.appBarManutencao.contentManutencao.ivFiltro.isInvisible = false
+                    manutencao.idVM = veiculoId
+                    controleManutencoes.salvarManutencao(manutencao, this)
+                    controleManutencoes.adicionarManutencao(manutencao)
+                    adapterManutencao.submitList(controleManutencoes.manutencoes)
+                }).show(supportFragmentManager, "AddManutencao")
         }
 
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.layoutManager = layoutManager
-        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.adapter = StatusManutencaoAdapterRW(controleManutencoes.arrayManutencoes,this, supportFragmentManager)
-
-
-        viewActivity.appBarManutencao.contentManutencao.btFtAddManutencao.setOnClickListener {
-            controleManutencoes.arrayManutencoes.add(controleManutencoes.addManutencao())
-            viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.adapter?.notifyItemInserted(controleManutencoes.arrayManutencoes.size)
-            layoutManager.scrollToPosition(controleManutencoes.arrayManutencoes.size-1)
-
-        }
-
-        viewActivity.appBarManutencao.contentManutencao.statusManutencao.setOnClickListener{
+        viewActivity.appBarManutencao.contentManutencao.statusManutencao.setOnClickListener {
             Util.fecharTeclado(this)
         }
 
@@ -97,6 +117,7 @@ class TelaStatusManutencao : AppCompatActivity(), NavigationView.OnNavigationIte
             }
         })
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.tela_status_manutencao, menu)

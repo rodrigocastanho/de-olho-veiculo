@@ -88,10 +88,11 @@ class ControleRelatorioCusto {
     }
     
      private fun calcularTotalCusto(manutencoes: List<Manutencao>): Double {
-        var total = 0.0
+         var total = 0.0
         manutencoes.forEach { m -> total += (
                 m.custo
                     .replace(".", "")
+                    .replace(",", ".")
                     .toDoubleOrNull() ?: 0.0
                 )
         }

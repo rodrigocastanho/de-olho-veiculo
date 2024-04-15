@@ -1,148 +1,102 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
-import android.app.Activity
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import android.text.Editable
-import android.text.TextWatcher
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import br.com.devnattiva.deolhoveiculo.DatePickerFragmentDialog
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import br.com.devnattiva.deolhoveiculo.AddManutencaoDialog
 import br.com.devnattiva.deolhoveiculo.configuration.Util
-import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.*
-import br.com.devnattiva.deolhoveiculo.configuration.Util.STATIC.veiculoId
+import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW.ViewHolder
 import br.com.devnattiva.deolhoveiculo.databinding.TipoManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
-import java.util.*
-
 
 class StatusManutencaoAdapterRW(
-    private val manutencoes: LinkedList<Manutencao>,
-    private val context: Activity,
-    private val supportFragmentManager: FragmentManager
-) : Adapter<ViewHolder>() {
+    private val context: Context,
+    private val fragment: FragmentManager,
+    private val controleManutencao: ControleManutencao
+) : ListAdapter<Manutencao, ViewHolder>(diffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    companion object {
+        private val diffCallback = object: DiffUtil.ItemCallback<Manutencao>() {
+            override fun areItemsTheSame(oldItem: Manutencao, newItem: Manutencao): Boolean {
+                return verificaItem(oldItem, newItem)
+            }
 
-        val view = TipoManutencaoBinding.inflate(LayoutInflater.from(context), parent, false)
+            override fun areContentsTheSame(oldItem: Manutencao, newItem: Manutencao): Boolean {
+                return verificaItem(oldItem, newItem)
+            }
+        }
 
-        return ViewHolder(view)
-
+        private fun verificaItem(antesItem: Manutencao, depoisItem: Manutencao): Boolean {
+            return antesItem.idM == depoisItem.idM &&
+                    antesItem.idVM == depoisItem.idVM &&
+                    antesItem.tipoManutencao == depoisItem.tipoManutencao &&
+                    antesItem.kmtroca == depoisItem.kmtroca &&
+                    antesItem.kmtrocaAtual == depoisItem.kmtrocaAtual &&
+                    antesItem.data?.compareTo(depoisItem.data) == 0 &&
+                    antesItem.custo == depoisItem.custo &&
+                    antesItem.observacao == depoisItem.observacao
+        }
     }
 
-    override fun getItemCount(): Int {
-        return manutencoes.size
-    }
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ) = ViewHolder(
+        TipoManutencaoBinding
+            .inflate(LayoutInflater.from(context), parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        //Safe call e funcao let garantindo integridade do codigo impedindo NUll
-        holder.let {
-
-            it.descricaoManutencao.text = manutencoes[position].tipoManutencao
-
-            it.kmtrocaAtual.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {}
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun onTextChanged(kmAtual: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                     manutencoes[it.bindingAdapterPosition].kmtrocaAtual = kmAtual.toString()
-                }
-            })
-
-            it.kmtroca.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(km: Editable?) {}
-                override fun beforeTextChanged(km: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(km: CharSequence?, start: Int, before: Int, count: Int) {
-                     manutencoes[it.bindingAdapterPosition].kmtroca = km.toString()
-                }
-            })
-
-           it.data.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(data: Editable?) {}
-                override fun beforeTextChanged(data: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(data: CharSequence?, start: Int, before: Int, count: Int) {
-                      manutencoes[it.bindingAdapterPosition].data  = Util.converteTextoData(data.toString())
-                }
-            })
-
-            it.custo.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(custo: Editable?) {}
-                override fun beforeTextChanged(custo: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(custo: CharSequence?, start: Int, before: Int, count: Int) {
-                     manutencoes[it.bindingAdapterPosition].custo = Util.conversorMonetario(custo.toString())
-                }
-            })
-
-            it.observacao.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(custo: Editable?) {}
-                override fun beforeTextChanged(custo: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(observacao: CharSequence?, start: Int, before: Int, count: Int) {
-                        manutencoes[it.bindingAdapterPosition].observacao = observacao.toString()
-
-
-                }
-            })
-
-            //Exibe os valores no EditText para o usuário
-              it.kmtrocaAtual.setText(manutencoes[position].kmtrocaAtual)
-              it.kmtroca.setText(manutencoes[position].kmtroca)
-              it.data.setText(Util.converteDataTexto(manutencoes[position].data))
-              it.custo.setText(manutencoes[position].custo)
-              it.observacao.setText(manutencoes[position].observacao)
-
-        }
-
-        holder.btSalvar.setOnClickListener {
-            ControleManutencao().salvarManutencao(manutencaoSelecionada(position, holder), context)
-        }
-
-        holder.btExcluir.setOnClickListener {
-           ControleManutencao().excluirManutencao(manutencaoSelecionada(position, holder), context, holder,
-               this, manutencoes)
-
-        }
-
-        holder.btEditarManutencao.setOnClickListener {
-            ControleManutencao().editarTipoManutencao(context, holder)
-
-        }
-
-
+        holder.inserirDado(getItem(position))
     }
 
-    private fun manutencaoSelecionada(position: Int, holder: ViewHolder): Manutencao =
-        Manutencao(manutencoes[position].idM,
-            veiculoId,
-            holder.descricaoManutencao.text.toString(), //manutencoes[position].tipoManutencao
-            manutencoes[position].kmtrocaAtual,
-            manutencoes[position].kmtroca,
-            manutencoes[position].data,
-            manutencoes[position].custo,
-            manutencoes[position].observacao)
+  inner class ViewHolder(
+      binding: TipoManutencaoBinding
+  ) : RecyclerView.ViewHolder(binding.root) {
 
+      private val tipoManutencao = binding.tipoManutencao
+      private val kmAtual = binding.tvKmAtual
+      private val kmFinal = binding.tvKmFinal
+      private val dataManutencao = binding.tvData
+      private val custo = binding.tvCusto
+      private val observacao = binding.tvObs
+      private val botaoEditar = binding.ivEditar
+      private val botaoDeletar = binding.ivDeletar
 
-  inner class ViewHolder(itemview: TipoManutencaoBinding) : RecyclerView.ViewHolder(itemview.root) {
+      fun inserirDado(item: Manutencao) {
+          tipoManutencao.text = item.tipoManutencao
+          kmAtual.text = item.kmtrocaAtual
+          kmFinal.text = item.kmtroca
+          dataManutencao.text = Util.converteDataTexto(item.data)
+          custo.text = item.custo
+          observacao.text = item.observacao
 
-        val descricaoManutencao = itemview.tipoManutencao
-        val kmtrocaAtual = itemview.kmTrocaAtual
-        val kmtroca = itemview.kmTroca
-        val data = itemview.dataTroca
-        val custo = itemview.custo
-        val observacao = itemview.mObservacao
-        val btSalvar = itemview.btsalvar2
-        val btExcluir = itemview.btexcluirManutencao
-        val btEditarManutencao = itemview.btEditarTpManutencao
+          onClickControle(item)
+      }
 
+      private fun onClickControle(manutencao: Manutencao) {
+          botaoEditar.setOnClickListener {
+              AddManutencaoDialog(
+                  manutencao = manutencao,
+                  callBack = { manutencao, dialog  ->
+                      dialog.dismiss()
+                      controleManutencao.salvarManutencao(manutencao, context)
+                      controleManutencao.atualizarManutencao(manutencao, bindingAdapterPosition)
+                      this@StatusManutencaoAdapterRW.submitList(controleManutencao.manutencoes)
+                  }).show(fragment,"AddManutencao")
+          }
 
-      init {
-            data.setOnClickListener {
-                 Util.fecharTeclado(context)
-                 DatePickerFragmentDialog().exibirDataPicker(supportFragmentManager, data)
-            }
-            custo.addTextChangedListener(Util.mascMonetario(custo))
-
+          botaoDeletar.setOnClickListener {
+              controleManutencao.deletarManutencao(
+                  manutencao,
+                  context,
+                  callBack = {
+                      controleManutencao.deletarManutencao(manutencao)
+                      this@StatusManutencaoAdapterRW.submitList(controleManutencao.manutencoes)
+                  })
+          }
       }
   }
-
 }

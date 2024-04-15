@@ -1,165 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:paddingBottom="5dp"
-            android:id="@+id/cad_manutencao"
-            android:paddingTop="5dp"
-            android:layout_gravity="center">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cad_manutencao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="wrap_content"
             android:visibility="visible"
             android:clickable="false">
 
-        <Button
-                android:layout_width="98dp"
-                android:layout_height="36dp"
-                android:id="@+id/btsalvar2"
-                android:text="Salvar"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                app:layout_constraintTop_toBottomOf="@+id/m_observacao"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
-                android:layout_width="98dp"
-                android:layout_height="36dp"
-                android:id="@+id/btexcluir_manutencao"
-                android:text="Excluir"
-                app:layout_constraintTop_toBottomOf="@+id/m_observacao"
-                app:layout_constraintLeft_toRightOf="@+id/btsalvar2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="5dp"/>
-
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="40dp"
-                android:inputType="numberDecimal"
-                android:id="@+id/kmTrocaAtual"
-                android:drawableStart="@drawable/ic_odometrokm"
-                android:drawablePadding="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:hint="Km troca atual "
-                android:textSize="16sp" />
-
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="8dp"
-                android:inputType="numberDecimal"
-                android:id="@+id/kmTroca"
-                android:drawableStart="@drawable/ic_odometrokm"
-                android:drawablePadding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/kmTrocaAtual"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:hint="Km próxima troca "
-                android:textSize="16sp" />
-
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="39dp"
-                android:ems="10"
-                android:id="@+id/dataTroca"
-                android:drawableStart="@drawable/ic_data"
-                android:drawablePadding="8dp"
-                android:inputType="date"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="9dp"
-                android:paddingTop="1dp"
-                app:layout_constraintTop_toBottomOf="@+id/kmTroca"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:textSize="16sp"
-                android:hint="Data da Troca"
-                android:maxLength="10"
-                android:clickable="false"
-                android:focusable="false"/>
-
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="39dp"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/custo"
-                android:drawableStart="@drawable/icon_dinheiro_20"
-                android:drawablePadding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="9dp"
-                android:paddingTop="1dp"
-                app:layout_constraintTop_toBottomOf="@+id/dataTroca"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:hint="Custo"
-                android:textSize="16sp" />
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/m_observacao"
-                android:hint="Obs:"
-                android:drawableStart="@drawable/icon_obs_coment_20"
-                android:drawablePadding="12dp"
-                android:inputType="text|textMultiLine"
-                app:layout_constraintTop_toBottomOf="@+id/custo"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintLeft_toRightOf="parent"
-                android:layout_marginTop="9dp"
-                android:paddingTop="1dp"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"/>
-
-        <TextView
-                android:text="Tipo Manutenção"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tipoManutencao"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/bt_editar_tp_manutencao"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="4dp"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:text="Tipo Manutenção"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/cordoStatusBar"
+                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-
-        <androidx.appcompat.widget.AppCompatImageButton
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_tipo_manutencao"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/bt_editar_tp_manutencao"
-                android:src="@drawable/ic_editat_manutencao_24"
-                android:contentDescription="Editar tipo manuntenção"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tipoManutencao"
-                app:layout_constraintBottom_toBottomOf="@+id/tipoManutencao"
-                android:layout_marginEnd="10dp"
-                android:clickable="true"
-                android:focusable="true" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintGuide_percent="0.5"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_km_atual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="4dp"
+                android:hint="Km. Atual"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tipoManutencao"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_km_atual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                app:layout_constraintTop_toTopOf="@+id/hint_km_atual"
+                app:layout_constraintStart_toEndOf="@+id/hint_km_atual"
+                app:layout_constraintEnd_toStartOf="@+id/gl_tipo_manutencao"
+                app:layout_constraintBottom_toBottomOf="@+id/hint_km_atual"
+                tools:text="100.000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_km_final"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Km. Final"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tipoManutencao"
+                app:layout_constraintStart_toEndOf="@+id/gl_tipo_manutencao" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_km_final"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                app:layout_constraintTop_toTopOf="@+id/hint_km_final"
+                app:layout_constraintStart_toEndOf="@+id/hint_km_final"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/hint_km_final"
+                tools:text="100.000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="4dp"
+                android:hint="Data"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv_km_atual"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@+id/hint_data"
+                app:layout_constraintStart_toEndOf="@+id/hint_data"
+                app:layout_constraintEnd_toStartOf="@+id/gl_tipo_manutencao"
+                app:layout_constraintBottom_toBottomOf="@+id/hint_data"
+                tools:text="09/04/2024" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_custo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="4dp"
+                android:hint="Custo"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/hint_data"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_custo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                app:layout_constraintTop_toTopOf="@+id/hint_custo"
+                app:layout_constraintStart_toEndOf="@+id/hint_custo"
+                app:layout_constraintBottom_toBottomOf="@+id/hint_custo"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="R$350,00" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_obs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="4dp"
+                android:hint="Obs"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/hint_custo"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_obs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp"
+                android:maxLength="80"
+                app:layout_constraintTop_toBottomOf="@+id/tv_custo"
+                app:layout_constraintStart_toEndOf="@+id/hint_obs"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="motor bom" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_editar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:srcCompat="@drawable/ic_editat_manutencao_24"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@+id/tv_obs"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/gl_tipo_manutencao"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_deletar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:srcCompat="@drawable/outline_delete_24"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@+id/tv_obs"
+                app:layout_constraintStart_toEndOf="@+id/gl_tipo_manutencao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

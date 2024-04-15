@@ -1,12 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/cordoStatusBar</item>
         <item name="colorPrimaryDark">@color/cordeFundo</item>
         <item name="colorAccent">@color/cordoStatusBar</item>
+        <item name="floatingActionButtonStyle">@color/cordoStatusBar</item>
+        <item name="windowActionModeOverlay">true</item>
+
     </style>
+
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/cordoStatusBar</item>-->
+<!--        <item name="colorPrimaryDark">@color/cordeFundo</item>-->
+<!--        <item name="colorAccent">@color/cordoStatusBar</item>-->
+<!--    </style>-->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

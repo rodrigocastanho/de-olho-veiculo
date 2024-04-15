@@ -6,11 +6,12 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import java.util.*
 
-class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerFragmentDialog: DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private var campoData: EditText?= null
     private val MESSANGEM_INTERVALO_DATA = "Data inicial não pode ser maior que a data final."
@@ -33,7 +34,6 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
     fun exibirDataPicker(supportFragmentManager: FragmentManager, editText: EditText) {
         campoData = editText
         this.show(supportFragmentManager,"dialogDatePicker")
-
     }
 
     @Throws(Exception::class)
@@ -48,5 +48,4 @@ class DatePickerFragmentDialog: androidx.fragment.app.DialogFragment(), DatePick
         }
 
     }
-
 }
