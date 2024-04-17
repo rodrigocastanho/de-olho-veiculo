@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaCadastroBinding
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
@@ -32,18 +33,23 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         bd = BancoDadoConfig.getInstance(applicationContext)
 
+        Util.limparErroCampo(
+            viewCadastroBind.appBarCadastro.contentCadastro.etNomeveiculo,
+            viewCadastroBind.appBarCadastro.contentCadastro.tiNomeveiculo
+        )
+
         val veiculoEditado = controleVeiculo.veiculoValorEditado(this)
 
-        viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.setText(veiculoEditado?.nomeVeiculo)
-        viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.setText(veiculoEditado?.marcaVeiculo)
-        viewCadastroBind.appBarCadastro.contentCadastro.cor.setText(veiculoEditado?.cor)
-        viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.setText(veiculoEditado?.placaVeiculo)
-        viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.setText(veiculoEditado?.motor)
+        viewCadastroBind.appBarCadastro.contentCadastro.etNomeveiculo.setText(veiculoEditado?.nomeVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.etMarca.setText(veiculoEditado?.marcaVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.etCor.setText(veiculoEditado?.cor)
+        viewCadastroBind.appBarCadastro.contentCadastro.etPlaca.setText(veiculoEditado?.placaVeiculo)
+        viewCadastroBind.appBarCadastro.contentCadastro.etMotor.setText(veiculoEditado?.motor)
         viewCadastroBind.appBarCadastro.contentCadastro.combescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.combustivel,
             R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.combustivel))
         viewCadastroBind.appBarCadastro.contentCadastro.cambioescolha.setSelection(ArrayAdapter.createFromResource(this, R.array.cambio,
             R.layout.activity_tela_cadastro).getPosition(veiculoEditado?.tipoCambio))
-        viewCadastroBind.appBarCadastro.contentCadastro.fabricaoveiculo.setText(veiculoEditado?.ano)
+        viewCadastroBind.appBarCadastro.contentCadastro.etFabricaoveiculo.setText(veiculoEditado?.ano)
 
 
         viewCadastroBind
@@ -51,16 +57,19 @@ class TelaCadastro : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .contentCadastro.btCadastro.setOnClickListener {
                 val veiculo = Veiculo(
                     controleVeiculo.statusVeiculoId(veiculoEditado),
-                    viewCadastroBind.appBarCadastro.contentCadastro.nomeveiculo.text.toString(),
-                    viewCadastroBind.appBarCadastro.contentCadastro.marcaveiculo.text.toString(),
-                    viewCadastroBind.appBarCadastro.contentCadastro.cor.text.toString(),
-                    viewCadastroBind.appBarCadastro.contentCadastro.placaveiculo.text.toString(),
-                    viewCadastroBind.appBarCadastro.contentCadastro.motorveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.etNomeveiculo.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.etMarca.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.etCor.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.etPlaca.text.toString(),
+                    viewCadastroBind.appBarCadastro.contentCadastro.etMotor.text.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.combescolha.selectedItem.toString(),
                     viewCadastroBind.appBarCadastro.contentCadastro.cambioescolha.selectedItem.toString(),
-                    viewCadastroBind.appBarCadastro.contentCadastro.fabricaoveiculo.text.toString())
+                    viewCadastroBind.appBarCadastro.contentCadastro.etFabricaoveiculo.text.toString())
 
-                controleVeiculo.salvarVeiculo(veiculo, this)
+                controleVeiculo.salvarVeiculo(veiculo, this,
+                    callBack = { m ->
+                        viewCadastroBind.appBarCadastro.contentCadastro.tiNomeveiculo.error = m
+                    })
 
         }
 

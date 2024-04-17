@@ -11,8 +11,10 @@ import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import br.com.devnattiva.deolhoveiculo.model.Veiculo
 import br.com.devnattiva.deolhoveiculo.TelaStatusManutencao
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.sql.SQLException
 
@@ -50,7 +52,11 @@ class ControleVeiculo {
         return veiculos
     }
 
-    fun salvarVeiculo(veiculo: Veiculo, context: Activity) {
+    fun salvarVeiculo(
+        veiculo: Veiculo,
+        context: Activity,
+        callBack: (messagem: String) -> Unit
+    ) {
 
         if(veiculo.nomeVeiculo.isNotEmpty()) {
             bd = BancoDadoConfig.getInstance(context.applicationContext)
@@ -67,13 +73,14 @@ class ControleVeiculo {
                 } finally {
                     bd.close()
                 }
-
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "VEÍCULO CADASTRADO", Toast.LENGTH_SHORT).show()
+                    context.startActivity(Intent(context, TelaStatusManutencao::class.java))
+                }
             }
-            Toast.makeText(context, "VEÍCULO CADASTRADO", Toast.LENGTH_SHORT).show()
-            context.startActivity(Intent(context, TelaStatusManutencao::class.java))
-
         } else {
-            Toast.makeText(context, "FALTOU NOME DO VEÍCULO", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "FALTOU NOME DO VEÍCULO", Toast.LENGTH_SHORT).show()
+            callBack.invoke("Obrigatório nome do veículo")
         }
     }
 

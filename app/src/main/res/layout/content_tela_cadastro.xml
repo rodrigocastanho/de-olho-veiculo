@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,78 +16,133 @@
             tools:layout_editor_absoluteY="81dp"
             tools:visibility="visible">
 
-
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_nomeveiculo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:inputType="textPersonName"
-                android:hint="Nome"
-                android:ems="18"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="76dp"
-                android:id="@+id/nomeveiculo"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:hint="Nome da Manutenção"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nomeveiculo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_marca"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:hint="Marca"
-                android:ems="18"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_nomeveiculo"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/nomeveiculo"
-                android:id="@+id/marcaveiculo"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-                android:id="@+id/cor"
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_marca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_cor"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:hint="Cor"
-                android:ems="18"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_marca"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/marcaveiculo"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_placa"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:inputType="textCapCharacters"
-                android:maxLength="7"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:hint="Placa"
-                android:ems="18"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_cor"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:id="@+id/placaveiculo"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/cor"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_placa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textAllCaps="true"
+                    android:maxLength="7"
+                    android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_motor"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:hint="Motor"
-                android:ems="18"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/ti_placa"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:id="@+id/motorveiculo"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/placaveiculo"/>
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_motor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Spinner
                 android:id="@+id/combescolha"
@@ -104,12 +159,12 @@
                 android:layout_marginStart="8dp" />
 
         <TextView
+                android:id="@+id/combustivel"
                 android:text="Combustível:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/combustivel"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/motorveiculo"
+                app:layout_constraintTop_toBottomOf="@+id/ti_motor"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -147,36 +202,45 @@
                 app:layout_constraintBottom_toBottomOf="@+id/cambio"
                 android:layout_marginStart="8dp"/>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_fabricaoveiculo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/fabricaoveiculo"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="72dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/cambio"
-                android:textSize="18sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:hint="Ano de Fabricação"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintVertical_bias="0.07999998"/>
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/cambio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_fabricaoveiculo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:maxLength="4"
+                    android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+                android:id="@+id/btCadastro"
                 android:text="Cadastrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btCadastro"
-                android:layout_marginBottom="65dp"
-                app:layout_constraintTop_toBottomOf="@+id/fabricaoveiculo"
+                app:layout_constraintTop_toBottomOf="@+id/ti_fabricaoveiculo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
                 android:textSize="18sp"
                 android:background="#918B8B"
                 android:textColor="#FFFFFF"/>

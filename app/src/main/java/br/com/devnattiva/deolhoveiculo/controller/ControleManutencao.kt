@@ -34,7 +34,10 @@ class ControleManutencao {
     ) {
         veiculoManutecoes.map {
             it.manutencao
-        }.also { m -> _manutencoes = m.toMutableList() }
+        }.also { m ->
+            _manutencoes.clear()
+            _manutencoes = m.toMutableList()
+        }
     }
 
     fun filtrarManutencoes(manutencao: Manutencao): List<Manutencao> {
@@ -75,9 +78,12 @@ class ControleManutencao {
                     val buscveiculomanutencao = bd.controleDAO().buscaVeiculoManutencao(veiculoId)
                     withContext(Dispatchers.Main) {
                         if (buscveiculomanutencao.isEmpty()) {
+                            _manutencoes.clear()
+                            viewConteudo.recyclerViewManutencao.isInvisible = true
                             viewConteudo.tvNaoManutencao.isVisible = true
                             viewConteudo.ivFiltro.isInvisible = true
                         } else {
+                            viewConteudo.recyclerViewManutencao.isInvisible = false
                             viewConteudo.tvNaoManutencao.isVisible = false
                             viewConteudo.ivFiltro.isInvisible = false
                             manutencoesVeiculo(buscveiculomanutencao)
@@ -97,10 +103,10 @@ class ControleManutencao {
                 sobreVeiculoDialog.veiculoSelecionado(veiculo)
                 sobreVeiculoDialog.show(supportFragmentManager, "dialogSobreVeiculo")
             }
-            if(viewConteudo.recyclerViewManutencao.visibility == View.GONE) {
+            if(viewConteudo.recyclerViewManutencao.visibility == View.INVISIBLE) {
                 viewConteudo.txInicioManutencao.visibility = View.GONE
                 viewConteudo.tvNaoManutencao.isVisible = false
-                viewConteudo.recyclerViewManutencao.visibility = View.VISIBLE
+                viewConteudo.recyclerViewManutencao.visibility = View.INVISIBLE
                 viewConteudo.btFtAddManutencao.show()
             }
         } else {
@@ -108,7 +114,7 @@ class ControleManutencao {
             viewConteudo.ivFiltro.isInvisible = true
             viewConteudo.tvNaoManutencao.isVisible = false
             viewConteudo.txInicioManutencao.visibility = View.VISIBLE
-            viewConteudo.recyclerViewManutencao.visibility = View.GONE
+            viewConteudo.recyclerViewManutencao.visibility = View.INVISIBLE
             viewConteudo.btFtAddManutencao.hide()
         }
     }

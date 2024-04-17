@@ -87,10 +87,11 @@ class TelaStatusManutencao : AppCompatActivity(),
                     dialog.dismiss()
                     viewActivity.appBarManutencao.contentManutencao.tvNaoManutencao.isVisible = false
                     viewActivity.appBarManutencao.contentManutencao.ivFiltro.isInvisible = false
+                    viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.isInvisible = false
                     manutencao.idVM = veiculoId
-                    controleManutencoes.salvarManutencao(manutencao, this)
                     controleManutencoes.adicionarManutencao(manutencao)
                     adapterManutencao.submitList(controleManutencoes.manutencoes)
+                    controleManutencoes.salvarManutencao(manutencao, this)
                 }).show(supportFragmentManager, "AddManutencao")
         }
 
