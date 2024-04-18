@@ -21,7 +21,8 @@ jobs:
         uses: chkfung/android-version-actions@v1.2.3
         with:
           gradlePath: app/build.gradle
-          versionCode: ${{ github.run_number }}
+#          versionCode: ${{ github.run_number }}
+          versionCode: '9'
           versionName: '1.4'
 
       - name: Assemble Release Bundle
