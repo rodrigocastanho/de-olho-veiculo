@@ -47,7 +47,7 @@ jobs:
           packageName: br.com.devnattiva.deolhoveiculo
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: production
-          status: inProgress
+          status: completed
 
 #      - name: Build with Gradle
 #        run: ./gradlew build
