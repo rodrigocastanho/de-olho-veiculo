@@ -46,9 +46,8 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: br.com.devnattiva.deolhoveiculo
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
-          status: 'completed'
-          whatsNewDirectory: whatsNewDirectory/
+          track: production
+          status: inProgress
 
 #      - name: Build with Gradle
 #        run: ./gradlew build
