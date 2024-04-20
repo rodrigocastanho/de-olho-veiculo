@@ -22,7 +22,7 @@ jobs:
         with:
           gradlePath: app/build.gradle
 #          versionCode: ${{ github.run_number }}
-          versionCode: '9'
+          versionCode: '10'
           versionName: '1.4'
 
       - name: Assemble Release Bundle

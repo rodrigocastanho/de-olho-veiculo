@@ -107,38 +107,28 @@ class ControleVeiculo {
 
 
     fun excluirVeiculo(veiculoId: Long, context: Activity) {
-
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
         if (veiculoId != 0L) {
-
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Excluir veículo")
             builder.setMessage("Deseja excluir o veículo e suas manutenções gravadas?")
             builder.setPositiveButton("SIM") { _, _ ->
-
                 CoroutineScope(IO).launch {
                     try {
                         bd.controleDAO().deletarDadosVeiculo(veiculoId)
-
                     } catch (e: SQLException) {
                         Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: $e")
-
                     } finally {
                         bd.close()
                     }
                 }
-
-                context.finish()
                 context.overridePendingTransition(0, 0)
                 context.startActivity(Intent(context, TelaStatusManutencao::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                 Toast.makeText(context.applicationContext, "VEÍCULO EXCLUIDO", Toast.LENGTH_SHORT).show()
-
             }
-
             builder.setNegativeButton("NÃO") { _, _ ->
                 Toast.makeText(context.applicationContext, "VEÍCULO NÃO SERÁ EXCLUIDO", Toast.LENGTH_SHORT).show()
-
             }
 
             builder.setNeutralButton("CANCELAR") { _, _ -> }
@@ -148,7 +138,5 @@ class ControleVeiculo {
         } else {
             Toast.makeText(context.applicationContext, "SELECIONAR VEÍCULO", Toast.LENGTH_SHORT).show()
         }
-
     }
-
 }

@@ -24,7 +24,7 @@
                 android:layout_marginTop="76dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:hint="Nome da Manutenção"
+                android:hint="Nome do Veículo"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="text" />
+                    android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="text" />
+                    android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="text" />
+                    android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +115,7 @@
                     android:textSize="16sp"
                     android:textAllCaps="true"
                     android:maxLength="7"
-                    android:inputType="text" />
+                    android:inputType="textCapCharacters" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
