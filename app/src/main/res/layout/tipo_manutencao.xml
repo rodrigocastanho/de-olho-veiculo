@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="4dp"
-                android:hint="Custo"
+                android:hint="Custo R$"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/hint_data"
@@ -141,7 +141,7 @@
                 app:layout_constraintStart_toEndOf="@+id/hint_custo"
                 app:layout_constraintBottom_toBottomOf="@+id/hint_custo"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="R$350,00" />
+                tools:text="350,00" />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/hint_obs"

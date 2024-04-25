@@ -42,11 +42,15 @@ class FiltroDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initCampo()
         initOnclick()
     }
 
+    private fun initCampo() {
+        binding.etKm.addTextChangedListener(Util.mascKmValor(binding.etKm))
+    }
+
     private fun initOnclick() {
-        binding.etDataFiltro.setText(Util.converteDataTexto(Date()))
         binding.etDataFiltro.setOnClickListener {
             DatePickerFragmentDialog().exibirDataPicker(
                 supportFragmentManager = childFragmentManager,
@@ -59,7 +63,7 @@ class FiltroDialog(
         }
 
         binding.btCancelar.setOnClickListener {
-            dismiss()
+            callBack(Manutencao(), requireDialog())
         }
     }
 

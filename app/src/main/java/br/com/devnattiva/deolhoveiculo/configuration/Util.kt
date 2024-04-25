@@ -148,7 +148,6 @@ class Util {
             view?.let{
                 val input = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 input.hideSoftInputFromWindow(it.windowToken, 0)
-
             }
         }
 

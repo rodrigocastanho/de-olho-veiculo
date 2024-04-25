@@ -41,12 +41,24 @@ class ControleManutencao {
     }
 
     fun filtrarManutencoes(manutencao: Manutencao): List<Manutencao> {
-        val listaAlterada = _manutencoes.filter {
-            it.tipoManutencao.contains(manutencao.tipoManutencao) &&
-                    it.kmtrocaAtual.contains(manutencao.kmtrocaAtual) &&
-                    (it.data?.compareTo(manutencao.data) == 0)
-        }
+        val listaAlterada = _manutencoes.filter { predicateFiltro(it, manutencao) }
         return listaAlterada.ifEmpty { _manutencoes }
+    }
+
+    private fun predicateFiltro(manutencaoFiltro: Manutencao, manutencao: Manutencao): Boolean {
+        return if (manutencao.tipoManutencao.isNotBlank()) {
+            manutencaoFiltro.tipoManutencao.contains(manutencao.tipoManutencao)
+        } else if (manutencao.kmtrocaAtual.isNotBlank()) {
+            manutencaoFiltro.kmtrocaAtual.contains(manutencao.kmtrocaAtual)
+        } else if (manutencao.data != null) {
+            manutencaoFiltro.data?.time == manutencao.data?.time
+        } else if (manutencao.tipoManutencao.isNotBlank() &&
+            manutencao.kmtrocaAtual.isNotBlank() &&
+            manutencao.data != null) {
+            manutencaoFiltro.tipoManutencao.contains(manutencao.tipoManutencao)
+                    && manutencaoFiltro.kmtrocaAtual.contains(manutencao.kmtrocaAtual)
+                    && manutencaoFiltro.data?.time == manutencao.data?.time
+        } else false
     }
 
     fun adicionarManutencao(manutencao: Manutencao) {
