@@ -30,11 +30,8 @@
 <!- -->
 
 <!--    test-->
-<!--    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>-->
-<!--    <string name="banner_app_id">ca-app-pub-3940256099942544/6300978111</string>-->
-
-    <string name="admob_app_id">ca-app-pub-5807404146135121~8748111490</string>
-    <string name="banner_app_id">ca-app-pub-5807404146135121/2182703144</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_app_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="sobreApp">Aplicativo com foco em ajudar você a registrar as manutenções e analisar os gastos com as manutenções de seu veículo. </string>
     <string name="versao">Versão: 1.4</string>
