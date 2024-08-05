@@ -123,7 +123,6 @@ class ControleVeiculo {
                         bd.close()
                     }
                 }
-                context.overridePendingTransition(0, 0)
                 context.startActivity(Intent(context, TelaStatusManutencao::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                 Toast.makeText(context.applicationContext, "VEÍCULO EXCLUIDO", Toast.LENGTH_SHORT).show()
             }
