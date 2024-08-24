@@ -1,6 +1,7 @@
 package br.com.devnattiva.deolhoveiculo
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -82,7 +85,7 @@ class TelaStatusManutencao : AppCompatActivity(),
             }
 
         viewActivity.appBarManutencao
-            .contentManutencao.btFtAddManutencao.setOnClickListener {
+            .contentManutencao.ivAddManutencao.setOnClickListener {
                 AddManutencaoDialog(callBack = { manutencao, dialog ->
                     dialog.dismiss()
                     viewActivity.appBarManutencao.contentManutencao.tvNaoManutencao.isVisible = false
@@ -114,7 +117,7 @@ class TelaStatusManutencao : AppCompatActivity(),
                 val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START)
-                }
+                } else finish()
             }
         })
     }

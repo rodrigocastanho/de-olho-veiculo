@@ -55,9 +55,27 @@
              app:srcCompat="@drawable/baseline_filter_list_alt_24"
              android:background="@drawable/imagem_carro_select"
              app:layout_constraintTop_toBottomOf="@+id/buscaVeiculo"
+             app:layout_constraintEnd_toStartOf="@+id/iv_add_manutencao"
+             android:clickable="true"
+             android:focusable="true"
+             android:visibility="invisible"
+             tools:visibility="visible"
+             tools:ignore="ContentDescription" />
+
+     <ImageView
+             android:id="@+id/iv_add_manutencao"
+             android:layout_width="35dp"
+             android:layout_height="35dp"
+             android:layout_marginTop="8dp"
+             android:layout_marginEnd="8dp"
+             app:srcCompat="@drawable/ic_add_manutencao"
+             android:background="@drawable/imagem_carro_select"
+             app:layout_constraintTop_toBottomOf="@+id/buscaVeiculo"
              app:layout_constraintEnd_toEndOf="parent"
              android:clickable="true"
              android:focusable="true"
+             android:visibility="invisible"
+             tools:visibility="visible"
              tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +85,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="68dp"
             android:splitMotionEvents="true"
             android:duplicateParentState="false"
             android:focusableInTouchMode="true"
@@ -79,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_filtro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/fg_anuncio_banner"
+            app:layout_constraintBottom_toTopOf="@+id/guideline01"
             app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
@@ -116,36 +134,23 @@
              android:visibility="gone"
              app:drawableStartCompat="@drawable/ic_menu_manutencao" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bt_ft_add_manutencao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_add_20"
-            android:layout_gravity="end|bottom"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewManutencao"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="visible">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
      <androidx.constraintlayout.widget.Guideline
              android:id="@+id/guideline01"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="horizontal"
-             app:layout_constraintGuide_percent="0.909" />
+             app:layout_constraintGuide_percent="1" />
 
     <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fg_anuncio_banner"
             android:name="br.com.devnattiva.deolhoveiculo.AdMobFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/guideline01"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewManutencao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"

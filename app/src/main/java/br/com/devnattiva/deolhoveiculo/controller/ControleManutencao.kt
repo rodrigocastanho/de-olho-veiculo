@@ -119,7 +119,7 @@ class ControleManutencao {
                 viewConteudo.txInicioManutencao.visibility = View.GONE
                 viewConteudo.tvNaoManutencao.isVisible = false
                 viewConteudo.recyclerViewManutencao.visibility = View.INVISIBLE
-                viewConteudo.btFtAddManutencao.show()
+                viewConteudo.ivAddManutencao.isVisible = true
             }
         } else {
             viewConteudo.ivEditarVeiculo.isEnabled = false
@@ -127,7 +127,7 @@ class ControleManutencao {
             viewConteudo.tvNaoManutencao.isVisible = false
             viewConteudo.txInicioManutencao.visibility = View.VISIBLE
             viewConteudo.recyclerViewManutencao.visibility = View.INVISIBLE
-            viewConteudo.btFtAddManutencao.hide()
+            viewConteudo.ivAddManutencao.isVisible = false
         }
     }
 
