@@ -46,6 +46,7 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: br.com.devnattiva.deolhoveiculo
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          changesNotSentForReview: true
           track: production
           status: completed
 
