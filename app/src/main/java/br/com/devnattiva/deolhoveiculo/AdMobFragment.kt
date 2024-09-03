@@ -65,7 +65,7 @@ class AdMobFragment : Fragment() {
 
             val density = resources.displayMetrics.density
             val adWidth = (adWidthPixels / density).toInt()
-            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
+            AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(requireContext(), adWidth)
         } else {
             AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 320)
         }
