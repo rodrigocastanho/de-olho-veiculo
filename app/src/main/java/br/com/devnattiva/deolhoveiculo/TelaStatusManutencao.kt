@@ -24,6 +24,7 @@ import br.com.devnattiva.deolhoveiculo.controller.ControleManutencao
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaStatusManutencaoBinding
+import br.com.devnattiva.deolhoveiculo.model.Manutencao
 import com.google.android.material.navigation.NavigationView.*
 
 
@@ -42,7 +43,7 @@ class TelaStatusManutencao : AppCompatActivity(),
         setContentView(viewActivity.root)
         setSupportActionBar(viewActivity.appBarManutencao.toolbar)
 
-        val controleManutencoes = ControleManutencao()
+        val controleManutencoes = ControleManutencao(this)
         val veiculosBusca = veiculos.buscarVeiculo(this)
 
         val buscarVeiculo = viewActivity.appBarManutencao.contentManutencao.buscaVeiculo
@@ -65,11 +66,19 @@ class TelaStatusManutencao : AppCompatActivity(),
 
         viewActivity.appBarManutencao.contentManutencao
             .ivFiltro.setOnClickListener {
-                FiltroDialog(callBack = { manutencao, dialog ->
-                    dialog.dismiss()
-                    val manutencoesFiltro = controleManutencoes.filtrarManutencoes(manutencao)
-                    adapterManutencao.submitList(manutencoesFiltro)
-                }).show(supportFragmentManager, "FiltroManutencao")
+                FiltroDialog(this, supportFragmentManager)
+                    .createDialog(
+                        primaryButtonAction = { manutencao, dialog ->
+                            dialog.dismiss()
+                            val manutencoesFiltro = controleManutencoes.filtrarManutencoes(manutencao)
+                            adapterManutencao.submitList(manutencoesFiltro)
+                        },
+                        secundaryButtonAction = { manutencao, dialog ->
+                            dialog.dismiss()
+                            val manutencoesFiltro = controleManutencoes.filtrarManutencoes(manutencao)
+                            adapterManutencao.submitList(manutencoesFiltro)
+                        }
+                )
         }
 
         adapterManutencao = StatusManutencaoAdapterRW(
@@ -86,16 +95,22 @@ class TelaStatusManutencao : AppCompatActivity(),
 
         viewActivity.appBarManutencao
             .contentManutencao.ivAddManutencao.setOnClickListener {
-                AddManutencaoDialog(callBack = { manutencao, dialog ->
-                    dialog.dismiss()
-                    viewActivity.appBarManutencao.contentManutencao.tvNaoManutencao.isVisible = false
-                    viewActivity.appBarManutencao.contentManutencao.ivFiltro.isInvisible = false
-                    viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.isInvisible = false
-                    manutencao.idVM = veiculoId
-                    controleManutencoes.adicionarManutencao(manutencao)
-                    adapterManutencao.submitList(controleManutencoes.manutencoes)
-                    controleManutencoes.salvarManutencao(manutencao, this)
-                }).show(supportFragmentManager, "AddManutencao")
+                AddManutencaoDialog(
+                    context = this,
+                    fragmentManager = supportFragmentManager
+                ).createDialog(
+                    primaryButtonAction = { manutencao, dialog ->
+                        dialog.dismiss()
+                        viewActivity.appBarManutencao.contentManutencao.tvNaoManutencao.isVisible = false
+                        viewActivity.appBarManutencao.contentManutencao.ivFiltro.isInvisible = false
+                        viewActivity.appBarManutencao.contentManutencao.recyclerViewManutencao.isInvisible = false
+                        manutencao.idVM = veiculoId
+                        controleManutencoes.adicionarManutencao(manutencao)
+                        adapterManutencao.submitList(controleManutencoes.manutencoes)
+                        controleManutencoes.salvarManutencao(manutencao, this)
+                    },
+                    secundaryButtonAction = { dialog -> dialog.dismiss()}
+                )
         }
 
         viewActivity.appBarManutencao.contentManutencao.statusManutencao.setOnClickListener {

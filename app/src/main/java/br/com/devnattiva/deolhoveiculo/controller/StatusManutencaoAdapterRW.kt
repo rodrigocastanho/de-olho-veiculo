@@ -1,6 +1,6 @@
 package br.com.devnattiva.deolhoveiculo.controller
 
-import android.content.Context
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
@@ -14,7 +14,7 @@ import br.com.devnattiva.deolhoveiculo.databinding.TipoManutencaoBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
 
 class StatusManutencaoAdapterRW(
-    private val context: Context,
+    private val context: Activity,
     private val fragment: FragmentManager,
     private val controleManutencao: ControleManutencao
 ) : ListAdapter<Manutencao, ViewHolder>(diffCallback) {
@@ -79,13 +79,18 @@ class StatusManutencaoAdapterRW(
       private fun onClickControle(manutencao: Manutencao) {
           botaoEditar.setOnClickListener {
               AddManutencaoDialog(
+                  context = context,
                   manutencao = manutencao,
-                  callBack = { manutencao, dialog  ->
+                  fragmentManager = fragment
+              ).createDialog(
+                  primaryButtonAction = { manutencao, dialog ->
                       dialog.dismiss()
                       controleManutencao.salvarManutencao(manutencao, context)
                       controleManutencao.atualizarManutencao(manutencao, bindingAdapterPosition)
                       this@StatusManutencaoAdapterRW.submitList(controleManutencao.manutencoes)
-                  }).show(fragment,"AddManutencao")
+                  },
+                  secundaryButtonAction = { dialog -> dialog.dismiss()}
+              )
           }
 
           botaoDeletar.setOnClickListener {
