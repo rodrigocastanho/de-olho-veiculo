@@ -4,27 +4,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_filtrar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Filtro"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ti_nome_manutencao"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:hint="Nome da Manutenção"
@@ -33,7 +18,7 @@
             app:boxCornerRadiusTopEnd="5dp"
             app:boxCornerRadiusTopStart="5dp"
             app:startIconDrawable="@drawable/ic_menu_manutencao"
-            app:layout_constraintTop_toBottomOf="@id/tv_filtrar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -121,34 +106,5 @@
                 android:textSize="16sp"
                 android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_filtrar"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingRight="25dp"
-            android:paddingLeft="25dp"
-            android:text="Filtrar"
-            app:layout_constraintTop_toBottomOf="@+id/ti_data_filtro"
-            app:layout_constraintEnd_toStartOf="@+id/bt_cancelar"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_cancelar"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:text="Cancelar"
-            app:layout_constraintTop_toTopOf="@+id/bt_filtrar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

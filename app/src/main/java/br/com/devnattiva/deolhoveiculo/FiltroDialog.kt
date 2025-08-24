@@ -1,49 +1,49 @@
 package br.com.devnattiva.deolhoveiculo
 
-import android.app.Dialog
-import android.os.Bundle
+import android.app.Activity
+import android.content.DialogInterface
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.fragment.app.DialogFragment
+import androidx.core.graphics.drawable.toDrawable
+import androidx.fragment.app.FragmentManager
 import br.com.devnattiva.deolhoveiculo.configuration.Util
 import br.com.devnattiva.deolhoveiculo.databinding.FiltrosDialogBinding
 import br.com.devnattiva.deolhoveiculo.model.Manutencao
-import java.util.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FiltroDialog(
-    private val callBack: (Manutencao, Dialog) -> Unit
-): DialogFragment() {
-
+    private val context: Activity,
+    val fragmentManager: FragmentManager,
+) {
     private lateinit var binding: FiltrosDialogBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isCancelable = false
-    }
+    fun createDialog(
+        primaryButtonAction: (manutencao: Manutencao, dialog: DialogInterface) -> Unit,
+        secundaryButtonAction: (manutencao: Manutencao, dialog: DialogInterface) -> Unit
+    ) {
+        binding = FiltrosDialogBinding.inflate(LayoutInflater.from(context))
 
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FiltrosDialogBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initCampo()
         initOnclick()
+
+        val dialogBuilder = MaterialAlertDialogBuilder(context, R.style.ThemeCustomDialog)
+            .setView(binding.root)
+            .setBackground(android.R.color.transparent.toDrawable())
+            .setTitle("Filtro")
+            .setPositiveButton("Filtrar") { dialog, _ ->
+                primaryButtonAction.invoke(preparDados(), dialog)
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                secundaryButtonAction.invoke(Manutencao(), dialog)
+            }
+            .setCancelable(false)
+            .create()
+
+        dialogBuilder.show()
+        dialogBuilder.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun initCampo() {
@@ -53,17 +53,9 @@ class FiltroDialog(
     private fun initOnclick() {
         binding.etDataFiltro.setOnClickListener {
             DatePickerFragmentDialog().exibirDataPicker(
-                supportFragmentManager = childFragmentManager,
+                supportFragmentManager = fragmentManager,
                 editText = binding.etDataFiltro
             )
-        }
-
-        binding.btFiltrar.setOnClickListener {
-            callBack(preparDados(), requireDialog())
-        }
-
-        binding.btCancelar.setOnClickListener {
-            callBack(Manutencao(), requireDialog())
         }
     }
 

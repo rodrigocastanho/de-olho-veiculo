@@ -65,6 +65,4 @@ interface ControleDAO {
 
     @Query("SELECT * FROM Manutencao WHERE Manutencao.data BETWEEN :dataInicial AND :dataFinal AND Manutencao.id_mveiculo = :idVeiculo")
     fun buscarCustoData(idVeiculo: Long, dataInicial: Date?, dataFinal: Date?): List<Manutencao>
-
-
 }

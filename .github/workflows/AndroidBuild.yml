@@ -22,8 +22,8 @@ jobs:
         with:
           gradlePath: app/build.gradle
 #          versionCode: ${{ github.run_number }}
-          versionCode: '14'
-          versionName: '1.4'
+          versionCode: '15'
+          versionName: '1.5'
 
       - name: Assemble Release Bundle
         run: ./gradlew bundleRelease
@@ -58,10 +58,5 @@ jobs:
 #        with:
 #          name: app.apk
 #          path: app/build/outputs/apk/debug/app-debug.apk
-
-
-
-
-
 
 
