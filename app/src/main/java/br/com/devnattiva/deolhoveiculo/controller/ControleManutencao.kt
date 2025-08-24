@@ -144,19 +144,9 @@ class ControleManutencao(private val context: Context) {
         if(manutencao.idVM != 0L) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    when (manutencao.idM) {
-                        0L -> {
-                            bd.controleDAO().salvarDadosManutencao(manutencao)
-                            withContext(Dispatchers.Main) {
-                                controleMensagensSalvar(true, context, manutencao)
-                            }
-                        }
-                        else -> {
-                            bd.controleDAO().alterarDadosManutencao(manutencao)
-                            withContext(Dispatchers.Main) {
-                                controleMensagensSalvar(false, context, manutencao)
-                            }
-                        }
+                   bd.controleDAO().salvarDadosManutencao(manutencao)
+                    withContext(Dispatchers.Main) {
+                        controleMensagensSalvar(true, context, manutencao)
                     }
                 } catch (e: SQLException) {
                     Log.e("ERRO_MANUTENCAO_INSERIR", "ERRO_MANUTENCAO_INSERIR: $e")
@@ -165,6 +155,22 @@ class ControleManutencao(private val context: Context) {
                 }
             }
         } else Toast.makeText(context,"SELECIONE O VEÌCULO", Toast.LENGTH_SHORT).show()
+    }
+
+    fun alterarManutencaoBase(manutencao: Manutencao, context: Context) {
+        bd = BancoDadoConfig.getInstance(context.applicationContext)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                bd.controleDAO().alterarDadosManutencao(manutencao)
+                withContext(Dispatchers.Main) {
+                    controleMensagensSalvar(false, context, manutencao)
+                }
+            } catch (e: SQLException) {
+                Log.e("ERRO_MANUTENCAO_ALTERAR", "ERRO_MANUTENCAO_ALTERAR: $e")
+            } finally {
+                bd.close()
+            }
+        }
     }
 
     fun deletarManutencao(

@@ -85,7 +85,7 @@ class StatusManutencaoAdapterRW(
               ).createDialog(
                   primaryButtonAction = { manutencao, dialog ->
                       dialog.dismiss()
-                      controleManutencao.salvarManutencao(manutencao, context)
+                      controleManutencao.alterarManutencaoBase(manutencao, context)
                       controleManutencao.atualizarManutencao(manutencao, bindingAdapterPosition)
                       this@StatusManutencaoAdapterRW.submitList(controleManutencao.manutencoes)
                   },
