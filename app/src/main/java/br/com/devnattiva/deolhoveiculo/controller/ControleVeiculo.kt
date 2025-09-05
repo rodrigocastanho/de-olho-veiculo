@@ -3,21 +3,18 @@ package br.com.devnattiva.deolhoveiculo.controller
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
-import br.com.devnattiva.deolhoveiculo.model.Veiculo
+import br.com.devnattiva.deolhoveiculo.AvisoDialog
 import br.com.devnattiva.deolhoveiculo.TelaStatusManutencao
+import br.com.devnattiva.deolhoveiculo.model.Veiculo
+import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import java.sql.SQLException
-
 
 class ControleVeiculo {
 
@@ -79,12 +76,10 @@ class ControleVeiculo {
                 }
             }
         } else {
-//            Toast.makeText(context, "FALTOU NOME DO VEÍCULO", Toast.LENGTH_SHORT).show()
             callBack.invoke("Obrigatório nome do veículo")
         }
     }
 
-    //Valor do objeto veiculo vem da class SobreVeiculoDialog
     fun veiculoValorEditado(context: Activity): Veiculo? {
         var veiculoEditado: Veiculo? = null
         try {
@@ -110,30 +105,35 @@ class ControleVeiculo {
         bd = BancoDadoConfig.getInstance(context.applicationContext)
 
         if (veiculoId != 0L) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("Excluir veículo")
-            builder.setMessage("Deseja excluir o veículo e suas manutenções gravadas?")
-            builder.setPositiveButton("SIM") { _, _ ->
-                CoroutineScope(IO).launch {
-                    try {
-                        bd.controleDAO().deletarDadosVeiculo(veiculoId)
-                    } catch (e: SQLException) {
-                        Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: $e")
-                    } finally {
-                        bd.close()
-                    }
-                }
-                context.startActivity(Intent(context, TelaStatusManutencao::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
-                Toast.makeText(context.applicationContext, "VEÍCULO EXCLUIDO", Toast.LENGTH_SHORT).show()
-            }
-            builder.setNegativeButton("NÃO") { _, _ ->
-                Toast.makeText(context.applicationContext, "VEÍCULO NÃO SERÁ EXCLUIDO", Toast.LENGTH_SHORT).show()
-            }
-
-            builder.setNeutralButton("CANCELAR") { _, _ -> }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-
+            AvisoDialog()
+                .createDialog(
+                    context = context,
+                    title = "Excluir veículo",
+                    messageText = "Deseja excluir o veículo e suas manutenções gravadas?",
+                    primaryButtonAction = { dialog ->
+                        CoroutineScope(IO).launch {
+                            try {
+                                bd.controleDAO().deletarDadosVeiculo(veiculoId)
+                                withContext(Dispatchers.Main) {
+                                    dialog.dismiss()
+                                    context.startActivity(Intent(context, TelaStatusManutencao::class.java)
+                                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+                                    Toast.makeText(context.applicationContext, "VEÍCULO EXCLUIDO",Toast.LENGTH_SHORT).show()
+                                }
+                            } catch (e: SQLException) {
+                                dialog.dismiss()
+                                Log.e("ERRO_DEL_VEICULO", "ERRO_DELETAR_VEICULO_MANUTEÇÂO: $e")
+                            } finally {
+                                bd.close()
+                            }
+                        }
+                    },
+                    secundaryButtonAction = { dialog ->
+                        dialog.dismiss()
+                        Toast.makeText(context.applicationContext, "VEÍCULO NÃO SERÁ EXCLUIDO",Toast.LENGTH_SHORT).show()
+                    },
+                    thirdButtonAction = {dialog ->  dialog.dismiss() }
+                )
         } else {
             Toast.makeText(context.applicationContext, "SELECIONAR VEÍCULO", Toast.LENGTH_SHORT).show()
         }

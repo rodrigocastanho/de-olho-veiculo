@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
+import br.com.devnattiva.deolhoveiculo.AvisoDialog
 import br.com.devnattiva.deolhoveiculo.SobreVeiculoDialog
 import br.com.devnattiva.deolhoveiculo.TelaCadastro
 import br.com.devnattiva.deolhoveiculo.databinding.ContentTelaStatusManutencaoBinding
@@ -20,7 +21,6 @@ import br.com.devnattiva.deolhoveiculo.model.VeiculoManutencao
 import br.com.devnattiva.deolhoveiculo.repository.BancoDadoConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.sql.SQLException
@@ -79,7 +79,6 @@ class ControleManutencao(private val context: Context) {
     fun fluxoManutencao(
         veiculoId: Long,
         context: Activity,
-        supportFragmentManager: FragmentManager,
         viewConteudo: ContentTelaStatusManutencaoBinding,
         callBack: () -> Unit,
     ) {
@@ -179,32 +178,34 @@ class ControleManutencao(private val context: Context) {
         callBack: () -> Unit,
     ) {
         bd = BancoDadoConfig.getInstance(context.applicationContext)
-
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Excluir manutenção")
-        builder.setMessage("Deseja excluir essa manutenção?")
-        builder.setPositiveButton("SIM") { _, _ ->
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    bd.controleDAO().deletarDadosManutencao(manutencao)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "MANUTENÇÃO EXCLUIDA", Toast.LENGTH_SHORT).show()
-                        callBack.invoke()
+        AvisoDialog()
+            .createDialog(
+                context = context,
+                title = "Excluir manutenção",
+                messageText = "Deseja excluir essa manutenção?",
+                primaryButtonAction = { dialog ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            bd.controleDAO().deletarDadosManutencao(manutencao)
+                            withContext(Dispatchers.Main) {
+                                dialog.dismiss()
+                                Toast.makeText(context, "MANUTENÇÃO EXCLUIDA", Toast.LENGTH_SHORT).show()
+                                callBack.invoke()
+                            }
+                        } catch (e: SQLException) {
+                            dialog.dismiss()
+                            Log.e("ERRO_DEL_MANUTENCAO", "ERRO_DELETAR_MANUTECAO: $e")
+                        } finally {
+                            bd.close()
+                        }
                     }
-                } catch (e: SQLException) {
-                    Log.e("ERRO_DEL_MANUTENCAO", "ERRO_DELETAR_MANUTECAO: $e")
-                } finally {
-                    bd.close()
-                }
-            }
-        }
-        builder.setNegativeButton("NÃO") { _, _ ->
-            Toast.makeText(context, "MANUTENÇÃO NÃO SERÁ EXCLUIDA", Toast.LENGTH_SHORT).show()
-        }
-
-        builder.setNeutralButton("CANCELAR") { _, _ -> }
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
+                },
+                secundaryButtonAction = { dialog ->
+                    dialog.dismiss()
+                    Toast.makeText(context, "MANUTENÇÃO NÃO SERÁ EXCLUIDA", Toast.LENGTH_SHORT).show()
+                },
+                thirdButtonAction = { dialog -> dialog.dismiss() }
+            )
     }
 
     private fun controleMensagensSalvar(status: Boolean, context: Context, manutencao: Manutencao) {
