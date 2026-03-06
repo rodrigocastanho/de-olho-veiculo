@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="br.com.devnattiva.deolhoveiculo.TelaPrincipalmain">
+        tools:context="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_height="wrap_content"
@@ -22,8 +22,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-       android:id="@+id/content_tela_principal"
-       layout="@layout/content_tela_principalmain" />
-
+        android:id="@+id/content_tela_relatorio_custo"
+        layout="@layout/activity_tela_relatorio_custo" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

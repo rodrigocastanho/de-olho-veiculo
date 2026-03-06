@@ -15,7 +15,7 @@
         <item
                 android:id="@+id/StatusManuteção"
                 android:icon="@drawable/ic_menu_manutencao"
-                android:title="Status de Manutenção"/>
+                android:title="Manutenções"/>
         <item
                 android:id="@+id/RelatorioCusto"
                 android:icon="@drawable/ic_menu_relatorio"
