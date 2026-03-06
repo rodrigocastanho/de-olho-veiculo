@@ -1,7 +1,6 @@
 package br.com.devnattiva.deolhoveiculo
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -24,7 +21,6 @@ import br.com.devnattiva.deolhoveiculo.controller.ControleManutencao
 import br.com.devnattiva.deolhoveiculo.controller.ControleVeiculo
 import br.com.devnattiva.deolhoveiculo.controller.StatusManutencaoAdapterRW
 import br.com.devnattiva.deolhoveiculo.databinding.ActivityTelaStatusManutencaoBinding
-import br.com.devnattiva.deolhoveiculo.model.Manutencao
 import com.google.android.material.navigation.NavigationView.*
 
 
@@ -56,7 +52,6 @@ class TelaStatusManutencao : AppCompatActivity(),
                 controleManutencoes.fluxoManutencao(
                     veiculoId,
                     this@TelaStatusManutencao,
-                    supportFragmentManager,
                     viewActivity.appBarManutencao.contentManutencao,
                     callBack = { adapterManutencao.submitList(controleManutencoes.manutencoes) }
                 )

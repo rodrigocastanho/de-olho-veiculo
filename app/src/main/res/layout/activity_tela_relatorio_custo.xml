@@ -5,13 +5,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        tools:showIn="@layout/app_bar_tela_custo"
+        tools:context="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto"
         android:fillViewport="true">
 
  <androidx.constraintlayout.widget.ConstraintLayout
-         android:id="@+id/tela_relatorio_custo"
+        android:id="@+id/tela_relatorio_custo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="br.com.devnattiva.deolhoveiculo.TelaRelatorioCusto">
+        android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_carro_custo"
@@ -20,7 +22,6 @@
             app:srcCompat="@drawable/inveiculo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="5dp" />
 
     <Spinner
@@ -28,11 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_carro_custo"
             app:layout_constraintStart_toEndOf="@+id/img_carro_custo"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/img_carro_custo"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="35dp"
             android:layout_marginEnd="8dp"/>
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -42,14 +43,14 @@
             android:inputType="datetime"
             android:background="@drawable/ic_fundo_data_custo"
             android:drawableStart="@drawable/ic_data"
-            android:hint="  Data inicial"
+            android:hint="Data inicial"
             android:textAlignment="textStart"
             android:maxLength="10"
             android:clickable="false"
             android:focusable="false"
             app:layout_constraintTop_toBottomOf="@+id/img_carro_custo"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingStart="25dp"
+            android:paddingStart="22dp"
             android:paddingBottom="5dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
@@ -62,9 +63,9 @@
             android:inputType="datetime"
             android:background="@drawable/ic_fundo_data_custo"
             android:drawableStart="@drawable/ic_data"
-            android:hint="  Data final"
+            android:hint="Data final"
             android:textAlignment="textStart"
-            android:paddingStart="25dp"
+            android:paddingStart="22dp"
             android:paddingBottom="5dp"
             android:maxLength="10"
             android:clickable="false"
@@ -134,17 +135,17 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_custo"
-            android:layout_width="match_parent"
-            android:layout_height="265dp"
-            app:layout_constraintTop_toBottomOf="@+id/txt_manutencoes_custo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.1"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+     <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rc_custo"
+             android:layout_width="match_parent"
+             android:layout_height="265dp"
+             app:layout_constraintTop_toBottomOf="@+id/txt_manutencoes_custo"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             android:layout_marginTop="16dp"
+             android:layout_marginStart="8dp"
+             android:layout_marginEnd="8dp"
+             app:layout_constraintHorizontal_bias="0.0" />
 
      <androidx.fragment.app.FragmentContainerView
              android:id="@+id/fg_anuncio_banner"
